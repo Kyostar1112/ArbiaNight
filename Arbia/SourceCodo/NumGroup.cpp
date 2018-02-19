@@ -56,7 +56,7 @@ void clsNumGrp::Create( ID3D11Device* pDevice11, ID3D11DeviceContext* pContext11
 
 		NumImage[i] = new clsSprite2D;
 
-		NumImage[i]->Init( pDevice11, pContext11, FILE_PATH_TEN );
+		NumImage[i]->Create( pDevice11, pContext11, FILE_PATH_TEN );
 
 		NumImage[i]->SetSs(
 			NumImage[i]->GetSs().Base.w,

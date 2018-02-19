@@ -151,7 +151,7 @@ void clsSp2dMgrMain::Render()
 	m_smpAButton->Render();
 
 #ifdef Tahara
-	m_smpTimerGrp->Move();
+	m_smpTimerGrp->Update();
 	m_smpTimerGrp->Render();
 	m_smpDisc->Update();
 	m_smpDisc->Render();
