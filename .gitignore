@@ -67,6 +67,12 @@ ipch/
 *.opensdf
 *.sdf
 *.cachefile
+*.suo
+/Debug
+/Release
+*.xlsm
+*.csv
+*.vcxproj.user
 
 # Visual Studio profiler
 *.psess
