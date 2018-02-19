@@ -65,9 +65,9 @@ ipch/
 *.aps
 *.ncb
 *.opensdf
-*.sdf
 *.cachefile
 *.suo
+*.sdf
 /Debug
 /Release
 *.xlsm
