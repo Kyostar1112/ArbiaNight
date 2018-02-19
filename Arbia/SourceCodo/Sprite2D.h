@@ -239,6 +239,7 @@ public:
 
 	bool Release();
 
+
 protected:
 
 	//¼ª°ÀŞì¬.
