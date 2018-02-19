@@ -45,7 +45,7 @@ void clsJewerSet::Create( HWND hWnd,
 	ID3D11Device* pDevice11, ID3D11DeviceContext* pContext11,
 	int iNo )
 {
-	if( m_smpModel ) return;
+	if( m_smpModel != nullptr ) return;
 
 	m_smpModel = make_unique<clsJewel>();
 	m_smpModel->Create( pDevice11, pContext11, sFILE_PATH_JEWEL );
@@ -59,7 +59,7 @@ void clsJewerSet::Create( HWND hWnd,
 
 void clsJewerSet::Update()
 {
-	if( !m_smpModel ) return;
+	if( m_smpModel == nullptr ) return;
 
 	m_smpModel->AddPos( m_vMove );
 
@@ -73,7 +73,7 @@ void clsJewerSet::Update()
 
 void clsJewerSet::AddScale( float fScale )
 {
-	if( !m_smpModel ) return;
+	if( m_smpModel == nullptr ) return;
 
 	m_fScale += fScale;
 

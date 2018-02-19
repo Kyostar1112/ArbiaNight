@@ -64,7 +64,7 @@ public:
 
 
 
-	void Init( HWND hWnd, ID3D11Device* pDevice11, ID3D11DeviceContext* pContext11 );
+	void Create( HWND hWnd, ID3D11Device* pDevice11, ID3D11DeviceContext* pContext11 );
 
 	void Init();
 

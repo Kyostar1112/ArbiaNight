@@ -62,7 +62,7 @@ void clsUiManagar::Init( HWND hWnd,ID3D11Device* pDevice11, ID3D11DeviceContext*
 
 
 	//リザルト用.
-	m_smpResult->Init( hWnd, pDevice11, pContext11 );
+	m_smpResult->Create( hWnd, pDevice11, pContext11 );
 
 	//エンディング用.
 	m_smpEndingScene->Create(pDevice11, pContext11);

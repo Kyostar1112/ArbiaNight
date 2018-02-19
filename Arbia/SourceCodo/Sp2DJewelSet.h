@@ -15,6 +15,11 @@ public:
 		ID3D11Device* pDevice11, ID3D11DeviceContext* pContext11,
 		int iNo );
 
+	void Init(){
+		if( m_smpModel == nullptr ) return;
+		m_smpModel->Init();
+	};
+
 	void Update();
 
 
@@ -36,15 +41,8 @@ public:
 		return m_bDown;
 	}
 
-
-	void Init(){
-		if( !m_smpModel ) return;
-		m_smpModel->Init();
-	};
-
-
 	void SetScale( float fScale ){
-		if( !m_smpModel ) return;
+		if( m_smpModel == nullptr ) return;
 		m_fScale = fScale;
 		m_smpModel->m_fScale = m_fScale;
 	}
@@ -52,21 +50,21 @@ public:
 	void AddScale( float fScale );
 
 	void Render(){
-		if( !m_smpModel ) return;
+		if( m_smpModel == nullptr ) return;
 		m_smpModel->Render();
 	};
 
 	void SetPos( D3DXVECTOR3 vPos ){
-		if( !m_smpModel ) return;
+		if( m_smpModel == nullptr ) return;
 		m_smpModel->SetPos( vPos );
 	};
 	D3DXVECTOR3 GetPos(){
-		if( !m_smpModel ) return { -100.0f, -100.0f, -100.0f };
+		if( m_smpModel == nullptr ) return { -100.0f, -100.0f, -100.0f };
 		return m_smpModel->GetPos();
 	}
 
 	void SetPosX( float fX ){
-		if( !m_smpModel ) return;
+		if( m_smpModel == nullptr ) return;
 		m_smpModel->SetPosX( fX );
 	}
 

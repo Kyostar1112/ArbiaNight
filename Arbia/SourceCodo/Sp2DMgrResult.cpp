@@ -127,7 +127,7 @@ clsSp2dMgrReslt::~clsSp2dMgrReslt()
 
 
 
-void clsSp2dMgrReslt::Init( HWND hWnd, ID3D11Device* pDevice11, ID3D11DeviceContext* pContext11)
+void clsSp2dMgrReslt::Create( HWND hWnd, ID3D11Device* pDevice11, ID3D11DeviceContext* pContext11)
 {
 	//”¼ˆÃ“].
 	m_smpBlack = make_unique<clsSprite2D>();
