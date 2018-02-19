@@ -1,9 +1,153 @@
-﻿2018/02/19 12:28:18 にビルドを開始しました。
+﻿2018/02/19 14:34:27 にビルドを開始しました。
      1>ノード 2 上のプロジェクト "C:\Users\men\Documents\GitHub\ArbiaNight\Arbia\Arbia.vcxproj" (Build ターゲット)。
-     1>Link:
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ISourceCodo\Effekseer\include /ZI /nologo /W3 /WX- /sdl /Od /Oy /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt SourceCodo\GameObject.cpp SourceCodo\Main.cpp SourceCodo\Sp2DJewelSet.cpp SourceCodo\Sp2DMgrResult.cpp SourceCodo\UiManager.cpp
+         UiManager.cpp
+         Sp2DMgrResult.cpp
+         Sp2DJewelSet.cpp
+         Main.cpp
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(76): warning C4305: '初期化中' : 'double' から 'const float' へ切り詰めます。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(596): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(740): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(987): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(999): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(1012): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(1025): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(1038): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(1051): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(1063): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(1076): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(1088): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2073): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2099): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2115): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2132): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2136): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2142): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2148): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2152): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2159): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2164): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2169): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2176): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2177): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2284): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2853): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2863): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2873): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2883): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2893): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2903): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2913): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2923): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2933): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2943): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2953): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2964): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2975): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3073): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3137): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3271): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3300): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3343): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3380): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3386): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3392): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3398): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3426): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3453): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3486): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3556): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3597): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3614): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3618): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3641): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3645): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3668): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3801): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3810): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3974): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3980): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3992): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(4008): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(4014): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(4020): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(4026): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(4032): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(4038): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(4053): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(4059): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(4065): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(4071): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(4105): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(4624): warning C4244: '=' : 'FLOAT' から 'INT' への変換です。データが失われる可能性があります。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(4625): warning C4244: '=' : 'FLOAT' から 'INT' への変換です。データが失われる可能性があります。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(4628): warning C4244: '=' : 'FLOAT' から 'UINT' への変換です。データが失われる可能性があります。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(4629): warning C4244: '=' : 'FLOAT' から 'UINT' への変換です。データが失われる可能性があります。
+         GameObject.cpp
+         コードを生成中...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\men\Documents\GitHub\ArbiaNight\Debug\Arbia.exe" /INCREMENTAL /NOLOGO /LIBPATH:SourceCodo\Effekseer\lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\men\Documents\GitHub\ArbiaNight\Debug\Arbia.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\men\Documents\GitHub\ArbiaNight\Debug\Arbia.lib" /MACHINE:X86 Debug\CheckPoint.obj
+         Debug\CheckPointMgr.obj
+         Debug\EndEnemy.obj
+         Debug\EndEnemyMgr.obj
+         Debug\NumGroup.obj
+         Debug\CharaSkin.obj
+         Debug\CharaStatic.obj
+         Debug\Collision.obj
+         Debug\CollisionRay.obj
+         Debug\Common.obj
+         Debug\CoverManager.obj
+         Debug\CXInput.obj
+         Debug\D3DXSKINMESH.obj
+         Debug\DebugText.obj
+         Debug\DoorManager.obj
+         Debug\DX9Mesh.obj
+         Debug\DxInput.obj
+         Debug\Effects.obj
+         Debug\Enemy.obj
+         Debug\EnemyManager.obj
+         Debug\File.obj
+         Debug\Floor.obj
+         Debug\GageSprite2D.obj
+         Debug\GameObject.obj
+         Debug\GoalManager.obj
+         Debug\Main.obj
+         Debug\Sp2DJewel.obj
+         Debug\Sp2DJewelSet.obj
+         Debug\Sp2DMgrActTxt.obj
+         Debug\Sp2DMgrDiscover.obj
+         Debug\Sp2DMgrEnding.obj
+         Debug\Sp2DMgrLives.obj
+         Debug\Sp2DMgrMain.obj
+         Debug\Sp2DMgrOver.obj
+         Debug\Particle.obj
+         Debug\Pendulum.obj
+         Debug\Player.obj
+         Debug\Ray.obj
+         Debug\Resource.obj
+         Debug\SceneManager.obj
+         Debug\Sound.obj
+         Debug\Sp2DMgrOverTxt.obj
+         Debug\Sp2DMgrPushButn.obj
+         Debug\Sp2DMgrResult.obj
+         Debug\Sp2DTimer.obj
+         Debug\Sp2DTimerGroup.obj
+         Debug\SpiaFloor.obj
+         Debug\SpiaFloorManager.obj
+         Debug\SpiaWall.obj
+         Debug\SpiaWallManager.obj
+         Debug\Sprite.obj
+         Debug\Sprite2D.obj
+         Debug\SpShadow.obj
+         Debug\StepBox.obj
+         Debug\StepCylinder.obj
+         Debug\Sp2DMgrTitle.obj
+         Debug\UiManager.obj
+         Debug\Wall.obj
          Arbia.vcxproj -> C:\Users\men\Documents\GitHub\ArbiaNight\Debug\Arbia.exe
      1>プロジェクト "C:\Users\men\Documents\GitHub\ArbiaNight\Arbia\Arbia.vcxproj" (Build ターゲット) のビルドが完了しました。
 
 ビルドに成功しました。
 
-経過時間 00:00:00.23
+経過時間 00:00:04.20

@@ -1294,7 +1294,7 @@ HRESULT clsMain::ReadMesh()
 #ifdef Inoue
 
 	m_smpUiManagar = make_unique<clsUiManagar>();
-	m_smpUiManagar->Init( m_hWnd, m_pDevice, m_pDeviceContext );
+	m_smpUiManagar->Create( m_hWnd, m_pDevice, m_pDeviceContext );
 
 	m_smpStageDataExcel = make_unique<clsFile>();
 	m_smpStageDataExcel->Init( "Data\\Text\\StageData.xlsm" );

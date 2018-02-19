@@ -20,7 +20,7 @@ clsUiManagar::~clsUiManagar()
 	Delete();
 }
 
-void clsUiManagar::Init( HWND hWnd,ID3D11Device* pDevice11, ID3D11DeviceContext* pContext11)
+void clsUiManagar::Create( HWND hWnd,ID3D11Device* pDevice11, ID3D11DeviceContext* pContext11)
 {
 	m_smpBlack = make_unique<clsSprite2D>();  //ˆÃ“]—p.
 
