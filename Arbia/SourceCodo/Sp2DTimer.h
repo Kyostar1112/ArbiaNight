@@ -9,6 +9,9 @@ class clsTimer
 {
 public:
 
+	clsTimer(){};
+	~clsTimer(){};
+
 	//一ケタ目の速度 二ケタ目の速度 タイマーか否か.
 	virtual void Create( ID3D11Device* pDevice11, ID3D11DeviceContext* pContext11 );
 

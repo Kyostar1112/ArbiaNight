@@ -82,7 +82,6 @@ protected:
 	void ThetaOverGuard( float& theta );
 	void ThetaOverGuard( double& theta );
 
-//public:
 	D3DXVECTOR3		m_vPos;		//à íu.
 	D3DXVECTOR3		m_vRot;		//âÒì].
 	float			m_fScale;	//ägèk.

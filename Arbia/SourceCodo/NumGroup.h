@@ -9,13 +9,13 @@
 
 using namespace std;
 
-
+const char cNUM_GROUP_NUM_MAX = 2;//桁数.
 
 class clsNumGrp
 {
 public:
 	clsNumGrp();
-	~clsNumGrp();
+	virtual ~clsNumGrp();
 
 	//最初の初期化( クラスを作った直後 ).
 	//一ケタ目の速度 二ケタ目の速度 タイマーか否か.
@@ -27,7 +27,7 @@ public:
 	void SetPos( D3DXVECTOR3 vPos );
 	void AddPos( D3DXVECTOR3 vPos );
 
-	void Move();
+	void Update();
 
 	void Render();
 
@@ -55,10 +55,10 @@ protected:
 	D3DXVECTOR3 m_vPos;
 
 	//二桁固定.
-	clsSprite2D*	NumImage[2];
+	clsSprite2D*	NumImage[cNUM_GROUP_NUM_MAX];
 	int				m_iRealNum;//実数値.
-	float			m_fRendNum[2];//描画( 画面に見える )の数値( m_iRealNumを一ケタ当たりに分解されたもの ).
-	float			m_fNumU[2];//座標値.
+	float			m_fRendNum[cNUM_GROUP_NUM_MAX];//描画( 画面に見える )の数値( m_iRealNumを一ケタ当たりに分解されたもの ).
+	float			m_fNumU[cNUM_GROUP_NUM_MAX];//座標値.
 
 
 	//ターゲットに実数値を近づける : approach_to_target.

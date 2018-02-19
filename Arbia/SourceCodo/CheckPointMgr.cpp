@@ -56,9 +56,10 @@ const float fSTOP_POS_X[cSTRING_MAX] =
 
 
 
-clsCheckPointMgr::clsCheckPointMgr(){
+clsCheckPointMgr::clsCheckPointMgr()
+{
 	m_ppModel = nullptr;
-	m_ppSe = nullptr;
+	m_pSe = nullptr;
 }
 
 clsCheckPointMgr::~clsCheckPointMgr()
@@ -67,15 +68,11 @@ clsCheckPointMgr::~clsCheckPointMgr()
 }
 void clsCheckPointMgr::Release()
 {
-	if( m_ppSe != nullptr ){
-		for( char i=0; i<cSTRING_MAX; i++ ){
-			m_ppSe[i]->Stop();
-			m_ppSe[i]->Close();
-			delete m_ppSe[i];
-			m_ppSe[i] = nullptr;
-		}
-		delete[] m_ppSe;
-		m_ppSe = nullptr;
+	if( m_pSe != nullptr ){
+		m_pSe->Stop();
+		m_pSe->Close();
+		delete m_pSe;
+		m_pSe = nullptr;
 	}
 
 	if( m_ppModel != nullptr ){
@@ -99,24 +96,16 @@ void clsCheckPointMgr::Create( HWND hWnd, ID3D11Device* pDevice11,
 	}
 
 	//音クラス.
-	m_ppSe = new clsSound*[cSTRING_MAX];
-	for( char i=0; i<cSTRING_MAX; i++ ){
-		m_ppSe[i] = new clsSound;
-		//名前.
-		char cAliasName[STR_BUFF_MAX] = "";
-		strcat_s( cAliasName, sizeof( cAliasName ), ALIAS_NAME );
-		//番号.
-		char cNumberString[] = "  ";
-		_itoa_s( i, cNumberString, 10 );
-		//名前と番号合体.
-		strcat_s( cAliasName, sizeof( cAliasName ), cNumberString );
-		//作成.
-		m_ppSe[i]->Open( FILE_PATH, cAliasName, hWnd );
-		//最大音量設定.
-		m_ppSe[i]->SetMaxVolume( VOL );
-		//現音量初期化.
-		m_ppSe[i]->SetVolume( VOL );
-	}
+	m_pSe = new clsSound;
+	//名前.
+	char cAliasName[STR_BUFF_MAX] = "";
+	strcat_s( cAliasName, sizeof( cAliasName ), ALIAS_NAME );
+	//作成.
+	m_pSe->Open( FILE_PATH, cAliasName, hWnd );
+	//最大音量設定.
+	m_pSe->SetMaxVolume( VOL );
+	//現音量初期化.
+	m_pSe->SetVolume( VOL );
 
 	Init();
 }
@@ -147,8 +136,8 @@ void clsCheckPointMgr::Start( float fPosZ )
 
 	m_ppModel[0]->SetMove( true );
 
-	m_ppSe[0]->SeekToStart();
-	m_ppSe[0]->Play();
+	m_pSe->SeekToStart();
+	m_pSe->Play();
 
 }
 
@@ -177,9 +166,8 @@ void clsCheckPointMgr::Update()
 							//次のやつを動かす.
 							m_ppModel[i + 1]->SetMove( true );
 							m_ppModel[i + 1]->m_enMode = clsCheckPoint::enM_IN;
-							m_ppSe[i + 1]->Stop();
-							m_ppSe[i + 1]->SeekToStart();
-							m_ppSe[i + 1]->Play();
+							m_pSe->SeekToStart();
+							m_pSe->Play();
 						}
 					}
 				}
@@ -188,9 +176,8 @@ void clsCheckPointMgr::Update()
 			case clsCheckPoint::enM_STAY:
 				//動かす　終わり際に音鳴らす.
 				if( m_ppModel[i]->Stay() ){
-					m_ppSe[i]->Stop();
-					m_ppSe[i]->SeekToStart();
-					m_ppSe[i]->Play();
+					m_pSe->SeekToStart();
+					m_pSe->Play();
 				}
 				break;
 

@@ -56,6 +56,15 @@ const float fWALL_HEIGHT = (float)iSPIA_MAX * fFLOOR_Y_OFFSET - fFLOOR_Y_OFFSET_
 
 clsSpiaWallMgr::clsSpiaWallMgr()
 {
+	m_iSpiaMax = 0;
+
+	m_ppSpiaL = nullptr;
+	m_ppSpiaR = nullptr;
+	
+	m_pSpiaWall[0] = nullptr;
+	m_pSpiaWall[1] = nullptr;
+
+	m_ppSe = nullptr;
 }
 
 clsSpiaWallMgr::~clsSpiaWallMgr()
@@ -67,6 +76,16 @@ clsSpiaWallMgr::~clsSpiaWallMgr()
 
 void clsSpiaWallMgr::CreateSpia( HWND hWnd, int iNo, int iMoveMode )
 {
+	if( m_iSpiaMax ||
+		m_ppSpiaL != nullptr ||
+		m_ppSpiaR != nullptr ||
+		m_pSpiaWall[0] != nullptr ||
+		m_pSpiaWall[1] != nullptr ||
+		m_ppSe != nullptr )
+	{
+		return;
+	}
+
 	m_enMoveMode = (enMode)iMoveMode;
 
 	//----- モデル -----//
@@ -140,6 +159,8 @@ void clsSpiaWallMgr::CreateSpia( HWND hWnd, int iNo, int iMoveMode )
 
 void clsSpiaWallMgr::Init()
 {
+	if( m_ppSpiaL == nullptr || m_ppSpiaR == nullptr ) return;
+
 	m_iTimer = 0;
 	//槍.
 	for( int i=0; i<m_iSpiaMax; i++ ){
@@ -151,19 +172,18 @@ void clsSpiaWallMgr::Init()
 
 		//左側.
 		m_ppSpiaL[i]->SetPosition( 
-		D3DXVECTOR3( 
-			GetPositionX() - fWALL_SIDE_OFFSET + fOffset, 
-			GetPositionY() + (float)i * fFLOOR_Y_OFFSET + fFLOOR_Y_OFFSET_FIRST,
-			GetPositionZ() ) );
+			D3DXVECTOR3( 
+				GetPositionX() - fWALL_SIDE_OFFSET + fOffset, 
+				GetPositionY() + (float)i * fFLOOR_Y_OFFSET + fFLOOR_Y_OFFSET_FIRST,
+				GetPositionZ() ) );
 		m_ppSpiaL[i]->Init( m_ppSpiaL[i]->GetPosition(), false );
 
 		//右側.
-//		fOffset *= -1.0f;
 		m_ppSpiaR[i]->SetPosition( 
-		D3DXVECTOR3( 
-			GetPositionX() + fWALL_SIDE_OFFSET + fOffset,
-			GetPositionY() + (float)i * fFLOOR_Y_OFFSET + fFLOOR_Y_OFFSET_FIRST,
-			GetPositionZ() ) );
+			D3DXVECTOR3( 
+				GetPositionX() + fWALL_SIDE_OFFSET + fOffset,
+				GetPositionY() + (float)i * fFLOOR_Y_OFFSET + fFLOOR_Y_OFFSET_FIRST,
+				GetPositionZ() ) );
 		m_ppSpiaR[i]->Init( m_ppSpiaR[i]->GetPosition(), true );
 	}
 }
@@ -172,49 +192,53 @@ void clsSpiaWallMgr::Init()
 void clsSpiaWallMgr::Release()
 {
 	//音.
-	if( m_ppSe != NULL ){
+	if( m_ppSe != nullptr ){
 		for( int i=0; i<clsSpiaWall::enSOUND_MAX; i++ ){
 			m_ppSe[i]->Stop();
 			m_ppSe[i]->Close();
 			delete m_ppSe[i];
-			m_ppSe[i] = NULL;
+			m_ppSe[i] = nullptr;
 		}
 		delete[] m_ppSe;
-		m_ppSe = NULL;
+		m_ppSe = nullptr;
 	}
 	//オブジェクト.
-	if( m_pSpiaWall != NULL ){
+	if( m_pSpiaWall != nullptr ){
 		for( char i=0; i<cWALL_MAX; i++ ){
 			m_pSpiaWall[i]->DetatchModel();
 			delete m_pSpiaWall[i];
-			m_pSpiaWall[i] = NULL;
+			m_pSpiaWall[i] = nullptr;
 		}
 	}
 
-	if( m_ppSpiaL != NULL ){
+	if( m_ppSpiaL != nullptr ){
 		for( int i=0; i<m_iSpiaMax; i++ ){
 			m_ppSpiaL[i]->DetatchModel();
 			delete m_ppSpiaL[i];
-			m_ppSpiaL[i] = NULL;
+			m_ppSpiaL[i] = nullptr;
 		}
 		delete[] m_ppSpiaL;
-		m_ppSpiaL = NULL;
+		m_ppSpiaL = nullptr;
 	}
-	if( m_ppSpiaR != NULL ){
+	if( m_ppSpiaR != nullptr ){
 		for( int i=0; i<m_iSpiaMax; i++ ){
 			m_ppSpiaR[i]->DetatchModel();
 			delete m_ppSpiaR[i];
-			m_ppSpiaR[i] = NULL;
+			m_ppSpiaR[i] = nullptr;
 		}
 		delete[] m_ppSpiaR;
-		m_ppSpiaR = NULL;
+		m_ppSpiaR = nullptr;
 		m_iSpiaMax = 0;
 	}
 }
 
 
-void clsSpiaWallMgr::Move( float fEarZ )
+void clsSpiaWallMgr::Update( float fEarZ )
 {
+	if( m_ppSpiaR == nullptr || m_ppSpiaL == nullptr || m_pSpiaWall[0] == nullptr || m_pSpiaWall[1] == nullptr ){
+		return;
+	}
+
 	m_fEarZ = fEarZ;
 	//動きのセット.
 	switch( m_enMoveMode )
@@ -244,7 +268,7 @@ void clsSpiaWallMgr::Move( float fEarZ )
 	//飛び出し効果音用.
 	bool bSpiaUpSound = false;
 	for( int i=0; i<m_iSpiaMax; i++ ){
-		bSpiaUpSound = m_ppSpiaL[i]->Move();
+		bSpiaUpSound = m_ppSpiaL[i]->Update();
 	}
 	//飛び出す音.
 	if( bSpiaUpSound ){
@@ -252,7 +276,7 @@ void clsSpiaWallMgr::Move( float fEarZ )
 	}
 
 	for( int i=0; i<m_iSpiaMax; i++ ){
-		bSpiaUpSound = m_ppSpiaR[i]->Move();
+		bSpiaUpSound = m_ppSpiaR[i]->Update();
 	}
 	//飛び出す音.
 	if( bSpiaUpSound ){
@@ -334,6 +358,10 @@ void clsSpiaWallMgr::MoveCloseR()
 
 void clsSpiaWallMgr::SetPosition( D3DXVECTOR3 vPos )
 {
+	if( m_ppSpiaR == nullptr || m_ppSpiaL == nullptr || m_pSpiaWall[0] == nullptr || m_pSpiaWall[1] == nullptr ){
+		return;
+	}
+
 	m_vPos = vPos;
 
 	//子分の座標.
@@ -373,6 +401,10 @@ void clsSpiaWallMgr::SetPosition( D3DXVECTOR3 vPos )
 void clsSpiaWallMgr::Render( D3DXMATRIX &mView, D3DXMATRIX &mProj,
 				 D3DXVECTOR3 &vLight, D3DXVECTOR3 &vEye )
 {
+	if( m_ppSpiaR == nullptr || m_ppSpiaL == nullptr ){
+		return;
+	}
+
 	for( int i=0; i<m_iSpiaMax; i++ ){
 		m_ppSpiaL[i]->Render( mView, mProj, vLight, vEye );
 		m_ppSpiaR[i]->Render( mView, mProj, vLight, vEye );
@@ -387,19 +419,24 @@ void clsSpiaWallMgr::Render( D3DXMATRIX &mView, D3DXMATRIX &mProj,
 //槍のあたり判定情報返す.
 COL_STATE* clsSpiaWallMgr::GetPointerSpiaCol( bool bRight, int i )
 {
+	if( m_ppSpiaR == nullptr || m_ppSpiaL == nullptr ){
+		return nullptr ;
+	}
 	if( bRight ){
 		return m_ppSpiaR[i]->GetPointerCol();
 	}
 	else{
 		return m_ppSpiaL[i]->GetPointerCol();
 	}
-	return NULL;
+	return nullptr;
 }
 
 
 //ラップ.
 void clsSpiaWallMgr::GoRight()
 {
+	if( m_ppSpiaL == nullptr ) return;
+
 	PlaySe( clsSpiaWall::enSOUND_VIB );
 	for( int i=0; i<m_iSpiaMax; i++ ){
 		m_ppSpiaL[i]->GoRight();
@@ -407,6 +444,8 @@ void clsSpiaWallMgr::GoRight()
 }
 void clsSpiaWallMgr::GoLeft()
 {
+	if( m_ppSpiaR == nullptr ) return;
+
 	PlaySe( clsSpiaWall::enSOUND_VIB );
 	for( int i=0; i<m_iSpiaMax; i++ ){
 		m_ppSpiaR[i]->GoLeft();
@@ -415,6 +454,8 @@ void clsSpiaWallMgr::GoLeft()
 //0:左, 1:右, 2:両方, それ以外:無効.
 void clsSpiaWallMgr::GoDown( int iRight )
 {
+	if( m_ppSpiaL == nullptr || m_ppSpiaR == nullptr ) return;
+
 	PlaySe( clsSpiaWall::enSOUND_DOWN );
 
 	if( iRight == 0 ){
@@ -440,6 +481,8 @@ void clsSpiaWallMgr::GoDown( int iRight )
 //============================================================
 void clsSpiaWallMgr::PlaySe( clsSpiaWall::enSound enSe )
 {
+	if( m_ppSe == nullptr ) return;
+
 	//再生する距離なら.
 	int vol = ChangeVolumeDistance( m_fEarZ, m_vPos.z );
 	if( vol ){

@@ -111,6 +111,13 @@ protected:
 
 	clsShadow* m_pShadow;
 
+	//===== SetDepth()のために必要 =====.
+	//Zテスト.
+	HRESULT SetDepth( bool bDepth );
+	ID3D11Device*			m_pDevice;	//ﾃﾞﾊﾞｲｽｵﾌﾞｼﾞｪｸﾄ.
+	ID3D11DeviceContext*	m_pContext;	//ﾃﾞﾊﾞｲｽｺﾝﾃｷｽﾄ.	
+	ID3D11DepthStencilState* m_pDepthStencilState;	//深度(Z)ﾃｽﾄ設定.
+	//===== SetDepth()のために必要 終了 =====.
 
 private:
 

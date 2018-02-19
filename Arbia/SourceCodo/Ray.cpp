@@ -8,7 +8,13 @@ const char ENT_PIX_NAME[] = "PS";
 
 clsRay::clsRay()
 {
-	ZeroMemory( this, sizeof( clsRay ) );
+//	ZeroMemory( this, sizeof( clsRay ) );
+	m_pVertexShader = nullptr;	
+	m_pVertexLayout = nullptr;	
+	m_pPixelShader = nullptr;		
+	m_pConstantBuffer = nullptr;	
+
+	m_pVertexBuffer = nullptr;	
 }
 
 clsRay::~clsRay()
@@ -51,8 +57,8 @@ void clsRay::Render( D3DXMATRIX& mView, D3DXMATRIX& mProj )
 	//回転行列、移動行列.
 	D3DXMATRIX mRot, mTran;
 
-//回転行列作成(ｹﾞｰﾑ、ｽﾃｰｼﾞ次第).
-D3DXMatrixRotationY( &mRot, m_Ray.fYaw );
+	//回転行列作成(ｹﾞｰﾑ、ｽﾃｰｼﾞ次第).
+	D3DXMatrixRotationY( &mRot, m_Ray.fYaw );
 
 
 	//平行移動作成.
@@ -124,8 +130,8 @@ D3DXMatrixRotationY( &mRot, m_Ray.fYaw );
 //============================================================
 HRESULT clsRay::InitShader()
 {
-	ID3DBlob* pCompiledShader = NULL;
-	ID3DBlob* pErrors = NULL;
+	ID3DBlob* pCompiledShader = nullptr;
+	ID3DBlob* pErrors = nullptr;
 
 	UINT uCompileFlag = 0;
 
@@ -150,7 +156,7 @@ HRESULT clsRay::InitShader()
 			&pErrors,		//ｴﾗｰと警告一覧を格納するﾒﾓﾘへのﾎﾟｲﾝﾀ.
 			NULL ) ) )		//戻り値へのﾎﾟｲﾝﾀ(未使用).
 	{
-		MessageBox(NULL, "hlsl(vs)読み込み失敗", "clsRay::InitShader", MB_OK );
+		MessageBox( NULL, "hlsl(vs)読み込み失敗", "clsRay::InitShader", MB_OK );
 		return E_FAIL;
 	}
 	SAFE_RELEASE( pErrors );
@@ -191,7 +197,7 @@ HRESULT clsRay::InitShader()
 			pCompiledShader->GetBufferSize(),
 			&m_pVertexLayout ) ) )//(out)頂点ｲﾝﾌﾟｯﾄﾚｲｱｳﾄ.
 	{
-		MessageBox(NULL, "頂点ｲﾝﾌﾟｯﾄﾚｲｱｳﾄ作成失敗", "clsRay::InitShader", MB_OK );
+		MessageBox( NULL, "頂点ｲﾝﾌﾟｯﾄﾚｲｱｳﾄ作成失敗", "clsRay::InitShader", MB_OK );
 		return E_FAIL;
 	}
 	SAFE_RELEASE( pCompiledShader );

@@ -69,7 +69,7 @@ public:
 
 
 	clsParticle(){
-		ZeroMemory( this, sizeof( clsParticle ) );//ｺﾝｽﾄﾗｸﾀ.
+		InitConstructor();
 	};	
 	//ｵｰﾊﾞｰﾛｰﾄﾞ関数.
 	clsParticle( int MaxParticle, D3DXVECTOR3 &vEmitPos );//ｺﾝｽﾄﾗｸﾀ.
@@ -86,7 +86,7 @@ public:
 	//ﾃｸｽﾁｬ読込&作成.
 	HRESULT InitTexture( char *pFileName );
 
-
+	void Release();
 
 	//描画(ﾚﾝﾀﾞﾘﾝｸﾞ)(※DX9MESH内とMain内で2つ存在するので注意).
 	void Render( D3DXMATRIX &mView, D3DXMATRIX &mProj,
@@ -127,6 +127,10 @@ public:
 	int GetMaxParticle(){ return m_iMaxParticle; }
 
 private:
+
+	//コンストラクタ用初期化( nullptrの割り当て ).
+	void InitConstructor();
+
 	//↓ﾓﾃﾞﾙの種類ごとに用意.
 	ID3D11VertexShader*		m_pVertexShader;	//頂点ｼｪｰﾀﾞ.
 	ID3D11InputLayout*		m_pVertexLayout;	//頂点ﾚｲｱｳﾄ.
@@ -139,8 +143,8 @@ private:
 	//↓ﾓﾃﾞﾙごとに用意.
 	ID3D11Buffer*			m_pVertexBuffer;	//頂点ﾊﾞｯﾌｧ.
 
-	ID3D11ShaderResourceView*	m_pTexture;		//ﾃｸｽﾁｬ.
 	ID3D11SamplerState*			m_pSampleLinear;//ﾃｸｽﾁｬのｻﾝﾌﾟﾗｰ:/ﾃｸｽﾁｬに各種ﾌｨﾙﾀをかける.
+	ID3D11ShaderResourceView*	m_pTexture;		//ﾃｸｽﾁｬ.
 
 	int				m_iMaxParticle;	//ﾊﾟｰﾃｨｸﾙ最大数.
 

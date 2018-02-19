@@ -55,6 +55,12 @@ const	  int iVOL_DEAD = 1000;
 
 
 
+//ﾓﾃﾞﾙの都合(前後向き).
+const float fMODEL_BACK_TURN = (float)M_PI;
+//アニメ速度.
+const double fANIM_SPD = 0.03125 / 2.0;
+const double fANIM_SPD_IDLE = fANIM_SPD / 2.0;
+
 
 //スタート地点.
 const D3DXVECTOR3 vSTART_POSITION = { 0.0f, 0.0f, 9.0f };
@@ -65,60 +71,80 @@ const int iMAX_HP = 10;
 
 
 //===== あたり判定 =====//.
-const float COL_PLAYER_H  = 2.0f;
-const float COL_PLAYER_RANGE  = 0.25f;
+const float fCOL_PLAYER_H  = 2.0f;
+const float fCOL_PLAYER_RANGE  = 0.25f;
 
 //===== Box =====//.
-const float COL_PLAYER_BOX_XZ = 0.5f / 2.0f;
-const float COL_PLAYER_BOX_Y = COL_PLAYER_H / 2.0f;
-const float COL_PLAYER_BOX_CENTER_Y = COL_PLAYER_H / 2.0f;
+const float fCOL_PLAYER_BOX_XZ = 0.5f / 2.0f;
+const float fCOL_PLAYER_BOX_Y = fCOL_PLAYER_H / 2.0f;
+const float fCOL_PLAYER_BOX_CENTER_Y = fCOL_PLAYER_H / 2.0f;
 
 //===== ﾌﾟﾚｲﾔｰの攻撃 =====//.
-const int	COL_PLAYER_KICK_THETA = 120;
+const int	iCOL_PLAYER_KICK_THETA = 120;
 //const float	COL_PLAYER_KICK_RANGE = 1.25f;
-const float	COL_PLAYER_KICK_RANGE = 2.0f;
+const float	fCOL_PLAYER_KICK_RANGE = 2.0f;
 //===== あたり判定 終わり =====//.
 
 
-const double fANIM_SPD = 0.03125 / 2.0;
+//減速.
+const float fLOW_SPD_CHANGE = 0.025f;
 
-
-
-
-
-//ﾓﾃﾞﾙの都合(前後向き).
-const float fMODEL_BACK_TURN = (float)M_PI;
-
+//ジャンプ開始.
+const float fJUMP_START_POWER = 0.2f;
 //ｼﾞｬﾝﾌﾟ上昇の上限時間.
-const int iJUNP_TIME_UP_TIME = 14;//jUpTime.
-
+const int iJUNP_TIME_UP_TIME = 14;
 //ジャンプ落下加速.
 const float fGRAVITY = 0.02f;//gravity.
+//最大落下速度.
+const float fDROP_DOWN_SPD_MAX = -0.2f;
 
 
 //最初のフレームに必要.
 float fLAND_PLAYER_ZERO = 0.0f;
 
 
+
+//かかと落とし.
+const float fJUMP_STK_PER_ENGY_S = 0.1875f;//Permission許可.
+const float fJUMP_STK_PER_ENGY_E = -0.0625f;//Permission許可.
+const float fJUMP_ATK_START_ENAGY = 0.15f;//初期上昇力.
+//加速度.
+const float fSPD_UP_POWER = 0.0625f;
+const float fJUMP_ATK_GRAVITY_SPN = 0.005f;			//上昇速度.
+const float fJUMP_ATK_GRAVITY_DOWN_START = 0.3625f;	//下降開始の速度.
+const float fJUMP_ATK_GRAVITY_DOWN_PLUS = 0.035f;	//下降加速度.
+
+
+
+//現在のアニメーションを終えたら( アニメNo.に掛ける{ 後ろのアニメになるほど遅れるので } ).
+const int iANIM_FIN_RATE = 3;//.
+//ごり押し( このアニメだけ残りが多い ).
+const int iEXCEPTION_ANIM_END_RATE = 2; //例外アニメのアニメーション終了時間のレート.
+
+//メイン以外.
+const int iTITLE_KICK_START_TIMER = 45;
+const int iTITLE_SPN_START_TIMER = 65;
+const float fTITLE_SPN_SPD = -(float)M_PI_4 / 8.0f;
+const float fOVER_INIT_ROT_Y = 0.75f;
+
 //エフェクト.
 const float fEFFECT_SPD_WAVE = 4.0f;
 const D3DXVECTOR3 vEFFECT_SCALE_WAVE = { 1.0f, 1.0f, 1.0f };
-
 const char cSTEP_EFFECT_MAX = 4;
-
-
 const float fEFFECT_KICK_UP_OFFSET = 1.0f;
 const float fEFFECT_SPD_KICK = 1.5f;
 const D3DXVECTOR3 vEFFECT_SCALE_KICK = { 0.1875f, 0.1875f, 0.1875f };
 const int iEFFECT_KICK_RAG = 15;
+const float fEFFECT_STEP_UP_OFFSET = 0.01f;//地面からの浮かし.
 
-//.
-const float fEFFECT_STEP_UP_OFFSET = 0.01f;
 
 clsPlayer::clsPlayer()
 {
 	m_dAnimSpeed = fANIM_SPD;
 	
+	m_pXInput = nullptr;
+	m_ppSe = nullptr;
+	m_pEffect = nullptr;
 }
 
 clsPlayer::~clsPlayer()
@@ -126,21 +152,35 @@ clsPlayer::~clsPlayer()
 	Rerease();
 }
 
-void clsPlayer::Create( HWND hWnd, ID3D11Device* pDevice11, ID3D11DeviceContext* pContext11 )
+void clsPlayer::Create( HWND hWnd, ID3D11Device* pDevice11, ID3D11DeviceContext* pContext11, clsXInput* pXinput )
 {
+	if( m_pXInput == nullptr ){
+		m_pXInput = pXinput;
+	}
+
 	SetSe( hWnd );
 	m_iHp = iMAX_HP;
 	Init();
-	m_pShadow = new clsShadow;
-	m_pShadow->Init( pDevice11, pContext11 );
+	if( m_pShadow == nullptr ){
+		m_pShadow = new clsShadow;
+		m_pShadow->Init( pDevice11, pContext11 );
+	}
 
-	m_pEffect = clsEffects::GetInstance();
+	if( m_pDevice == nullptr ) m_pDevice = pDevice11;
+	if( m_pContext == nullptr ) m_pContext = pContext11;
+
+
+	if( m_pEffect == nullptr ){
+		m_pEffect = clsEffects::GetInstance();
+	}
+
 
 }
 
 
 void clsPlayer::Init()
 {
+	m_dAnimSpeed = fANIM_SPD;
 	m_bDead = false;
 
 	m_bJump = false;
@@ -161,25 +201,23 @@ void clsPlayer::Init()
 
 	//あたり判定.
 	//本体.
-	ColState.fRange = COL_PLAYER_RANGE;
-	ColState.fHeight = COL_PLAYER_H;
+	ColState.fRange = fCOL_PLAYER_RANGE;
+	ColState.fHeight = fCOL_PLAYER_H;
 
 	//Box用.
-	ColState.vRangeHalf.x = ColState.vRangeHalf.z = COL_PLAYER_BOX_XZ;
-	ColState.vRangeHalf.y = COL_PLAYER_BOX_Y;
-	ColState.fCenterY = COL_PLAYER_BOX_CENTER_Y;
+	ColState.vRangeHalf.x = ColState.vRangeHalf.z = fCOL_PLAYER_BOX_XZ;
+	ColState.vRangeHalf.y = fCOL_PLAYER_BOX_Y;
+	ColState.fCenterY = fCOL_PLAYER_BOX_CENTER_Y;
 	ColState.fCenterX = 0.0f;
 
 	//Sub.
-	m_colSub.fRange = COL_PLAYER_KICK_RANGE;
-	m_colSub.fHeight = COL_PLAYER_H;
-	m_colSub.iSarchTheta = COL_PLAYER_KICK_THETA;
+	m_colSub.fRange = fCOL_PLAYER_KICK_RANGE;
+	m_colSub.fHeight = fCOL_PLAYER_H;
+	m_colSub.iSarchTheta = iCOL_PLAYER_KICK_THETA;
 
 	//ｱﾆﾒｰｼｮﾝ.
 	ChangeAnimMode( enANIM_IDLE );
 
-	m_iEffTimer = 0;
-	m_bEffTimer = false;
 }
 //ステージスタート.
 void clsPlayer::Spawn()
@@ -201,61 +239,55 @@ void clsPlayer::ReSpawn()
 
 void clsPlayer::Rerease()
 {
-	if( m_pShadow != NULL ){
+	if( m_pShadow != nullptr ){
 		delete m_pShadow;
-		m_pShadow = NULL;
+		m_pShadow = nullptr;
 	}
 
+	m_pEffect = nullptr;
 
-	if( m_ppSe != NULL ){
+	if( m_ppSe != nullptr ){
 		for( int i=0; i<enPS_MAX; i++ ){
 			delete m_ppSe[i];
-			m_ppSe[i] = NULL;
+			m_ppSe[i] = nullptr;
 		}
 		delete[]m_ppSe;
-		m_ppSe = NULL;
+		m_ppSe = nullptr;
 	}
 
-	if( m_pModel != NULL ){
+	if( m_pModel != nullptr ){
 		delete m_pModel;
-		m_pModel = NULL;
+		m_pModel = nullptr;
 	}
 
-	if( m_pXInput != NULL ){
-		m_pXInput = NULL;
-	}
+	m_pXInput = nullptr;
 }
 //============================================================
 //	入力.
 //============================================================
-void clsPlayer::Input( clsXInput* const xInput )
+void clsPlayer::Input()
 {
 	if( m_enMove != enPM_ATK	 &&
 		m_enMove != enPM_JUM_ATK &&
 		m_enMove != enPM_DEAD )
 	{
 		//移動.
-		Input_Move( xInput );
+		Input_Walk();
 		//ｱｸｼｮﾝ.
-		Input_Action( xInput );
-	}
-
-	if( m_pXInput == NULL ){
-		m_pXInput = xInput;
+		Input_Action();
 	}
 
 	//デバッグ用.
 	if( GetAsyncKeyState( VK_SPACE ) & 0x1 ){
 		m_iHp = 0;
 	}
-
-
 }
 //------------------------------.
 //	入力（移動）.
 //------------------------------.
-void clsPlayer::Input_Move( clsXInput* const xInput )
+void clsPlayer::Input_Walk()
 {
+	if( m_pXInput == nullptr ) return;
 	//入力されているか.
 	bool bInputMovePlus = true;
 	bool bInputMoveStick = true;
@@ -267,31 +299,31 @@ void clsPlayer::Input_Move( clsXInput* const xInput )
 	m_enMove = enPM_RUN;
 	m_bJumpSpdDown = false;
 	//上.
-	if( InputUp( xInput ) ){
+	if( InputUp() ){
 		closButnTarYaw = fMODEL_BACK_TURN + 0.0f;
-		if( InputRight( xInput ) ){
+		if( InputRight() ){
 			closButnTarYaw += (float)M_PI_4;
 		}
-		else if( InputLeft( xInput ) ){
+		else if( InputLeft() ){
 			closButnTarYaw -= (float)M_PI_4;
 		}
 	}
 	//下.
-	else if( InputDown( xInput ) ){
+	else if( InputDown() ){
 		closButnTarYaw = fMODEL_BACK_TURN + (float)M_PI;
-		if( InputRight( xInput ) ){
+		if( InputRight() ){
 			closButnTarYaw -= (float)M_PI_4;
 		}
-		else if( InputLeft( xInput ) ){
+		else if( InputLeft() ){
 			closButnTarYaw += (float)M_PI_4;
 		}
 	}
 	//右.
-	else if( InputRight( xInput ) ){
+	else if( InputRight() ){
 		closButnTarYaw = fMODEL_BACK_TURN + (float)M_PI_2;
 	}
 	//左.
-	else if( InputLeft( xInput ) ){
+	else if( InputLeft() ){
 		closButnTarYaw = fMODEL_BACK_TURN + (float)( M_PI + M_PI_2 );
 	}
 	//何も押していない.
@@ -320,7 +352,7 @@ void clsPlayer::Input_Move( clsXInput* const xInput )
 	}
 
 	//ｽﾃｨｯｸ.
-	if( xInput->GetLStickSlope() != clsXInput::enSS_NOTHING ){
+	if( m_pXInput->GetLStickSlope() != clsXInput::enSS_NOTHING ){
 		m_enMove = enPM_RUN;
 		m_bJumpSpdDown = false;
 		m_enDir = enDirection_Foward;
@@ -328,7 +360,7 @@ void clsPlayer::Input_Move( clsXInput* const xInput )
 		//ｽﾃｨｯｸ方向逆以外.
 		if( ThetaCheck( m_vRot.y, m_fYawTarget, 270 ) ){
 			//目標の方向を変える.
-			m_fYawTarget = xInput->GetLStickTheta();
+			m_fYawTarget = m_pXInput->GetLStickTheta();
 			ThetaOverGuard( m_fYawTarget );
 		}
 		//ｽﾃｨｯｸ逆入力.
@@ -347,7 +379,7 @@ void clsPlayer::Input_Move( clsXInput* const xInput )
 			m_fSpd = 0.0f;
 			//アニメーション(走り終わる).
 			if( m_bRunning ){
-				if( m_enAnimNo == enANIM_ATK ){}
+				if( m_enAnimNo == enANIM_ATK_ACT ){}
 				else if( m_enAnimNo == enANIM_RUNNING_L ){
 					ChangeAnimMode( enANIM_RUN_END_L );
 				}
@@ -371,7 +403,7 @@ void clsPlayer::Input_Move( clsXInput* const xInput )
 			//走り始め.
 			if( !m_bRunning ){
 				//攻撃中は除く.
-				if( m_enAnimNo != enANIM_ATK ){
+				if( m_enAnimNo != enANIM_ATK_ACT ){
 					ChangeAnimMode( enANIM_RUN_START );
 				}
 			}
@@ -384,18 +416,19 @@ void clsPlayer::Input_Move( clsXInput* const xInput )
 //------------------------------.
 //	入力（ｱｸｼｮﾝ）.
 //------------------------------.
-void clsPlayer::Input_Action( clsXInput* const xInput )
+void clsPlayer::Input_Action()
 {
 	//ｼﾞｬﾝﾌﾟ.
-	Input_Action_Jump( xInput );
+	Input_ActionJump();
 	//攻撃.
-	Input_Action_Atk( xInput );
+	Input_ActionAtk();
 }
 //	入力｛ ｱｸｼｮﾝ （ｼﾞｬﾝﾌﾟ）｝.
-void clsPlayer::Input_Action_Jump( clsXInput* const xInput )
+void clsPlayer::Input_ActionJump()
 {
+	if( m_pXInput == nullptr ) return;
 	//ｼﾞｬﾝﾌﾟ開始.
-	if( xInput->IsPressEnter( XINPUT_A ) ||
+	if( m_pXInput->IsPressEnter( XINPUT_A ) ||
 		GetAsyncKeyState( 'Z' ) & 0x1 )
 	{
 		if( !m_bJump ){
@@ -405,21 +438,17 @@ void clsPlayer::Input_Action_Jump( clsXInput* const xInput )
 
 	//ｼﾞｬﾝﾌﾟ上昇中断.
 	if( m_bJump ){
-		if( xInput->IsPressExit( XINPUT_A ) ){
+		if( m_pXInput->IsPressExit( XINPUT_A ) ){
 			m_iJumpTimer = iJUNP_TIME_UP_TIME;
 			ChangeAnimMode( enANIM_JUMP_U_TURN );
 		}
 	}
 }
 //	入力｛ ｱｸｼｮﾝ （攻撃）｝.
-void clsPlayer::Input_Action_Atk( clsXInput* const xInput )
+void clsPlayer::Input_ActionAtk()
 {
-	const float JUMP_STK_PER_ENGY_S = 0.1875f;//Permission許可.//JumpAtkPermEnegyS.
-	const float JUMP_STK_PER_ENGY_E = -0.0625f;//Permission許可.//JumpAtkPermEnegyE.
-
-	const float JUMP_ATK_START_ENAGY = 0.15f;//初期上昇力.//JumpAtkStartEneagyB.
-
-	if( xInput->IsPressEnter( XINPUT_X ) ||
+	if( m_pXInput == nullptr ) return;
+	if( m_pXInput->IsPressEnter( XINPUT_X ) ||
 		GetAsyncKeyState( 'X' ) )
 	{
 		//ｼﾞｬﾝﾌﾟ攻撃.
@@ -427,12 +456,12 @@ void clsPlayer::Input_Action_Atk( clsXInput* const xInput )
 			//ｼﾞｬﾝﾌﾟの頂点?.
 			if( m_bJumpAtkTopFlg ){
 				//頂点近くを判定するif文.
-				if( m_fJumpEnagy < JUMP_STK_PER_ENGY_S &&
-					m_fJumpEnagy > JUMP_STK_PER_ENGY_E )
+				if( m_fJumpEnagy < fJUMP_STK_PER_ENGY_S &&
+					m_fJumpEnagy > fJUMP_STK_PER_ENGY_E )
 				{
 					m_enMove = enPM_JUM_ATK;
 					m_bLanding = false;//陸地か否か.
-					m_fJumpEnagy = JUMP_ATK_START_ENAGY;
+					m_fJumpEnagy = fJUMP_ATK_START_ENAGY;
 					ChangeAnimMode( enANIM_JUMP_ATK_SPN );
 					m_bAtkImpact = true;
 					PlaySe( enPS_JUMP_ATK_SPN );
@@ -449,17 +478,9 @@ void clsPlayer::Input_Action_Atk( clsXInput* const xInput )
 //============================================================
 //	自動挙動.
 //============================================================
-void clsPlayer::Move( float fEarZ )
+void clsPlayer::Update( float fEarZ )
 {
-	//キックエフェクト再生.
-	if( m_bEffTimer ){
-		m_iEffTimer ++;
-		if( m_iEffTimer >= iEFFECT_KICK_RAG ){
-			m_iEffTimer = 0;
-			m_bEffTimer = false;
-			PlayKickEff();
-		}
-	}
+	if( m_pEffect == nullptr || m_pShadow == nullptr ) return;
 
 	//キックエフェクトがついてくる.
 	if( m_pEffect->PlayCheck( m_ehKick ) ){
@@ -474,8 +495,8 @@ void clsPlayer::Move( float fEarZ )
 	//かかと落とし用.
 	m_fOldY = m_vPos.y;
 
-	Move_Move();
-	Move_Action();
+	MoveWalk();
+	MoveAction();
 
 	SetSpeed();
 	UpdateDir();
@@ -492,10 +513,8 @@ void clsPlayer::Move( float fEarZ )
 //------------------------------.
 //	自動挙動（移動）.
 //------------------------------.
-void clsPlayer::Move_Move()
+void clsPlayer::MoveWalk()
 {
-	//加速度.
-	const float SPD_UP_POWER = 0.0625f;//highSpdChange
 
 	//北向きﾌﾗｸﾞ(ｷｬﾗが北と南どちらを向いてるか).
 	if( ThetaCheck( (float)M_PI, m_vRot.y, 90 ) ){
@@ -517,7 +536,7 @@ void clsPlayer::Move_Move()
 			}
 			//加速.
 			if( m_fSpd == 0.0f )	m_fSpd = 0.1f;
-			else m_fSpd += SPD_UP_POWER;
+			else m_fSpd += fSPD_UP_POWER;
 			if( m_fSpd > TarSpd )	m_fSpd = TarSpd;
 		}
 	}
@@ -559,20 +578,18 @@ void clsPlayer::Move_Move()
 //------------------------------.
 //	自動挙動（ｱｸｼｮﾝ）.
 //------------------------------.
-void clsPlayer::Move_Action()
+void clsPlayer::MoveAction()
 {
 	//ｼﾞｬﾝﾌﾟ.
 	if( m_enMove != enPM_JUM_ATK ){
-		Move_Action_Jump();
+		MoveActionJump();
 	}
 	//攻撃.
-	Move_Action_Atk();
+	MoveActionAtk();
 }
 //	自動挙動｛ ｱｸｼｮﾝ （ｼﾞｬﾝﾌﾟ）｝.
-void clsPlayer::Move_Action_Jump()
-{
-	const float DROP_DOWN_SPD_MAX = -0.2f;//jFallSpdMax.
-	
+void clsPlayer::MoveActionJump()
+{	
 	//普通ｼﾞｬﾝﾌﾟ行動途中.
 	if( m_bJump ){
 		m_iJumpTimer ++;
@@ -584,8 +601,8 @@ void clsPlayer::Move_Action_Jump()
 			ChangeAnimMode( enANIM_JUMP_U_TURN );
 		}
 		//落下速くなりすぎない.
-		if( m_fJumpEnagy < DROP_DOWN_SPD_MAX ){
-			m_fJumpEnagy = DROP_DOWN_SPD_MAX;
+		if( m_fJumpEnagy < fDROP_DOWN_SPD_MAX ){
+			m_fJumpEnagy = fDROP_DOWN_SPD_MAX;
 		}
 		//落下.
 		m_vPos.y += m_fJumpEnagy;
@@ -606,40 +623,32 @@ void clsPlayer::Move_Action_Jump()
 	}
 }
 //	自動挙動｛ ｱｸｼｮﾝ （攻撃）｝.
-void clsPlayer::Move_Action_Atk()
+void clsPlayer::MoveActionAtk()
 {
+	if( m_pXInput == nullptr ) return;
+
 	//減速関数.
 	Deceleration();
-
 
 	//通常攻撃.
 	if( m_enMove == enPM_ATK ){
 //		//攻撃終了（アニメ終了時に引っ越し）.
 	}
-
 	//ｼﾞｬﾝﾌﾟ攻撃.
 	else if( m_enMove == enPM_JUM_ATK ){
-		const int JUMP_ATK_END_TIME = 32;//jumpAtkEndTimer.
-		const float JUMP_ATK_GRAVITY_SPN = 0.005f;//0.03025f.//jAtk_gravitySpnB.
-		const float JUMP_ATK_GRAVITY_DOWN_START = 0.3625f;//0.03025f.//jAtk_gravityDownStartB.
-		const float JUMP_ATK_GRAVITY_DOWN_PLUS = 0.035f;//0.03025f.//jAtk_gravityDownB.
-
-		const float JumpAtkDropDown = 0.08125f;
-
-
 		//空中機動.
 		if( !m_bLanding ){
 			//上昇中.
 			if( m_fJumpEnagy > 0.0f ){
-				m_fJumpEnagy -= JUMP_ATK_GRAVITY_SPN;
+				m_fJumpEnagy -= fJUMP_ATK_GRAVITY_SPN;
 				//降下に切り替わる瞬間.
 				if( m_fJumpEnagy <= 0.0f ){
-					m_fJumpEnagy = -JUMP_ATK_GRAVITY_DOWN_START;
+					m_fJumpEnagy = -fJUMP_ATK_GRAVITY_DOWN_START;
 					ChangeAnimMode( enANIM_JUMP_ATK_FALL );
 				}
 			}
 			else{
-				m_fJumpEnagy -= JUMP_ATK_GRAVITY_DOWN_PLUS;
+				m_fJumpEnagy -= fJUMP_ATK_GRAVITY_DOWN_PLUS;
 			}
 
 			m_vPos.y += m_fJumpEnagy;
@@ -666,6 +675,7 @@ void clsPlayer::Move_Action_Atk()
 //============================================================
 void clsPlayer::Dead()
 {
+	if( m_pXInput == nullptr ) return;
 	m_enMove = enPM_DEAD;
 	ChangeAnimMode( enANIM_DEAD );
 	m_bDead = true;
@@ -684,8 +694,7 @@ void clsPlayer::Dead()
 //============================================================
 void clsPlayer::Deceleration()
 {
-	const float lowSpdChange = 0.025f;
-	m_fSpd -= lowSpdChange;
+	m_fSpd -= fLOW_SPD_CHANGE;
 	if( m_fSpd < 0.0f )	m_fSpd = 0.0f;
 }
 
@@ -695,6 +704,7 @@ void clsPlayer::Deceleration()
 //============================================================
 void clsPlayer::UpdateDir()
 {
+	if( m_pModel == nullptr ) return;
 	m_pModel->m_enDir = m_enDir;
 }
 
@@ -718,12 +728,10 @@ void clsPlayer::UpdateColState()
 //============================================================
 void clsPlayer::SetJump( bool bDropout )
 {
-	const float JUMP_POWER = 0.2f;
-
 	m_bJump = true;
 	//まっとうなｼﾞｬﾝﾌﾟ.
 	if( !bDropout ){
-		m_fJumpEnagy = JUMP_POWER;
+		m_fJumpEnagy = fJUMP_START_POWER;
 		m_iJumpTimer = 0;
 		m_bJumpAtkTopFlg = true;
 		ChangeAnimMode( enANIM_JUMP_START );
@@ -755,7 +763,8 @@ void clsPlayer::Animation()
 		m_enAnimNo == enANIM_JUMP_START		||
 		m_enAnimNo == enANIM_JUMP_U_TURN	||
 		m_enAnimNo == enANIM_JUMP_STMP		||
-		m_enAnimNo == enANIM_ATK			||
+		m_enAnimNo == enANIM_ATK_ACT		||
+		m_enAnimNo == enANIM_ATK_MOVIE		||
 		m_enAnimNo == enANIM_JUMP_ATK_SPN	||
 		m_enAnimNo == enANIM_JUMP_ATK_STMP	||
 		m_enAnimNo == enANIM_JUMP_ATK_STND	||
@@ -766,22 +775,16 @@ void clsPlayer::Animation()
 		m_dAnimTimer += m_pModel->GetAnimSpeed();
 	}
 
-
-	//現在のアニメーションを終えたら( アニメNo.に掛ける{ 後ろのアニメになるほど遅れるので } ).
-	const int iRATE = 3;//.
-
 	bool bAnimEndFlg = false;
 
 	//アニメーション終わった?.
-	//ごり押し( このアニメだけ残りが多い ).
-	const int iEXCEPTION_ANIM_END_RATE = 4; //例外アニメのアニメーション終了時間のレート.
 	if( m_enAnimNo == enANIM_RUNNING_R ){
-		if( m_pModel->GetAnimPeriod( m_enAnimNo ) - ( dANIM_ONE_FRAME_OVER_SOLUTION * (double)( m_enAnimNo * m_enAnimNo / iRATE * iEXCEPTION_ANIM_END_RATE ) ) <= m_dAnimTimer ){
+		if( m_pModel->GetAnimPeriod( m_enAnimNo ) - ( dANIM_ONE_FRAME_OVER_SOLUTION * (double)( m_enAnimNo * m_enAnimNo / iANIM_FIN_RATE * iEXCEPTION_ANIM_END_RATE ) ) <= m_dAnimTimer ){
 			bAnimEndFlg = true;
 		}
 	}
 	else{
-		if( m_pModel->GetAnimPeriod( m_enAnimNo ) - ( dANIM_ONE_FRAME_OVER_SOLUTION * (double)( m_enAnimNo * m_enAnimNo / iRATE ) ) <= m_dAnimTimer ){
+		if( m_pModel->GetAnimPeriod( m_enAnimNo ) - ( dANIM_ONE_FRAME_OVER_SOLUTION * (double)( m_enAnimNo * m_enAnimNo / iANIM_FIN_RATE ) ) <= m_dAnimTimer ){
 			bAnimEndFlg = true;
 		}
 	}
@@ -823,11 +826,16 @@ void clsPlayer::Animation()
 			ChangeAnimMode( enANIM_JUMP_FALL );
 			break;
 		case enANIM_JUMP_STMP://着地.
-				ChangeAnimMode( enANIM_IDLE );
+			ChangeAnimMode( enANIM_IDLE );
 			break;
 
 		//攻撃.
-		case enANIM_ATK:
+		case enANIM_ATK_MOVIE:
+			PlaySe( enPS_ATK );
+			PlayKickEff();
+			ChangeAnimMode( enANIM_ATK_ACT );
+			break;
+		case enANIM_ATK_ACT:
 			//攻撃終了.
 			m_bRunning = false;
 			m_enMove = enPM_IDLE;
@@ -878,13 +886,16 @@ void clsPlayer::ChangeAnimMode( enAnimation anim )
 	//飛ばさない.
 	if( anim == enANIM_DEAD ||
 		anim == enANIM_LOSE)
-	{}
+	{
+	}
 	//飛ばす.
 	else if( m_bDead )
 	{
 		return;
 	}
 
+	if( anim == enANIM_IDLE )	m_dAnimSpeed = fANIM_SPD_IDLE;
+	else						m_dAnimSpeed = fANIM_SPD;
 	m_dAnimTimer = 0.0;
 	m_enAnimNo = anim;
 	ChangeAnimSet( m_enAnimNo );//アニメセット.
@@ -896,6 +907,7 @@ void clsPlayer::ChangeAnimMode( enAnimation anim )
 //効果音再生.
 void clsPlayer::PlaySe( enPlayerSound enSe )
 {
+	if( m_ppSe == nullptr ) return;
 	//再生する距離なら.
 	int vol = ChangeVolumeDistance( m_fEarZ, m_vPos.z );
 	if( vol ){
@@ -910,9 +922,9 @@ void clsPlayer::PlaySe( enPlayerSound enSe )
 	}
 }
 
-//コンストラクタ内にいます.
 void clsPlayer::SetSe( HWND hWnd )
 {
+	if( m_ppSe != nullptr ) return;
 	clsSound::SOUND_DATA tmpSData[enPS_MAX] =
 	{
 		{ ALIAS_NAME_RUN,			FILE_PATH_RUN,			iVOL_RUN			},
@@ -943,11 +955,13 @@ void clsPlayer::SetSe( HWND hWnd )
 
 //背の高さを返す（天井のあたり判定用）.
 float clsPlayer::GetHeight(){
-	return COL_PLAYER_H;
+	return fCOL_PLAYER_H;
 }
 
 //天井に頭を打ったら.
-void clsPlayer::HeadHitToCeiling(){
+void clsPlayer::HeadHitToCeiling()
+{
+	if( m_pXInput == nullptr ) return;
 	if( m_fJumpEnagy > 0.0f){
 		m_fJumpEnagy = 0.0f;
 	}
@@ -961,14 +975,17 @@ void clsPlayer::HeadHitToCeiling(){
 }
 
 //通常攻撃開始.
-void clsPlayer::Kick()
+void clsPlayer::Kick( bool bMovie )
 {
 	m_enMove = enPM_ATK;
-	ChangeAnimMode( enANIM_ATK );
+	if( bMovie ) ChangeAnimMode( enANIM_ATK_MOVIE );
+	else{
+		ChangeAnimMode( enANIM_ATK_ACT );
+		PlaySe( enPS_ATK );
+		PlayKickEff();
+	}
 	m_bAtkImpact = true;
-	PlaySe( enPS_ATK );
 
-	m_bEffTimer = true;
 }
 
 
@@ -989,6 +1006,7 @@ bool clsPlayer::GetJumpAtkImpact()
 //衝撃波エフェクト.
 void clsPlayer::PlayWaveEff()
 {
+	if( m_pEffect == nullptr ) return;
 	if( !m_pEffect->PlayCheck( m_ehWave ) ){
 		D3DXVECTOR3 vEffPos = m_vPos;
 		vEffPos.y += fEFFECT_STEP_UP_OFFSET;
@@ -1005,6 +1023,7 @@ void clsPlayer::PlayWaveEff()
 //足跡エフェクト再生.
 void clsPlayer::PlayStepEff()
 {
+	if( m_pEffect == nullptr ) return;
 	for( char i=0; i<iEFFECT_PLAYER_STEP_MAX; i++ ){
 		if( !m_pEffect->PlayCheck( m_EffStep[i].ehStep ) ){
 			m_EffStep[i].vPos = m_vPos;
@@ -1022,6 +1041,7 @@ void clsPlayer::PlayStepEff()
 //キック再生.
 void clsPlayer::PlayKickEff()
 {
+	if( m_pEffect == nullptr ) return;
 	//キックエフェクト.
 //	if( !m_pEffect->PlayCheck( m_ehKick ) ){
 		D3DXVECTOR3 vEffPos = m_vPos;
@@ -1042,6 +1062,7 @@ void clsPlayer::PlayKickEff()
 //メイン以外.
 void clsPlayer::InitTitleScene()
 {
+	if( m_pShadow == nullptr ) return;
 	Spawn();
 	ReSpawn();
 	m_pShadow->SetShadow( m_vPos, m_fFloorY );
@@ -1053,33 +1074,28 @@ void clsPlayer::InitTitleScene()
 
 void clsPlayer::MoveTitleScene()
 {
-	const int iTITLE_KICK_START_TIMER = 60;
-	const float fPLAYER_SPN_SPD = -(float)M_PI_4 / 8.0f;
-	const D3DXVECTOR3 vINIT_POS = m_vPos;
-
 	m_iTitleTimer ++;
 	//アルビアの動き.
 	if( m_iTitleTimer == iTITLE_KICK_START_TIMER ){
 		//キック.
-		Kick();
+		Kick( true );
 	}
-	else if( m_iTitleTimer > iTITLE_KICK_START_TIMER ){
+	else if( m_iTitleTimer > iTITLE_SPN_START_TIMER ){
 		//クルリと回る.
 		//真北を向いている時は無視.
 		if( !m_bTitleSpnFlg ){
-			m_fYawTarget += fPLAYER_SPN_SPD;
+			m_fYawTarget += fTITLE_SPN_SPD;
 			//向こうを向いたら.
 			if( m_vRot.y < (float)M_PI &&
 				m_vRot.y != 0.0f )
 			{
 				//回転が止まる.
-				m_vRot.y =  (float)M_PI;
+				m_vRot.y = (float)M_PI;
 				m_bTitleSpnFlg = true;
 			}
 		}
 	}
-	Move( m_vPos.z );
-	m_vPos = vINIT_POS;
+	Update( m_vPos.z );
 }
 
 
@@ -1088,7 +1104,6 @@ void clsPlayer::MoveTitleScene()
 
 void clsPlayer::InitOverScene()
 {
-	const float fOVER_INIT_ROT_Y = 0.75f;
 	m_vPos = D3DXVECTOR3( 0.0f, 0.0f, 0.0f );
 	m_vRot.y = fOVER_INIT_ROT_Y;
 	//倒れているモーション.
@@ -1103,7 +1118,7 @@ void clsPlayer::MoveOverScene()
 
 void clsPlayer::MoveResultScene()
 {
-	Move( m_vPos.z );
+	Update( m_vPos.z );
 	Animation();
 	if( m_enAnimNo == enANIM_RUNNING_L ){
 		m_enAnimNo = enANIM_RUN_END_L;
@@ -1141,48 +1156,40 @@ void clsPlayer::MoveEndScene( float fRuRange )
 
 
 //移動補助.
-bool clsPlayer::InputUp( clsXInput* const xInput )
+bool clsPlayer::InputUp  ()
 {
-	bool bFlg = false;
-	if( xInput->IsPressStay( XINPUT_UP ) ) bFlg = true;
+	if( m_pXInput == nullptr ) return false;
 
-	if( bFlg || GetAsyncKeyState( VK_UP ) & 0x8000 ){
-		return true;
-	}
+	if( m_pXInput->IsPressStay( XINPUT_UP ) ) return true;
+	if( GetAsyncKeyState( VK_UP ) & 0x8000 ) return true;
+
 	return false;
 }
-
-//移動補助.
-bool clsPlayer::InputDown( clsXInput* const xInput )
+bool clsPlayer::InputDown()
 {
-	bool bFlg = false;
-	if( xInput->IsPressStay( XINPUT_DOWN ) ) bFlg = true;
+	if( m_pXInput == nullptr ) return false;
 
-	if( bFlg || GetAsyncKeyState( VK_DOWN ) & 0x8000 ){
-		return true;
-	}
+	if( m_pXInput->IsPressStay( XINPUT_DOWN ) ) return true;
+	if( GetAsyncKeyState( VK_DOWN ) & 0x8000 ) return true;
+
 	return false;
 }
-//移動補助.
-bool clsPlayer::InputLeft( clsXInput* const xInput )
+bool clsPlayer::InputLeft()
 {
-	bool bFlg = false;
-	if( xInput->IsPressStay( XINPUT_LEFT ) ) bFlg = true;
+	if( m_pXInput == nullptr ) return false;
 
-	if( bFlg || GetAsyncKeyState( VK_LEFT ) & 0x8000 ){
-		return true;
-	}
+	if( m_pXInput->IsPressStay( XINPUT_LEFT ) ) return true;
+	if( GetAsyncKeyState( VK_LEFT ) & 0x8000 ) return true;
+
 	return false;
 }
-//移動補助.
-bool clsPlayer::InputRight( clsXInput* const xInput )
+bool clsPlayer::InputRight()
 {
-	bool bFlg = false;
-	if( xInput->IsPressStay( XINPUT_RIGHT ) ) bFlg = true;
+	if( m_pXInput == nullptr ) return false;
 
-	if( bFlg || GetAsyncKeyState( VK_RIGHT ) & 0x8000 ){
-		return true;
-	}
+	if( m_pXInput->IsPressStay( XINPUT_RIGHT ) ) return true;
+	if( GetAsyncKeyState( VK_RIGHT ) & 0x8000 ) return true;
+
 	return false;
 }
 

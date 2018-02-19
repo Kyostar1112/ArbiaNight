@@ -11,9 +11,9 @@ const	  int iVOL = 1000;
 
 
 //タイマーの数.
-const char cTIMEER_NUM = 3;
+const char cTIMEER_NUM = cTIMER_GROUP_TIMER_NUM;
 //コロンの数.
-const char cCOLON_NUM = cTIMEER_NUM - 1;
+const char cCOLON_NUM = cTIMER_GROUP_COLON_NUM;
 //数字の幅高さ.
 const float fNUM_DISP = 64.0f;
 //コロンの幅高さ.
@@ -31,36 +31,36 @@ const int iTIMER_NUM_MAX = 59;
 clsTimerGrp::clsTimerGrp()
 {
 	for( char i=0; i<cTIMEER_NUM; i++ ){
-		m_Timer[i] = NULL;
+		m_Timer[i] = nullptr;
 	}
 	for( char i=0; i<cCOLON_NUM; i++ ){
-		m_Colon[i] = NULL;
+		m_Colon[i] = nullptr;
 	}
-	m_pSe = NULL;
+	m_pSe = nullptr;
 }
 
 clsTimerGrp::~clsTimerGrp()
 {
-	if( m_pSe != NULL ){
+	if( m_pSe != nullptr ){
 		m_pSe->Stop();
 		m_pSe->Close();
 		delete m_pSe;
-		m_pSe = NULL;
+		m_pSe = nullptr;
 	}
 
-	if( m_Colon != NULL ){
+	if( m_Colon != nullptr ){
 		for( char i=0; i<cCOLON_NUM; i++ ){
-			if( m_Colon[i] != NULL ){
+			if( m_Colon[i] != nullptr ){
 				delete m_Colon[i];
-				m_Colon[i] = NULL;
+				m_Colon[i] = nullptr;
 			}
 		}
 	}
-	if( m_Timer != NULL ){
+	if( m_Timer != nullptr ){
 		for( char i=0; i<cTIMEER_NUM; i++ ){
-			if( m_Timer[i] != NULL ){
+			if( m_Timer[i] != nullptr ){
 				delete m_Timer[i];
-				m_Timer[i] = NULL;
+				m_Timer[i] = nullptr;
 			}
 		}
 	}
@@ -77,11 +77,13 @@ void clsTimerGrp::Create( HWND hWnd, ID3D11Device* pDevice11, ID3D11DeviceContex
 	}
 	for( char i=0; i<cCOLON_NUM; i++ ){
 		m_Colon[i] = new clsSprite2D;
-		m_Colon[i]->Create( pDevice11, pContext11, FILE_PATH_SCOLON );
+		m_Colon[i]->Init( pDevice11, pContext11, FILE_PATH_SCOLON );
 		m_Colon[i]->SetSs(
 			m_Colon[i]->GetSs().Base.w,
 			m_Colon[i]->GetSs().Base.h,
 			fCOLON_DISP, fCOLON_DISP );
+
+		m_Colon[i]->UpDateSpriteSs();
 	}
 
 	//効果音.
@@ -146,7 +148,7 @@ void clsTimerGrp::AddPosY( float fPos )
 }
 
 
-void clsTimerGrp::Move()
+void clsTimerGrp::Update()
 {
 	//カウント.
 	if( !m_bRimitFlg && !m_bStop ){
@@ -174,7 +176,7 @@ void clsTimerGrp::Move()
 				}
 			}
 		}
-		m_Timer[i]->Move();
+		m_Timer[i]->Update();
 	}
 }
 

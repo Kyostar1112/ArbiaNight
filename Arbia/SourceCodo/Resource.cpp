@@ -2,11 +2,12 @@
 
 clsResource::clsResource()
 {
-	m_hWnd = NULL;
-	m_pDevice11 = NULL;
-	m_pCotext11 = NULL;
-	m_ppStaticModels = NULL;
-	ZeroMemory( m_FilePath,sizeof( m_FilePath ) );
+	m_hWnd = nullptr;
+	m_pDevice11 = nullptr;
+	m_pCotext11 = nullptr;
+	m_ppStaticModels = nullptr;
+	m_ppSkinModels = nullptr;
+	ZeroMemory( m_FilePath, sizeof( m_FilePath ) );
 }
 
 clsResource::~clsResource()
@@ -20,18 +21,18 @@ clsResource::~clsResource()
 	//½·ÝÒ¯¼­‚ÌÎß²ÝÀ—Ìˆæ‚ð‰ð•ú.
 	if( m_ppSkinModels ){
 		delete[] m_ppSkinModels;
-		m_ppSkinModels = NULL;
+		m_ppSkinModels = nullptr;
 	}
 	//½ÀÃ¨¯¸Ò¯¼­‚ÌÎß²ÝÀ—Ìˆæ‚ð‰ð•ú.
 	if( m_ppStaticModels ){
 		delete[] m_ppStaticModels;
-		m_ppStaticModels = NULL;
+		m_ppStaticModels = nullptr;
 	}
 
 
-	m_pCotext11 = NULL;
-	m_pDevice11 = NULL;
-	m_hWnd = NULL;
+	m_pCotext11 = nullptr;
+	m_pDevice11 = nullptr;
+	m_hWnd = nullptr;
 }
 
 
@@ -48,7 +49,7 @@ HRESULT clsResource::InitStaticModel( HWND hWnd,
 	//½ÀÃ¨¯¸Ò¯¼­‚ÌÎß²ÝÀ—Ìˆæ‚ðŠm•Û.
 	m_ppStaticModels = new clsDX9Mesh*[ enST_MODEL_MAX ];
 	for( int i=0; i<enST_MODEL_MAX; i++ ){
-		m_ppStaticModels[i] = NULL;
+		m_ppStaticModels[i] = nullptr;
 	}
 
 	return S_OK;
@@ -63,7 +64,7 @@ HRESULT clsResource::InitSkinModel( HWND hWnd,
 	//½·ÝÒ¯¼­‚ÌÎß²ÝÀ—Ìˆæ‚ðŠm•Û.
 	m_ppSkinModels = new clsD3DXSKINMESH*[ enSK_MODEL_MAX ];
 	for( int i=0; i<enSK_MODEL_MAX; i++ ){
-		m_ppSkinModels[i] = NULL;
+		m_ppSkinModels[i] = nullptr;
 	}
 
 	return S_OK;
@@ -83,7 +84,7 @@ HRESULT clsResource::CreateStaticModel(
 		return E_FAIL;
 	}
 	//Šù‚ÉÃÞ°À‚ª‚ ‚é‚©.
-	if( m_ppStaticModels[ enModel ] != NULL ){
+	if( m_ppStaticModels[ enModel ] != nullptr ){
 		return E_FAIL;
 	}
 
@@ -104,7 +105,7 @@ HRESULT clsResource::CreateSkinModel(
 	}
 
 	//Šù‚ÉÃÞ°À‚ª‚ ‚é‚©.
-	if ( m_ppSkinModels[ enModel ] != NULL ){
+	if ( m_ppSkinModels[ enModel ] != nullptr ){
 		return E_FAIL;
 	}
 
@@ -127,12 +128,12 @@ HRESULT clsResource::ReleaseStaticModel( enStaticModel enModel )
 		return E_FAIL;
 	}
 	//Šù‚ÉÃÞ°À‚ª‚ ‚é‚©.
-	if( m_ppStaticModels[ enModel ] == NULL ){
+	if( m_ppStaticModels[ enModel ] == nullptr ){
 		return E_FAIL;
 	}
 
 	delete m_ppStaticModels[ enModel ];
-	m_ppStaticModels[ enModel ] = NULL;
+	m_ppStaticModels[ enModel ] = nullptr;
 
 	return S_OK;
 }
@@ -144,12 +145,12 @@ HRESULT clsResource::ReleaseSkinModel( enSkinModel enModel )
 		return E_FAIL;
 	}
 	//Šù‚ÉÃÞ°À‚ª‚ ‚é‚©.
-	if( m_ppSkinModels[ enModel ] == NULL ){
+	if( m_ppSkinModels[ enModel ] == nullptr ){
 		return E_FAIL;
 	}
 
 	delete m_ppSkinModels[ enModel ];
-	m_ppSkinModels[ enModel ] = NULL;
+	m_ppSkinModels[ enModel ] = nullptr;
 
 	return S_OK;
 }
@@ -163,11 +164,11 @@ clsDX9Mesh* clsResource::GetStaticModels(
 {
 	//—ñ‹“‘Ì‚Ì”ÍˆÍ“à?.
 	if( !IsRangeStaticModel( enModel ) ){
-		return NULL;
+		return nullptr;
 	}
 	//Šù‚ÉÃÞ°À‚ª‚ ‚é‚©.
-	if( m_ppStaticModels[ enModel ] == NULL ){
-		return NULL;
+	if( m_ppStaticModels[ enModel ] == nullptr ){
+		return nullptr;
 	}
 	
 	//ÓÃÞÙ‚ÌÎß²ÝÀ•Ô‚·.
@@ -175,16 +176,17 @@ clsDX9Mesh* clsResource::GetStaticModels(
 	//return (clsDX9Mesh*)S_OK;	//‘åŽ–ŒÌ.
 }
 //	Skin Model.
-clsD3DXSKINMESH* clsResource::GetSkinModels(enSkinModel enModel)
+clsD3DXSKINMESH* clsResource::GetSkinModels(
+	enSkinModel enModel)
 {
 	//—ñ‹“‘Ì‚Ì”ÍˆÍ“à?.
 	if ( !IsRangeSkinModel( enModel ) ){
-		return NULL;
+		return nullptr;
 	}
 
 	//Šù‚ÉÃÞ°À‚ª‚ ‚é‚©.
-	if ( m_ppSkinModels[ enModel ] == NULL ){
-		return NULL;
+	if ( m_ppSkinModels[ enModel ] == nullptr ){
+		return nullptr;
 	}
 
 	//ÓÃÞÙ‚ÌÎß²ÝÀ•Ô‚·.

@@ -2,11 +2,11 @@
 #define _DOOR_MANAGER_H_
 
 #include "CharaStatic.h"
-#include "CharaSkin.h"
+#include "Enemy.h"
 
 #include "Sound.h"
-
 #include "Effects.h"
+
 
 
 class clsDoorMgr
@@ -31,7 +31,7 @@ public:
 	virtual void SetPosition( D3DXVECTOR3 vPos );
 
 
-	void Move( float fEarZ );
+	void Update( float fEarZ );
 
 	//蹴られたとき.
 	//戻り値はプレイヤーの初期化位置の更新座標.
@@ -74,16 +74,13 @@ public:
 	}
 
 private:
-	//効果音.
-	void PlaySe( /*enSound enSe*/ );
-	clsSound*	m_pSe;
-	float		m_fEarZ;
 
 	//モデル.
 	clsCharaStatic*	m_pGate;//門部分.
 	clsCharaSkin*	m_pDoor;//扉部分.
 
 	clsCharaStatic*	m_pColWall;//破壊される前の壁判定.
+
 
 	//あたり判定用.
 	COL_STATE	ColState;
@@ -113,6 +110,10 @@ private:
 	double m_dAnimTimer;
 
 
+	//効果音.
+	void PlaySe( /*enSound enSe*/ );
+	clsSound*	m_pSe;
+	float		m_fEarZ;
 
 	//エフェクト.
 	//名前省略用.

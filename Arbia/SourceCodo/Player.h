@@ -3,12 +3,10 @@
 
 
 #include "CharaSkin.h"
-
 #include "Sound.h"
-
 #include "CXInput.h"
-
 #include "Effects.h"
+
 
 const int iEFFECT_PLAYER_STEP_MAX = 4;
 
@@ -37,7 +35,10 @@ public:
 		enPM_DEAD		//ﾐｽ.
 	};//m_enMove
 
-void Create( HWND hWnd, ID3D11Device* pDevice11, ID3D11DeviceContext* pContext11 );
+	void Create( HWND hWnd, 
+		ID3D11Device* pDevice11, 
+		ID3D11DeviceContext* pContext11,
+		clsXInput* pXinput );
 	virtual void Init();
 
 
@@ -45,13 +46,13 @@ void Create( HWND hWnd, ID3D11Device* pDevice11, ID3D11DeviceContext* pContext11
 		return &m_colSub;
 	}
 
-
 	//ラジコン操作Update.
 	void UpdateDir();
 
-	void Input( clsXInput* const xInput );
+	void Input();
 
-	void Move( float fEarZ );
+	void Update( float fEarZ );
+
 	void Rerease();
 
 	void Dead();
@@ -68,9 +69,6 @@ void Create( HWND hWnd, ID3D11Device* pDevice11, ID3D11DeviceContext* pContext11
 		m_vReSpawnPos = vPos;
 	}
 
-
-	//通常攻撃開始.
-	void Kick();
 
 
 
@@ -147,8 +145,10 @@ void Create( HWND hWnd, ID3D11Device* pDevice11, ID3D11DeviceContext* pContext11
 
 private:
 
-	//ｷｯｸ範囲.
-	COL_STATE	m_colSub;	//索敵,攻撃範囲.
+
+	//通常攻撃開始.
+	void Kick( bool bMovie = false );
+
 	virtual void UpdateColState();//ﾑｰﾌﾞの最後に使う.
 
 	//減速関数.
@@ -156,48 +156,42 @@ private:
 
 
 	//子分.
-	void Input_Move( clsXInput* const xInput );
-	void Input_Action( clsXInput* const xInput );
-		void Input_Action_Jump( clsXInput* const xInput );
-		void Input_Action_Atk( clsXInput* const xInput );
+	void Input_Walk();
+	void Input_Action();
+	void Input_ActionJump();
+	void Input_ActionAtk();
+
+	void MoveWalk();
+	void MoveAction();
+	void MoveActionJump();
+	void MoveActionAtk();
+
+
 	clsXInput* m_pXInput;
 
-
-
-	void Move_Move();
-	void Move_Action();
-		void Move_Action_Jump();
-		void Move_Action_Atk();
-
+	//ｷｯｸ範囲.
+	COL_STATE	m_colSub;	//索敵,攻撃範囲.
 
 	enPLAYER_MOVE m_enMove;
 
 	bool	m_bDead;
 	bool	m_bJump;//jump.
-	bool	m_bLanding;//陸地か否か.//static bool standUp.
+	bool	m_bLanding;//陸地か否か.
 
 	float	m_fJumpEnagy;//j_energy.
 
-
 	int		m_iJumpTimer;//Player_JumpTimer
 
-
-	bool	m_bJumpAtkTopFlg;//頂点でしか発動しない.//PlayerJumpAtkTopFlg.
+	bool	m_bJumpAtkTopFlg;//頂点でしか発動しない.
 	bool	m_bJumpSpdDown;//ジャンプ中に減速してよいか.
 
 	bool	m_bDirNorth;//北向きﾌﾗｸﾞ.
 
 	D3DXVECTOR3 m_vReSpawnPos;//復活地点.
 
-
 	int		m_iHp;//残機数.
 
 	float	m_fOldY;
-
-
-
-
-
 
 
 
@@ -207,36 +201,6 @@ private:
 
 
 
-#if 0
-	//ｱﾆﾒｰｼｮﾝ番号.
-	enum enAnimation
-	{
-		enANIM_IDLE = 0,
-
-		enANIM_RUN_START,	//右足スタート.
-		enANIM_RUNNING_R,	//右足が前に出ている.
-		enANIM_RUNNING_L,
-		enANIM_RUN_END_R,	//enANIM_RUNNING_Rからつなぐ.
-		enANIM_RUN_END_L,
-
-		enANIM_JUMP_START,	
-		enANIM_JUMP_UP,		//上昇.
-		enANIM_JUMP_U_TURN,	//上下運動エネルギーの転換.
-		enANIM_JUMP_FALL,	//下降.
-		enANIM_JUMP_STMP,	//着地着地時に移動を入力してるなら再生されない(走りモーションに行く).
-
-		enANIM_ATK,
-
-		enANIM_JUMP_ATK_SPN,	//空中回転.
-		enANIM_JUMP_ATK_FALL,	//落下.
-		enANIM_JUMP_ATK_END,	//着地->起き上がり.
-
-		enANIM_DEAD,//倒れる.
-		enANIM_LOSE,//倒れてる（ 倒れ終わった{ 不動 } ）.
-
-		enANIM_MAX 	//最大.
-	};
-#else
 	//ｱﾆﾒｰｼｮﾝ番号.
 	enum enAnimation
 	{
@@ -254,7 +218,8 @@ private:
 		enANIM_JUMP_FALL,	//下降.
 		enANIM_JUMP_STMP,	//着地着地時に移動を入力してるなら再生されない(走りモーションに行く).
 
-		enANIM_ATK,
+		enANIM_ATK_MOVIE,
+		enANIM_ATK_ACT,
 
 		enANIM_JUMP_ATK_SPN,	//空中回転.
 		enANIM_JUMP_ATK_FALL,	//落下.
@@ -266,8 +231,6 @@ private:
 
 		enANIM_MAX 	//最大.
 	};
-
-#endif
 
 	enAnimation m_enAnimNo;
 	void Animation();
@@ -297,14 +260,6 @@ private:
 
 
 
-
-	//移動補助.
-	bool InputUp( clsXInput* const xInput );
-	bool InputDown( clsXInput* const xInput );
-	bool InputLeft( clsXInput* const xInput );
-	bool InputRight( clsXInput* const xInput );
-
-
 	//エフェクト.
 	//名前省略用.
 	clsEffects*				m_pEffect;
@@ -320,9 +275,13 @@ private:
 	//キック再生.
 	void PlayKickEff();
 
-	int		m_iEffTimer;
-	bool	m_bEffTimer;
 
+
+	//移動補助.
+	bool InputUp();
+	bool InputDown();
+	bool InputLeft();
+	bool InputRight();
 };
 
 

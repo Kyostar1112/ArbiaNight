@@ -7,11 +7,13 @@
 clsSound::clsSound()
 {
 	ZeroMemory( this, sizeof( clsSound ) );
+	m_hWnd = nullptr;
 }
 
 //ﾃﾞｽﾄﾗｸﾀ.
 clsSound::~clsSound()
 {
+	m_hWnd = nullptr;
 }
 
 
@@ -37,10 +39,12 @@ bool clsSound::Open( LPCTSTR sFName, const char *sAlias, HWND hWnd )
 //音声ﾌｧｲﾙを閉じる.
 bool clsSound::Close()
 {
+	m_hWnd = nullptr;
+
 	//ｺﾏﾝﾄﾞ.
 	char command[STR_BUFF_MAX] = "close ";
 	strcat_s( command, sizeof( command ), m_sAlias );	//ｴｲﾘｱｽを結合.
-													//ｴｲﾘｱｽ(ﾆｯｸﾈｰﾑのようなもの).
+														//ｴｲﾘｱｽ(ﾆｯｸﾈｰﾑのようなもの).
 	if( mciSendString( command, NULL, 0, m_hWnd ) == 0 ){
 		return true;
 	}
@@ -129,7 +133,7 @@ bool clsSound::SeekToStart()
 //状態取得関数.
 //	sStatus の配列は256以下にすること.
 //※ただし、状態を取得する場合は、再生時に「notify」を設定し、.
-//	ｳｨﾝﾄﾞｳﾊﾝﾄﾞﾙのﾒｯｾｰｼﾞを送っておく必要がある.
+//	ウィンドウハンドルのメッセージを送っておく必要がある.
 bool clsSound::GetStatus( char *sStatus )
 {
 	//ｺﾏﾝﾄﾞ.
@@ -211,11 +215,18 @@ bool clsSound::SetVolume( int ivolume )
 //============================================================
 //初期設定.
 //============================================================
-void clsSound::SetInitParam( const char *sAlias, HWND hWnd )
+HRESULT clsSound::SetInitParam( const char *sAlias, HWND hWnd )
 {
+	if( m_hWnd != nullptr ){
+		return E_FAIL;
+	}
+
 	//ｳｨﾝﾄﾞｳﾊﾝﾄﾞﾙｳｨﾝﾄﾞｳﾊﾝﾄﾞﾙを渡す.
 	m_hWnd = hWnd;
 
 	//ｴｲﾘｱｽ.
 	strcpy_s( m_sAlias, sizeof( m_sAlias ), sAlias );
+	
+
+	return S_OK;
 }

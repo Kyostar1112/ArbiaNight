@@ -20,19 +20,25 @@ const int iVOL_DOWN = 1000;
 
 
 
-
-
-const float STAGE_WIDHT = 10.0f;
-const float WALL_OFFSET_Y = 0.4375f;
+//ステージ横幅.
+const float fSTAGE_WIDHT = 10.0f;
+//壁が槍の先端からどれだけずらすか.
+const float fWALL_OFFSET_Y = 0.4375f;
 
 const int iFLOOR_MAX = 20;	//床槍の数.
-const float fFLOOR_W_OFFSET = 0.5f;
-const float fFLOOR_H_OFFSET = 0.0625f;
-const float fFLOOR_H_OFFSET_SECOND = 0.25f;
+const float fFLOOR_W_OFFSET = 0.5f;		//槍と槍の横の間隔.
+const float fFLOOR_H_OFFSET = 0.0625f;		//奇数番目を床からどれだけ上げるか.
+const float fFLOOR_H_OFFSET_SECOND = 0.25f;	//偶数番目を床からどれだけ上げるか.
 
 
 clsSpiaFlorMgr::clsSpiaFlorMgr()
 {
+	m_iSpiaMax = 0;
+
+	m_ppSpia = nullptr;
+	m_pSpiaWall = nullptr;
+
+	m_ppSe = nullptr;
 }
 
 clsSpiaFlorMgr::~clsSpiaFlorMgr()
@@ -40,8 +46,43 @@ clsSpiaFlorMgr::~clsSpiaFlorMgr()
 	Release();
 }
 
+void clsSpiaFlorMgr::Release()
+{
+	//音.
+	if( m_ppSe != nullptr ){
+		for( int i=0; i<clsSpiaFloor::enSOUND_MAX; i++ ){
+			m_ppSe[i]->Stop();
+			m_ppSe[i]->Close();
+			delete m_ppSe[i];
+			m_ppSe[i] = nullptr;
+		}
+		delete[] m_ppSe;
+		m_ppSe = nullptr;
+	}
+	//オブジェクト.
+	if( m_ppSpia != nullptr ){
+		for( int i=0; i<m_iSpiaMax; i++ ){
+			m_ppSpia[i]->DetatchModel();
+			delete m_ppSpia[i];
+			m_ppSpia[i] = nullptr;
+		}
+		delete[] m_ppSpia;
+		m_ppSpia = nullptr;
+		m_iSpiaMax = 0;
+	}
+	if( m_pSpiaWall != nullptr ){
+		delete m_pSpiaWall;
+		m_pSpiaWall = nullptr;
+	}
+}
+
+
 void clsSpiaFlorMgr::CreateSpia( HWND hWnd, int iNo )
 {
+	if( m_ppSpia != nullptr || m_iSpiaMax ) return;
+	if( m_pSpiaWall != nullptr ) return;
+	if( m_ppSe != nullptr ) return;
+
 	//----- モデル -----//
 	//槍.
 	m_iSpiaMax = iFLOOR_MAX;
@@ -55,6 +96,7 @@ void clsSpiaFlorMgr::CreateSpia( HWND hWnd, int iNo )
 	}
 
 	//槍壁.
+	if( m_pSpiaWall != nullptr ) return;
 	m_pSpiaWall = new clsCharaStatic;
 	m_pSpiaWall->AttachModel(
 		clsResource::GetInstance()->GetStaticModels( 
@@ -62,6 +104,7 @@ void clsSpiaFlorMgr::CreateSpia( HWND hWnd, int iNo )
 	//----- モデル 終了 -----//
 
 
+	if( m_ppSe != nullptr ) return;
 	//----- SE -----//
 	//サウンド構造体.
 	clsSound::SOUND_DATA tmpSData[clsSpiaFloor::enSOUND_MAX] =
@@ -98,6 +141,8 @@ void clsSpiaFlorMgr::CreateSpia( HWND hWnd, int iNo )
 
 void clsSpiaFlorMgr::Init()
 {
+	if( m_ppSpia == nullptr ) return;
+
 	//槍.
 	for( int i=0; i<m_iSpiaMax; i++ ){
 		float fOffset = fFLOOR_H_OFFSET;
@@ -110,57 +155,31 @@ void clsSpiaFlorMgr::Init()
 
 		m_ppSpia[i]->SetPosition( 
 		D3DXVECTOR3( 
-			GetPositionX() - STAGE_WIDHT/2.0f + (float)i * fFLOOR_W_OFFSET + fFLOOR_W_OFFSET / 2.0f,
+			GetPositionX() - fSTAGE_WIDHT/2.0f + (float)i * fFLOOR_W_OFFSET + fFLOOR_W_OFFSET / 2.0f,
 			GetPositionY() + fOffset, 
 			GetPositionZ() ) );
 		m_ppSpia[i]->Init( bFlg );
 	}
 
+	if( m_pSpiaWall == nullptr ) return;
 	//槍壁座標.
 	m_pSpiaWall->SetPosition( GetPosition() );
-	m_pSpiaWall->AddPositionY( WALL_OFFSET_Y );
-	m_pSpiaWall->AddPositionX( -STAGE_WIDHT / 2.0f );
+	m_pSpiaWall->AddPositionY( fWALL_OFFSET_Y );
+	m_pSpiaWall->AddPositionX( -fSTAGE_WIDHT / 2.0f );
 }
 
-void clsSpiaFlorMgr::Release()
-{
-	//音.
-	if( m_ppSe != NULL ){
-		for( int i=0; i<clsSpiaFloor::enSOUND_MAX; i++ ){
-			m_ppSe[i]->Stop();
-			m_ppSe[i]->Close();
-			delete m_ppSe[i];
-			m_ppSe[i] = NULL;
-		}
-		delete[] m_ppSe;
-		m_ppSe = NULL;
-	}
-	//オブジェクト.
-	if( m_ppSpia != NULL ){
-		for( int i=0; i<m_iSpiaMax; i++ ){
-			m_ppSpia[i]->DetatchModel();
-			delete m_ppSpia[i];
-			m_ppSpia[i] = NULL;
-		}
-		delete[] m_ppSpia;
-		m_ppSpia = NULL;
-		m_iSpiaMax = 0;
-	}
-	if( m_pSpiaWall != NULL ){
-		delete m_pSpiaWall;
-		m_pSpiaWall = NULL;
-	}
-}
 
-void clsSpiaFlorMgr::Move( float fEarZ )
+void clsSpiaFlorMgr::Update( float fEarZ )
 {
+	if( m_ppSpia == nullptr || m_ppSe == nullptr || m_pSpiaWall == nullptr ) return;
+
 	//どの音を鳴らすかのフラグ.
 	clsSpiaFloor::enSound enSoundFlg;
 
 	//動き.
 	for( int i=0; i<m_iSpiaMax; i++ ){
 		//動きに合わせてフラグを更新.
-		enSoundFlg = m_ppSpia[i]->Move();
+		enSoundFlg = m_ppSpia[i]->Update();
 	}
 
 	//効果音再生（MAXはSpiaFloor内の初期化使っているのでそれ以上では鳴らさない）.
@@ -179,7 +198,7 @@ void clsSpiaFlorMgr::Move( float fEarZ )
 	//下がっている時は刺さりにくく.
 	if( m_ppSpia[0]->GetMode() == clsSpiaFloor::enSFM_UNDER ||
 		m_ppSpia[0]->GetMode() == clsSpiaFloor::enSFM_DOWN ){
-		m_pSpiaWall->AddPositionY( WALL_OFFSET_Y );
+		m_pSpiaWall->AddPositionY( fWALL_OFFSET_Y );
 	}
 	
 }
@@ -189,6 +208,8 @@ void clsSpiaFlorMgr::Move( float fEarZ )
 void clsSpiaFlorMgr::Render( D3DXMATRIX &mView, D3DXMATRIX &mProj,
 				 D3DXVECTOR3 &vLight, D3DXVECTOR3 &vEye )
 {
+	if( m_ppSpia == nullptr ) return;
+
 	for( int i=0; i<m_iSpiaMax; i++ ){
 		m_ppSpia[i]->Render( mView, mProj, vLight, vEye );
 	}
@@ -200,26 +221,29 @@ void clsSpiaFlorMgr::Render( D3DXMATRIX &mView, D3DXMATRIX &mProj,
 
 void clsSpiaFlorMgr::SetPosition( D3DXVECTOR3 vPos )
 {
+	if( m_ppSpia == nullptr || m_pSpiaWall == nullptr ) return;
+
 	m_vPos = vPos;
 
 	//子分の座標.
 	for( int i=0; i<m_iSpiaMax; i++ ){
 		m_ppSpia[i]->SetPosition( 
 			D3DXVECTOR3( 
-				GetPositionX() - STAGE_WIDHT/2.0f + (float)i * fFLOOR_W_OFFSET,
+				GetPositionX() - fSTAGE_WIDHT/2.0f + (float)i * fFLOOR_W_OFFSET,
 				GetPositionY(), 
 				GetPositionZ() ) );
 	}
 
 	//槍壁座標.
 	m_pSpiaWall->SetPosition( GetPosition() );
-	m_pSpiaWall->AddPositionY( WALL_OFFSET_Y );
-	m_pSpiaWall->AddPositionX( -STAGE_WIDHT / 2.0f );
+	m_pSpiaWall->AddPositionY( fWALL_OFFSET_Y );
+	m_pSpiaWall->AddPositionX( -fSTAGE_WIDHT / 2.0f );
 }
 
 //槍のあたり判定情報返す.
 COL_STATE* clsSpiaFlorMgr::GetPointerSpiaCol( int i )
 {
+	if( m_ppSpia == nullptr ) return nullptr;
 	return m_ppSpia[i]->GetPointerCol();
 }
 
@@ -240,6 +264,8 @@ clsCharaStatic*	clsSpiaFlorMgr::GetWallPointer()
 //============================================================
 void clsSpiaFlorMgr::PlaySe( clsSpiaFloor::enSound enSe, float fEarZ )
 {
+	if( m_ppSe == nullptr ) return;
+
 	//再生する距離なら.
 	int vol = ChangeVolumeDistance( fEarZ, m_vPos.z );
 	if( vol ){

@@ -98,6 +98,7 @@ public:
 	enPStickSlopeMode	m_enStickSlope;//也輦蓳n偡矫ǒ競虛|偟嬶崌.
 
 private:
+
 	LPDIRECTINPUT8		 m_pDI; //DxInput堤藜蕺改.
 	LPDIRECTINPUTDEVICE8 m_pPad;//棉兽步(狠嫩白)堤藜蕺改.
 

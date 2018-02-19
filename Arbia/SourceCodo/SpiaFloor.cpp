@@ -2,31 +2,31 @@
 
 
 //===== あたり判定 =====//.
-const float COL_SPIA_H = 0.5f;
-const float COL_SPIA_RANGE = 0.25f;
+const float fCOL_SPIA_H = 0.5f;
+const float fCOL_SPIA_RANGE = 0.25f;
 //===== あたり判定 終わり =====//.
 
 
 
 //ﾀｲﾑ.
-const int iUNDER_TIME = 120;
+const int iUNDER_TIME = 120;//待機時間.
 const int iVIB_START_TIME = 60;//Vibration Start　がたがた開始.
 const int iVIB_INTER_TIME = 4;//Vibration Interval　ガタガタする間隔.
 const int iTOP_TIME = 30;	//頂点にいる時間.
 
 //速度.
 const float fUP_SPD = 0.75f;
-const float fDOWN_SPN_YAW = 0.1f;
+const float fDOWN_SPN_YAW = 0.1f;//回転速度.
 const float fDOWN_SPD = -0.035f;
 
 //長さ(動きの).
-const float fVIB_RANGE = 0.25f;
-const float fSPIA_TOP = 3.5f;
+const float fVIB_RANGE = 0.25f;//振動上下.
+const float fSPIA_TOP = 3.5f;//最大上昇.
 
 clsSpiaFloor::clsSpiaFloor()
 {
-	ColState.fRange = COL_SPIA_RANGE;
-	ColState.fHeight = COL_SPIA_H;
+	ColState.fRange = fCOL_SPIA_RANGE;
+	ColState.fHeight = fCOL_SPIA_H;
 	ColState.iSarchTheta = 360;
 }
 
@@ -49,7 +49,7 @@ void clsSpiaFloor::Init( bool bFlg )//右回転のフラグ.
 }
 
 //戻り値は槍マネージャーでの音再生用.
-clsSpiaFloor::enSound clsSpiaFloor::Move()
+clsSpiaFloor::enSound clsSpiaFloor::Update()
 {
 	//マネージャーでの音再生用.
 	enSound enSoundFlg = enSOUND_MAX;

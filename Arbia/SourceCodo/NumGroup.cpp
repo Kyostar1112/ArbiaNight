@@ -11,7 +11,7 @@ const float fNUM_ONE_HEIGHT = 180.0f;
 
 
 
-const char cNUM_MAX = 2;//êîéöÇÃåÖêî.
+const char cNUM_MAX = cNUM_GROUP_NUM_MAX;//êîéöÇÃåÖêî.
 const int iTEN_DECIMAL = 10;//10êiêî.
 const int iSIX_DECIMAL = 6;	//6 êiêî.
 const int iMAX = 99;
@@ -29,15 +29,18 @@ const WHSIZE_FLOAT NUMSIZE  = { 64.0f, 64.0f };
 
 clsNumGrp::clsNumGrp()
 {
+	for( char i=0; i<cNUM_MAX; i++ ){
+		NumImage[i] = nullptr;
+	}
 }
 
 clsNumGrp::~clsNumGrp()
 {
-	if( NumImage != NULL ){
+	if( NumImage != nullptr ){
 		for( char i=0; i<cNUM_MAX; i++ ){
-			if( NumImage[i] != NULL ){
+			if( NumImage[i] != nullptr ){
 				delete NumImage[i];
-				NumImage[i] = NULL;
+				NumImage[i] = nullptr;
 			}
 		}
 	}
@@ -53,12 +56,15 @@ void clsNumGrp::Create( ID3D11Device* pDevice11, ID3D11DeviceContext* pContext11
 
 		NumImage[i] = new clsSprite2D;
 
-		NumImage[i]->Create( pDevice11, pContext11, FILE_PATH_TEN, 1.0f, iTEN_DECIMAL );
+		NumImage[i]->Init( pDevice11, pContext11, FILE_PATH_TEN );
 
 		NumImage[i]->SetSs(
 			NumImage[i]->GetSs().Base.w,
 			NumImage[i]->GetSs().Base.h,
-			NUMSIZE.w, NUMSIZE.h);
+			NUMSIZE.w, NUMSIZE.h,
+			1.0f, iTEN_DECIMAL );
+
+		NumImage[i]->UpDateSpriteSs();
 	}
 	//ç≈ëÂíl.
 	m_iMax = iMAX;
@@ -76,7 +82,7 @@ void clsNumGrp::ReSet()
 void clsNumGrp::SetPos( D3DXVECTOR3 vPos )
 {
 	m_vPos = vPos;
-
+	
 	for( char i=0; i<cNUM_MAX; i++ ){
 		NumImage[i]->SetPos( vPos );
 	}
@@ -94,7 +100,7 @@ void clsNumGrp::AddPos( D3DXVECTOR3 vPos )
 	SetPos( m_vPos );
 }
 
-void clsNumGrp::Move()
+void clsNumGrp::Update()
 {
 //	GETKEY_DOWN('G')PlusNum();
 //	GETKEY_DOWN('T')PlusNum();

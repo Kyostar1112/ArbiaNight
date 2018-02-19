@@ -4,9 +4,9 @@ LPDIRECTINPUT8 pDI2 = NULL;			// DxInputオブジェクト.
 LPDIRECTINPUTDEVICE8 pPad2 = NULL;	// デバイス(コントローラ)オブジェクト.
 
 //========== ｽﾃｨｯｸの倒し具合と最大値 ==========.
-const LONG STICK_MAX = 1000;
-const float STICK_RUN = 975;
-const float STICK_WALK = 250;
+const LONG lSTICK_MAX = 1000;
+const float fSTICK_RUN = 975;
+const float fSTICK_WALK = 250;
 
 
 
@@ -42,8 +42,8 @@ BOOL CALLBACK EnumObjectsCallBack( const DIDEVICEOBJECTINSTANCE *pdidoi, VOID *p
 		diprg.diph.dwHow = DIPH_BYID;						// dwObjに設定されるものが.
 															// オブジェクトの種類か？インスタンス番号か？.
 
-		diprg.lMax = +STICK_MAX;	// 最大値.
-		diprg.lMin = -STICK_MAX;	// 最小値.
+		diprg.lMax = +lSTICK_MAX;	// 最大値.
+		diprg.lMin = -lSTICK_MAX;	// 最小値.
 
 		// 範囲を設定.
 		if( FAILED( pPad2->SetProperty(
@@ -312,10 +312,10 @@ enPStickSlopeMode clsDxInput::GetStickSlopeMode( float slope )
 {
 	enPStickSlopeMode mode = enPSSM_Stand;
 	
-	if( slope > abs( STICK_RUN ) ){
+	if( slope > abs( fSTICK_RUN ) ){
 		mode = enPSSM_High;
 	}
-	else if( slope > abs( STICK_WALK ) ){
+	else if( slope > abs( fSTICK_WALK ) ){
 		mode = enPSSM_Low;
 	}
 	return mode;

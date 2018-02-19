@@ -9,6 +9,22 @@ const char SHADER_NAME[] = "Shader\\DebugText.hlsl";
 clsDebugText::clsDebugText()
 {
 	ZeroMemory( this, sizeof( clsDebugText ) );	//初期化.
+	m_pDevice11 = nullptr;		//ﾃﾞﾊﾞｲｽｵﾌﾞｼﾞｪｸﾄ.
+	m_pDeviceContext11 = nullptr;	//ﾃﾞﾊﾞｲｽｺﾝﾃｷｽﾄ.
+
+	m_pVertexShader = nullptr;	//頂点ｼｪｰﾀﾞ.
+	m_pVertexLayout = nullptr;	//頂点ﾚｲｱｳﾄ.
+	m_pPixelShader = nullptr;		//ﾋﾟｸｾﾙｼｪｰﾀﾞ.
+	m_pConstantBuffer = nullptr;	//ｺﾝｽﾀﾝﾄﾊﾞｯﾌｧ.
+
+	for( int i=0; i<100; i++ ){
+		m_pVertexBuffer[i] = nullptr;	//頂点ﾊﾞｯﾌｧ(100個分).
+	}
+
+	m_pAsciiTexture = nullptr;//ｱｽｷｰﾃｸｽﾁｬ.
+	m_pSampleLinear = nullptr;//ﾃｸｽﾁｬのｻﾝﾌﾟﾗｰ:/ﾃｸｽﾁｬに各種ﾌｨﾙﾀをかける.
+
+	m_pBlendState = nullptr;	//ﾌﾞﾚﾝﾄﾞｽﾃｰﾄ.
 	
 	m_fScale = 1.0f;
 }

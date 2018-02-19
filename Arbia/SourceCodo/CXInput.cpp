@@ -7,7 +7,7 @@ const float fSTICK_SLOPE_HIGH = 30000;
 const float fSTICK_SLOPE_LOW = 10000;
 
 
-
+//更新.
 bool clsXInput::UpdateStatus(){
 
 	m_stateOld = m_state;//判断用.
@@ -34,6 +34,7 @@ bool clsXInput::UpdateStatus(){
 	}
 	return false;
 }
+//更新( 使わない? ).
 bool clsXInput::UpdateKeyStatus(){
 	if( ERROR_SUCCESS == XInputGetKeystroke(
 		m_padId,
@@ -153,6 +154,7 @@ void clsXInput::VibSafe( int &iVibPower, int &iVibDec )
 	}
 }
 
+//振動衰弱.
 void clsXInput::VibDecrease( int &iVibPower, int iDecPower )
 {
 	iVibPower -= iDecPower;

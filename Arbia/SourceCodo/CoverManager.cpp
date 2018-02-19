@@ -17,20 +17,21 @@ const int iVOL_OPEN = 1000;
 
 
 //奥行の長さ（音の発生位置をど真ん中にするために必要）.
-const float OBJ_Z_LONG = 12.0f;
+const float fOBJ_Z_LONG = 12.0f;
 
-const float STAGE_WIDHT = 10.0f;
-const float fOFFSET_X = STAGE_WIDHT / 2.0f;
+//ステージの中心からどれだけずらすか及びそのための種.
+const float fSTAGE_WIDHT = 10.0f;
+const float fOFFSET_X = fSTAGE_WIDHT / 2.0f;
 
-const float fSPD_OPEN = 0.125f;		//.
-const float fSPD_CLOSE = 0.1875f;	//.
+const float fSPD_OPEN = 0.125f;		//開くときの速度.
+const float fSPD_CLOSE = 0.1875f;	//閉じるときの速度.
 
 const int iVIB_DISTANCE = 8;	//開きかけ時、「何フレームに一回」角度を動かす?.
 const int iVIB_TIME = 60 * 1.75;//開きかけ時間.
 const int iHOLL_TIME = 90;	//穴としての時間.
 
-const float fOPEN_THETA = (float)( M_PI_2 - ( M_PI_4 / 16.0) );//一気に開く角度.
-const float fVIB_THETA = (float)( M_PI_4 / 128.0 );//ゆっくり開く角度.
+const float fOPEN_THETA = (float)( M_PI_2 - ( M_PI_4 / 16.0) );//一気に開く角度はここまで.
+const float fVIB_THETA = (float)( M_PI_4 / 128.0 );//ゆっくり開く角度はここまで.
 
 
 //Se発信箇所の数.
@@ -39,6 +40,8 @@ const char cSE_NUM_MAX = 2;
 
 clsCoverMgr::clsCoverMgr()
 {
+	m_ppCover = nullptr;
+	m_pppSe = nullptr;
 }
 
 clsCoverMgr::~clsCoverMgr()
@@ -48,6 +51,8 @@ clsCoverMgr::~clsCoverMgr()
 
 void clsCoverMgr::CreateCover( HWND hWnd, int iNo )
 {
+	if( m_ppCover != nullptr ) return; 
+
 	//----- モデル -----//
 	//全体.
 	m_ppCover = new clsCharaStatic*[cCOVER_MAX];
@@ -66,6 +71,7 @@ void clsCoverMgr::CreateCover( HWND hWnd, int iNo )
 
 
 
+	if( m_pppSe != nullptr ) return; 
 	//----- SE -----//
 	//サウンド構造体.
 	clsSound::SOUND_DATA tmpSData[enSOUND_MAX] = 
@@ -110,6 +116,8 @@ void clsCoverMgr::CreateCover( HWND hWnd, int iNo )
 
 void clsCoverMgr::Init()
 {
+	if( m_ppCover == nullptr ) return;
+
 	m_enMove = enCM_FLOOR;
 	m_iTimer = 0;
 	for( char i=0; i<cCOVER_MAX; i++ ){
@@ -125,37 +133,39 @@ void clsCoverMgr::Init()
 
 void clsCoverMgr::Release()
 {
-	if( m_pppSe != NULL ){
+	if( m_pppSe != nullptr ){
 		for( int i=0; i<enSOUND_MAX; i++ ){
 			for( int j=0; j<cSE_NUM_MAX; j++ ){
 				m_pppSe[i][j]->Stop();
 				m_pppSe[i][j]->Close();
 				delete m_pppSe[i][j];
-				m_pppSe[i][j] = NULL;
+				m_pppSe[i][j] = nullptr;
 			}
 			delete[] m_pppSe[i];
-			m_pppSe[i] = NULL;
+			m_pppSe[i] = nullptr;
 		}
 		delete[] m_pppSe;
-		m_pppSe = NULL;
+		m_pppSe = nullptr;
 	}
 
-	if( m_ppCover != NULL ){
+	if( m_ppCover != nullptr ){
 		for( char i=0; i<cCOVER_MAX; i++ ){
 			m_ppCover[i]->DetatchModel();
 			delete m_ppCover[i];
-			m_ppCover[i] = NULL;
+			m_ppCover[i] = nullptr;
 		}
 		delete[] m_ppCover;
-		m_ppCover = NULL;
+		m_ppCover = nullptr;
 	}
 }
 
 
 
 //動き.
-void clsCoverMgr::Move( float fEarZ )
+void clsCoverMgr::Update( float fEarZ )
 {
+	if( m_ppCover == nullptr ||  m_pppSe == nullptr ) return;
+
 	switch( m_enMove )
 	{
 	case enCM_FLOOR:
@@ -225,6 +235,8 @@ void clsCoverMgr::StmpCovor( float fEarZ )
 //強く踏む.
 void clsCoverMgr::StmpCovorStrong( float fEarZ )
 {
+	if( m_pppSe == nullptr ) return;
+
 	if( m_enMove == enCM_FLOOR ||
 		m_enMove == enCM_VIB ){
 		m_iTimer = 0;
@@ -240,6 +252,8 @@ void clsCoverMgr::StmpCovorStrong( float fEarZ )
 void clsCoverMgr::Render( D3DXMATRIX &mView, D3DXMATRIX &mProj,
 	D3DXVECTOR3 &vLight, D3DXVECTOR3 &vEye )
 {
+	if( m_ppCover == nullptr ) return;
+
 	for( char i=0; i<cCOVER_MAX; i++ ){
 		m_ppCover[i]->Render( mView, mProj, vLight, vEye );
 	}
@@ -253,6 +267,7 @@ void clsCoverMgr::Render( D3DXMATRIX &mView, D3DXMATRIX &mProj,
 //============================================================
 void clsCoverMgr::PlaySe( enSound enSe, float fEarZ )
 {
+	if( m_pppSe == nullptr ) return;
 	//耳を手前として考えさせる(ど真ん中から音を出す).
 //	fEarZ -= OBJ_Z_LONG / 2.0f;
 
@@ -272,6 +287,6 @@ void clsCoverMgr::PlaySe( enSound enSe, float fEarZ )
 		}
 
 		//0は手前、1は奥.
-		fEarZ -= OBJ_Z_LONG;
+		fEarZ -= fOBJ_Z_LONG;
 	}
 }

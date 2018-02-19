@@ -38,10 +38,12 @@ private:
 	bool Intersect(
 		clsCharaSkin* pAttacker, clsCharaStatic* pTarget,
 		float* pfDistance, D3DXVECTOR3* pvIntersect );
+
 	//Œğ·ˆÊ’u‚ÌÎßØºŞİ‚Ì’¸“_‚ğŒ©‚Â‚¯‚é.
 	HRESULT FindVerticesOnPoly(
 		LPD3DXMESH pTarget, DWORD dwPolyIndex,
 		D3DXVECTOR3* pVecVertices );
+
 	//‰ñ“]’l’²®.
 	void DirOverGuard( float* fYaw );	
 };

@@ -16,7 +16,7 @@ public:
 	virtual void Init();
 
 	//“®ì.
-	void Move();
+	void Update();
 
 	//ƒLƒƒƒ‰‚ªæ‚Á‚Ä‚¢‚é‚É“®‚©‚·—Ê‚ğ•Ô‚·.
 	D3DXVECTOR3 GetCarryRange(){

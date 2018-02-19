@@ -2,14 +2,13 @@
 
 const char SHADER_NAME[] = "Shader\\PointSprite.hlsl";
 
-
 //============================================================
 //	∫›Ωƒ◊∏¿.
 //============================================================
 clsParticle::clsParticle( int MaxParticle,			// ﬂ∞√®∏Ÿç≈ëÂêî.
 						  D3DXVECTOR3 &vEmitPos )	//ï˙éÀà íu.
 {
-	ZeroMemory( this, sizeof( clsParticle ) );
+	InitConstructor();
 
 	m_iMaxParticle	= MaxParticle;
 	m_vEmitPos		= vEmitPos;
@@ -44,7 +43,72 @@ clsParticle::clsParticle( int MaxParticle,			// ﬂ∞√®∏Ÿç≈ëÂêî.
 //============================================================
 clsParticle::~clsParticle()
 {
-	
+	Release();
+}
+
+void clsParticle::InitConstructor()
+{
+	m_pVertexShader = nullptr;	
+	m_pVertexLayout = nullptr;	
+	m_pGeometryShader = nullptr;	
+	m_pPixelShader = nullptr;		
+	m_pConstantBuffer = nullptr;	
+	m_pVertexBuffer = nullptr;	
+	m_pTexture = nullptr;		
+	m_pSampleLinear = nullptr;
+
+	m_pParticleArray = nullptr;
+
+	m_vPos = { 0.0f, 0.0f, 0.0f };
+	m_vEmitPos = m_vPos;
+	m_AnimCount = 0;
+	m_bDispFlg = false;
+	m_iMaxParticle = 0;
+	m_Frame = 0;
+}
+
+void clsParticle::Release()
+{
+	if( m_pTexture != nullptr ){
+		m_pTexture->Release();
+		m_pTexture = nullptr;
+	}
+
+	if( m_pSampleLinear != nullptr ){
+		m_pSampleLinear->Release();
+		m_pSampleLinear = nullptr;
+	}
+
+	if( m_pVertexBuffer != nullptr ){
+		m_pVertexBuffer->Release();
+		m_pVertexBuffer = nullptr;
+	}
+
+	if( m_pConstantBuffer != nullptr ){
+		m_pConstantBuffer->Release();
+		m_pConstantBuffer = nullptr;
+	}
+
+	if( m_pPixelShader != nullptr ){
+		m_pPixelShader->Release();
+		m_pPixelShader = nullptr;
+	}
+
+	if( m_pGeometryShader != nullptr ){
+		m_pGeometryShader->Release();
+		m_pGeometryShader = nullptr;
+	}
+
+	if( m_pVertexLayout != nullptr ){
+		m_pVertexLayout->Release();
+		m_pVertexLayout = nullptr;
+	}
+
+	if( m_pVertexShader != nullptr ){
+		m_pVertexShader->Release();
+		m_pVertexShader = nullptr;
+	}
+
 }
 
 
@@ -68,51 +132,8 @@ HRESULT clsParticle::Init(
 		return E_FAIL;
 	}
 
-
-
 	return S_OK;
 }
-
-
-
-//============================================================
-//	Œﬂ≤›ƒΩÃﬂ◊≤ƒèâä˙âª.
-//============================================================
-HRESULT clsParticle::InitPointSprite()
-{
-	// ﬁ∞√Ø∏Ω ﬁØÃßçÏê¨.
-	PSpriteVertex vertices[] =
-	{
-		D3DXVECTOR3( -0.5f, 0.5f, 0.0f ),
-	};
-	D3D11_BUFFER_DESC bd;
-	bd.Usage		= D3D11_USAGE_DEFAULT;
-	bd.ByteWidth	= sizeof( PSpriteVertex ) * 1;
-	bd.BindFlags	= D3D11_BIND_VERTEX_BUFFER;
-	bd.CPUAccessFlags= 0;
-	bd.MiscFlags	= 0;
-
-	D3D11_SUBRESOURCE_DATA InitData;
-	InitData.pSysMem = vertices;
-	if( FAILED( 
-		m_pDevice11->CreateBuffer(
-			&bd, &InitData, &m_pVertexBuffer ) ) )
-	{
-		MessageBox( NULL, "í∏ì_ ﬁØÃßçÏê¨é∏îs", "InitPointSprite:Init", MB_OK );
-		return E_FAIL;
-	}
-
-	// ﬁ∞√Ø∏Ω ﬁØÃßÇæØƒ.
-	UINT stride = sizeof( PSpriteVertex );
-	UINT offset = 0;
-	m_pDeviceContext11->IASetVertexBuffers(
-		0, 1, &m_pVertexBuffer, &stride, &offset );
-
-
-
-	return S_OK;
-}
-
 
 //============================================================
 //	HLSLÃß≤ŸÇì«Ç›çûÇ›º™∞¿ﬁÇçÏê¨Ç∑ÇÈ.
@@ -120,8 +141,8 @@ HRESULT clsParticle::InitPointSprite()
 //============================================================n
 HRESULT clsParticle::InitShader()
 {
-	ID3DBlob* pCompiledShader = NULL;
-	ID3DBlob* pErrors = NULL;
+	ID3DBlob* pCompiledShader = nullptr;
+	ID3DBlob* pErrors = nullptr;
 
 	UINT uCompileFlag = 0;
 
@@ -146,7 +167,7 @@ HRESULT clsParticle::InitShader()
 			&pErrors,		//¥◊∞Ç∆åxçêàÍóóÇäiî[Ç∑ÇÈ“”ÿÇ÷ÇÃŒﬂ≤›¿.
 			NULL ) ) )		//ñﬂÇËílÇ÷ÇÃŒﬂ≤›¿(ñ¢égóp).
 	{
-		MessageBox(NULL, "hlsl(vs)ì«Ç›çûÇ›é∏îs", "¥◊∞", MB_OK );
+		MessageBox( NULL, "hlsl(vs)ì«Ç›çûÇ›é∏îs", "¥◊∞", MB_OK );
 		return E_FAIL;
 	}
 	SAFE_RELEASE( pErrors );
@@ -195,7 +216,7 @@ HRESULT clsParticle::InitShader()
 			pCompiledShader->GetBufferSize(),
 			&m_pVertexLayout ) ) )//(out)í∏ì_≤›ÃﬂØƒ⁄≤±≥ƒ.
 	{
-		MessageBox(NULL, "í∏ì_≤›ÃﬂØƒ⁄≤±≥ƒçÏê¨é∏îs", "¥◊∞", MB_OK );
+		MessageBox( NULL, "í∏ì_≤›ÃﬂØƒ⁄≤±≥ƒçÏê¨é∏îs", "¥◊∞", MB_OK );
 		return E_FAIL;
 	}
 	SAFE_RELEASE( pCompiledShader );
@@ -297,6 +318,79 @@ HRESULT clsParticle::InitShader()
 
 
 //============================================================
+//	Œﬂ≤›ƒΩÃﬂ◊≤ƒèâä˙âª.
+//============================================================
+HRESULT clsParticle::InitPointSprite()
+{
+	// ﬁ∞√Ø∏Ω ﬁØÃßçÏê¨.
+	PSpriteVertex vertices[] =
+	{
+		D3DXVECTOR3( -0.5f, 0.5f, 0.0f ),
+	};
+	D3D11_BUFFER_DESC bd;
+	bd.Usage		= D3D11_USAGE_DEFAULT;
+	bd.ByteWidth	= sizeof( PSpriteVertex ) * 1;
+	bd.BindFlags	= D3D11_BIND_VERTEX_BUFFER;
+	bd.CPUAccessFlags= 0;
+	bd.MiscFlags	= 0;
+
+	D3D11_SUBRESOURCE_DATA InitData;
+	InitData.pSysMem = vertices;
+	if( FAILED( 
+		m_pDevice11->CreateBuffer(
+			&bd, &InitData, &m_pVertexBuffer ) ) )
+	{
+		MessageBox( NULL, "í∏ì_ ﬁØÃßçÏê¨é∏îs", "InitPointSprite:Init", MB_OK );
+		return E_FAIL;
+	}
+
+	// ﬁ∞√Ø∏Ω ﬁØÃßÇæØƒ.
+	UINT stride = sizeof( PSpriteVertex );
+	UINT offset = 0;
+	m_pDeviceContext11->IASetVertexBuffers(
+		0, 1, &m_pVertexBuffer, &stride, &offset );
+
+
+
+	return S_OK;
+}
+
+//============================================================
+//	√∏Ω¡¨ì«çû&çÏê¨.
+//============================================================
+HRESULT clsParticle::InitTexture( char *pFileName )
+{
+	//√∏Ω¡¨ópª›Ãﬂ◊∞çÏê¨.
+	D3D11_SAMPLER_DESC SamDesc;
+	ZeroMemory( &SamDesc,
+		sizeof( D3D11_SAMPLER_DESC ) );
+	SamDesc.Filter		= D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+	SamDesc.AddressU	= D3D11_TEXTURE_ADDRESS_WRAP;
+	SamDesc.AddressV	= D3D11_TEXTURE_ADDRESS_WRAP;
+	SamDesc.AddressW	= D3D11_TEXTURE_ADDRESS_WRAP;
+
+	if( FAILED( m_pDevice11->CreateSamplerState(
+		&SamDesc, &m_pSampleLinear ) ) )
+	{
+		MessageBox( NULL, "ª›Ãﬂ◊∞çÏê¨é∏îs", "clsParticle::InitTexture", MB_OK );
+		return E_FAIL;
+	}
+
+	//√∏Ω¡¨ÇÃì«çû.
+	if( FAILED( D3DX11CreateShaderResourceViewFromFile(
+		m_pDevice11, pFileName, NULL, NULL,
+		&m_pTexture, NULL ) ) )
+	{
+		MessageBox( NULL, pFileName, "√∏Ω¡¨ì«çûé∏îs(clsParticle)", MB_OK );
+		return E_FAIL;
+	}
+
+
+	return S_OK;
+}
+
+
+//============================================================
 //	ï`âÊ(⁄›¿ﬁÿ›∏ﬁ)(Å¶DX9MESHì‡Ç∆Mainì‡Ç≈2Ç¬ë∂ç›Ç∑ÇÈÇÃÇ≈íçà”).
 //============================================================
 void clsParticle::Render( D3DXMATRIX &mView, D3DXMATRIX &mProj, D3DXVECTOR3 &vEye, D3DXVECTOR3 &vPos )
@@ -391,40 +485,6 @@ void clsParticle::DetachShader()
 
 }
 
-//============================================================
-//	√∏Ω¡¨ì«çû&çÏê¨.
-//============================================================
-HRESULT clsParticle::InitTexture( char *pFileName )
-{
-	//√∏Ω¡¨ópª›Ãﬂ◊∞çÏê¨.
-	D3D11_SAMPLER_DESC SamDesc;
-	ZeroMemory( &SamDesc,
-		sizeof( D3D11_SAMPLER_DESC ) );
-	SamDesc.Filter		= D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-	SamDesc.AddressU	= D3D11_TEXTURE_ADDRESS_WRAP;
-	SamDesc.AddressV	= D3D11_TEXTURE_ADDRESS_WRAP;
-	SamDesc.AddressW	= D3D11_TEXTURE_ADDRESS_WRAP;
-
-	if( FAILED( m_pDevice11->CreateSamplerState(
-		&SamDesc, &m_pSampleLinear ) ) )
-	{
-		MessageBox( NULL, "ª›Ãﬂ◊∞çÏê¨é∏îs", "clsParticle::InitTexture", MB_OK );
-		return E_FAIL;
-	}
-
-	//√∏Ω¡¨ÇÃì«çû.
-	if( FAILED( D3DX11CreateShaderResourceViewFromFile(
-		m_pDevice11, pFileName, NULL, NULL,
-		&m_pTexture, NULL ) ) )
-	{
-		MessageBox( NULL, pFileName, "√∏Ω¡¨ì«çûé∏îs(clsParticle)", MB_OK );
-		return E_FAIL;
-	}
-
-
-	return S_OK;
-}
-
 
 //============================================================
 // ﬂ∞√®∏ŸÇÃà⁄ìÆ.
@@ -461,8 +521,6 @@ void clsParticle::Run()
 				m_pParticleArray[i].vPos.y = 5.0f;
 				m_pParticleArray[i].fSpeed = -0.2f;
 			}
-
 		}
 	}
-
 }

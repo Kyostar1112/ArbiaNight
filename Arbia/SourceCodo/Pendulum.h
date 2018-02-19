@@ -31,7 +31,7 @@ public:
 
 
 	//“®ì(‚ä‚ç‚ä‚ç).
-	void Move( float fEarZ );
+	void Update( float fEarZ );
 
 
 

@@ -8,6 +8,10 @@
 
 #include "Sound.h"
 
+
+const char cTIMER_GROUP_TIMER_NUM = 3;
+const char cTIMER_GROUP_COLON_NUM = cTIMER_GROUP_TIMER_NUM - 1;
+
 class clsTimerGrp
 {
 public:
@@ -21,7 +25,7 @@ public:
 	virtual void ReSet();
 
 
-	void Move();
+	void Update();
 
 	void Render();
 
@@ -41,8 +45,8 @@ private:
 
 	D3DXVECTOR3 m_vPos;
 
-	clsTimer*		m_Timer[3];
-	clsSprite2D*	m_Colon[2];//:( コロン ).
+	clsTimer*		m_Timer[cTIMER_GROUP_TIMER_NUM];
+	clsSprite2D*	m_Colon[cTIMER_GROUP_COLON_NUM];//:( コロン ).
 
 	bool m_bRimitFlg;//trueになるとカウントしない.
 

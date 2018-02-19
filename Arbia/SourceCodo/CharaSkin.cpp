@@ -2,20 +2,35 @@
 
 clsCharaSkin::clsCharaSkin()
 {
-	m_pModel = NULL;
-	m_pAnimCtrl = NULL;
+	m_pModel = nullptr;
+	m_pAnimCtrl = nullptr;
+	m_pShadow = nullptr;
 	m_dAnimSpeed = 0.025;
+
 	//m_vPos = D3DXVECTOR3( 0.0f, 0.0f, 0.0f );
 	//m_vRot = D3DXVECTOR3( 0.0f, 0.0f, 0.0f );
 	//m_fScale = 1.0f;
+	m_pShadow = nullptr;
+
+	m_pDevice = nullptr;
+	m_pContext = nullptr;
+	m_pDepthStencilState = nullptr;
+
+
 }
 
 clsCharaSkin::~clsCharaSkin()
 {
-//	if( m_pModel != NULL ){
-//		delete m_pModel;
-//		m_pModel = NULL;
-//	}
+	m_pDepthStencilState = nullptr;
+	m_pContext = nullptr;
+	m_pDevice = nullptr;
+
+	if( m_pShadow != nullptr ){
+		delete m_pShadow;
+		m_pShadow = nullptr;
+	}
+
+	DetatchModel();
 }
 
 
@@ -24,7 +39,7 @@ clsCharaSkin::~clsCharaSkin()
 //============================================================
 void clsCharaSkin::UpDateModel()
 {
-	if( m_pModel == NULL ){
+	if( m_pModel == nullptr ){
 		return;
 	}
 
@@ -46,7 +61,7 @@ void clsCharaSkin::UpDateModel()
 //============================================================
 void clsCharaSkin::AttachModel( clsD3DXSKINMESH* pModel )
 {
-	if( pModel == NULL ){
+	if( pModel == nullptr ){
 		return;
 	}
 	//ÓÃÞÙÝ’è.
@@ -71,13 +86,11 @@ void clsCharaSkin::AttachModel( clsD3DXSKINMESH* pModel )
 //============================================================
 void clsCharaSkin::DetatchModel()
 {
-	if( m_pModel != NULL ){
-		m_pModel = NULL;
-
-
-		if( m_pAnimCtrl != NULL ){
+	if( m_pModel != nullptr ){
+		m_pModel = nullptr;
+		if( m_pAnimCtrl != nullptr ){
 			m_pAnimCtrl->Release();
-			m_pAnimCtrl = NULL;
+			m_pAnimCtrl = nullptr;
 		}
 	}
 }
@@ -92,12 +105,14 @@ void clsCharaSkin::Render( D3DXMATRIX& mView, D3DXMATRIX& mProj,
 	D3DXVECTOR3& vLight, D3DXVECTOR3& vEye,
 	D3DXVECTOR4 &vColor, bool alphaFlg )
 {
-	if( m_pModel == NULL || m_pAnimCtrl == NULL ){
+	if( m_pModel == nullptr || m_pAnimCtrl == nullptr ){
 		return;
 	}
 	//‰e.
-	if( m_pShadow != NULL ){
+	if( m_pShadow != nullptr ){
+		SetDepth( false );
 		m_pShadow->Render( mView, mProj, vEye );
+		SetDepth( true );
 	}
 
 	UpDateModel();
@@ -112,7 +127,7 @@ void clsCharaSkin::Render( D3DXMATRIX& mView, D3DXMATRIX& mProj,
 //============================================================
 int clsCharaSkin::GetAnimSetMax()
 {
-	if( m_pAnimCtrl != NULL ){
+	if( m_pAnimCtrl ){
 		return (int)m_pAnimCtrl->GetMaxNumAnimationSets();
 	}
 	return -1;
@@ -211,6 +226,7 @@ void clsCharaSkin::UpdatePos()
 	//ZŽ²ÍÞ¸ÄÙ‚ð—pˆÓ.
 	D3DXVECTOR3 vecAxisZ( 0.0f, 0.0f, 1.0f );
 
+
 	//ZŽ²ÍÞ¸ÄÙ‚»‚Ì‚à‚Ì‚ð‰ñ“]ó‘Ô‚É‚æ‚è•ÏŠ·‚·‚é.
 	D3DXVec3TransformCoord(
 		&vecAxisZ,	//(out).
@@ -279,3 +295,24 @@ void clsCharaSkin::SetDropoutFlg( bool flg )
 
 
 
+//ZƒeƒXƒg.
+HRESULT clsCharaSkin::SetDepth( bool bDepth )
+{
+	if( m_pDevice == nullptr ||
+		m_pContext == nullptr )
+	{
+		return E_FAIL;
+	}
+
+	D3D11_DEPTH_STENCIL_DESC depthStencilDesc;
+	ZeroMemory( &depthStencilDesc,
+		sizeof( D3D11_DEPTH_STENCIL_DESC ) );
+	depthStencilDesc.DepthEnable = bDepth;
+
+	m_pDevice->CreateDepthStencilState(
+		&depthStencilDesc, &m_pDepthStencilState );
+	m_pContext->OMSetDepthStencilState(
+		m_pDepthStencilState, 1 );
+
+	return S_OK;
+}

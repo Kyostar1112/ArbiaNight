@@ -210,13 +210,6 @@ public:
 	void Proj();
 
 
-	//ｼﾞｮｲｽﾃｨｯｸ.
-	clsXInput* m_pXInput;
-
-
-
-	//あたり判定.
-	clsCollision*	m_pCollision;
 
 #ifdef Inoue
 
@@ -304,22 +297,24 @@ public:
 	int	 iWallModelNumZero;
 	int	 iFloorModelNumZero;
 
-	enScene m_enScene;
 
 #endif //Inoue
+
+
+	enScene m_enScene;
 
 	//タイトルの状態.
 	enum enTitleSceneMode
 	{
 		en_TSM_IDLE = 0,	//入力受付.
 		en_TSM_BREAK_DOOR,	//ドア破壊しつつカメラ移動.
-		en_TSM_GO_MAIN,
+		en_TSM_GO_MAIN,		//ゲームの始まり.
 
 		en_TSM_MAX,
 	};
 	enTitleSceneMode m_enTitleSceneMode;
 
-	//リザルトの状態.
+	//リザルトの状態( BGMの ).
 	enum enResultSceneMode
 	{
 		enRSM_SILENCE = 0,
@@ -408,9 +403,6 @@ private:
 
 
 #if _DEBUG
-	//板ﾎﾟﾘｺﾞﾝ用.
-	clsSprite*		m_pExplosion;//爆発用.
-
 	//ﾃﾞﾊﾞｯｸﾞﾃｷｽﾄｸﾗｽ.
 	clsDebugText*	m_pText;
 
@@ -429,6 +421,11 @@ private:
 #endif //#if _DEBUG
 
 
+	//ｼﾞｮｲｽﾃｨｯｸ.
+	clsXInput* m_pXInput;
+
+	//あたり判定.
+	clsCollision*	m_pCollision;
 
 	//ﾌﾟﾚｲﾔｰ.
 	clsPlayer*			m_pPlayer;

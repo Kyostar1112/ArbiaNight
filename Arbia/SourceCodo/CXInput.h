@@ -112,7 +112,6 @@ private:
 	XINPUT_KEYSTROKE	m_keystroke;
 	XINPUT_VIBRATION	m_vibration;
 
-
 	//U“®•â•.
 	void VibSafe( int &iVibPower, int &iVibDec );//”ÍˆÍ“à‚Éû‚ß‚é.
 	void VibDecrease( int &iVibPower, int iDecPower );//Œ¸Š.

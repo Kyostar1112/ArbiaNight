@@ -19,6 +19,29 @@ clsDX9Mesh::clsDX9Mesh()
 	m_fPitch = 0.0f;
 	m_fRoll = 0.0f;
 
+	m_hWnd = nullptr;	//ｳｨﾝﾄﾞｳﾊﾝﾄﾞﾙ.
+
+	
+	m_pD3d = nullptr;	//DX9ｵﾌﾞｼﾞｪｸﾄ.
+	m_pDevice9 = nullptr;	//Dx9ﾃﾞﾊﾞｲｽｵﾌﾞｼﾞｪｸﾄ.
+
+	m_pMesh = nullptr;		//ﾒｯｼｭｵﾌﾞｼﾞｪｸﾄ.
+
+	
+	m_pDevice11 = nullptr;		//ﾃﾞﾊﾞｲｽｵﾌﾞｼﾞｪｸﾄ.
+	m_pDeviceContext11 = nullptr;	//ﾃﾞﾊﾞｲｽｺﾝﾃｷｽﾄ.
+	m_pVertexShader = nullptr;	//頂点ｼｪｰﾀﾞ.
+	m_pVertexLayout = nullptr;	//頂点ﾚｲｱｳﾄ.
+	m_pPixelShader = nullptr;		//ﾋﾟｸｾﾙｼｪｰﾀﾞ.
+	m_pConstantBuffer0 = nullptr;	//ｺﾝｽﾀﾝﾄﾊﾞｯﾌｧ0.
+	m_pConstantBuffer1 = nullptr;	//ｺﾝｽﾀﾝﾄﾊﾞｯﾌｧ1.
+
+	m_pVertexBuffer = nullptr;//頂点(ﾊﾞｰﾃｯｸｽ)ﾊﾞｯﾌｧ.
+	m_ppIndexBuffer = nullptr;	//ｲﾝﾃﾞｯｸｽﾊﾞｯﾌｧ.
+	m_pSampleLinear = nullptr;//ﾃｸｽﾁｬのｻﾝﾌﾟﾗｰ.//ﾃｸｽﾁｬに各種ﾌｨﾙﾀをかける.
+
+	m_pMaterials = nullptr;	//ﾏﾃﾘｱﾙ構造体.
+
 }
 
 //============================================================
@@ -69,7 +92,7 @@ HRESULT clsDX9Mesh::InitDx9( HWND hWnd )
 
 	//「Direct3D」ｵﾌﾞｼﾞｪｸﾄの作成.
 	m_pD3d = Direct3DCreate9( D3D_SDK_VERSION );
-	if( m_pD3d == NULL ){
+	if( m_pD3d == nullptr ){
 		MessageBox( NULL, "Dx9ｵﾌﾞｼﾞｪｸﾄ作成失敗", "InitDx9", MB_OK );
 		return E_FAIL;
 	}
@@ -129,7 +152,7 @@ HRESULT clsDX9Mesh::InitDx9( HWND hWnd )
 HRESULT clsDX9Mesh::LoadXMesh( HPSTR filename )
 {
 	//ﾏﾃﾘｱﾙﾊﾞｯﾌｧ.
-	LPD3DXBUFFER pD3DXMtrlBuffer = NULL;
+	LPD3DXBUFFER pD3DXMtrlBuffer = nullptr;
 
 	//ﾚｲとﾒｯｼｭの為に追加.
 	if( FAILED(D3DXLoadMeshFromXA(
@@ -173,7 +196,7 @@ HRESULT clsDX9Mesh::LoadXMesh( HPSTR filename )
 	//ﾏﾃﾘｱﾙ数分の繰り返し.
 	for( DWORD i=0; i<m_dwNumMaterials; i++ ){
 		//このﾀｲﾐﾝｸﾞでｲﾝﾃﾞｯｸｽﾊﾞｯﾌｧを初期化.
-		m_ppIndexBuffer[i] = NULL;//解放時のNULLﾁｪｯｸに対応するため.
+		m_ppIndexBuffer[i] = nullptr;//解放時のNULLﾁｪｯｸに対応するため.
 
 		//ﾏﾃﾘｱﾙ情報のｺﾋﾟｰ.
 		//ｱﾝﾋﾞｴﾝﾄ.
@@ -196,7 +219,7 @@ HRESULT clsDX9Mesh::LoadXMesh( HPSTR filename )
 
 
 		//(その面に)ﾃｸｽﾁｬが貼られているか?.
-		if( d3dxMaterials[i].pTextureFilename != NULL
+		if( d3dxMaterials[i].pTextureFilename != nullptr
 			&& lstrlen( d3dxMaterials[i].pTextureFilename ) > 0 )
 		{
 			m_bTexture = true;	//ﾃｸｽﾁｬﾌﾗｸﾞを立てる.
@@ -242,7 +265,7 @@ HRESULT clsDX9Mesh::LoadXMesh( HPSTR filename )
 	//---------------------------------------------------
 	//ﾒｯｼｭの属性情報を得る.
 	//属性情報でｲﾝﾃﾞｯｸｽﾊﾞｯﾌｧから細かいﾏﾃﾘｱﾙ毎のｲﾝﾃﾞｯｸｽﾊﾞｯﾌｧを分離できる.
-	D3DXATTRIBUTERANGE*	pAttrTable = NULL;
+	D3DXATTRIBUTERANGE*	pAttrTable = nullptr;
 
 	//ﾒｯｼｭの面および頂点の順番変更を制御し、ﾊﾟﾌｫｰﾏﾝｽを最適化する.
 	//	D3DXMESHOPT_COMPACT :面の順番を変更し、使用されてない頂点と面を削除する.
@@ -294,7 +317,7 @@ HRESULT clsDX9Mesh::LoadXMesh( HPSTR filename )
 			= pAttrTable[i].FaceCount;
 	}
 	delete[] pAttrTable;	//属性ﾃｰﾌﾞﾙの削除.
-	//pAttrTable = NULL;
+	//pAttrTable = nullptr;
 
 	//使用済みのｲﾝﾃﾞｯｸｽﾊﾞｯﾌｧの解放.
 	m_pMesh->UnlockIndexBuffer();
@@ -307,11 +330,11 @@ HRESULT clsDX9Mesh::LoadXMesh( HPSTR filename )
 	//	頂点(ﾊﾞｰﾃｯｸｽ)ﾊﾞｯﾌｧの作成.
 	//---------------------------------------------------
 	//Dx9の場合,mapではなくﾛｯｸでﾊﾞｰﾃｯｸｽﾊﾞｯﾌｧからﾃﾞｰﾀを取り出す.
-	LPDIRECT3DVERTEXBUFFER9 pVB = NULL;
+	LPDIRECT3DVERTEXBUFFER9 pVB = nullptr;
 	m_pMesh->GetVertexBuffer( &pVB );
 	DWORD dwStride = m_pMesh->GetNumBytesPerVertex();
-	BYTE *pVertices = NULL;
-	MeshVertex* pVertex = NULL;
+	BYTE *pVertices = nullptr;
+	MeshVertex* pVertex = nullptr;
 	if( SUCCEEDED(
 		pVB->Lock( 0, 0, ( VOID** )&pVertices, 0 ) ) )
 	{
@@ -394,8 +417,8 @@ HRESULT clsDX9Mesh::LoadXMesh( HPSTR filename )
 //============================================================
 HRESULT clsDX9Mesh::InitShader()
 {
-	ID3DBlob* pCompiledShader = NULL;
-	ID3DBlob* pErrors = NULL;
+	ID3DBlob* pCompiledShader = nullptr;
+	ID3DBlob* pErrors = nullptr;
 
 	UINT uCompileFlag = 0;
 

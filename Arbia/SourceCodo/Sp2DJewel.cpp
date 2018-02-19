@@ -20,7 +20,7 @@ HRESULT clsJewel::InitModel( SPRITE_STATE ss )
 	float fH = ss.Disp.h;	//表示ｽﾌﾟﾗｲﾄ高さ.
 	float fU = (ss.Base.w / ss.Stride.w)/ss.Base.w;	//一ｺﾏあたりの幅.
 	float fV = (ss.Base.h / ss.Stride.h)/ss.Base.h;	//一ｺﾏあたりの高さ.
-
+	
 	//中心を基準にするために.
 	fW /= 2.0f;
 	fH /= 2.0f;
@@ -198,4 +198,51 @@ void clsJewel::Render()
 	//ｱﾙﾌｧﾌﾞﾚﾝﾄﾞを無効にする.
 	SetBlend( false );
 
+}
+
+
+void clsJewel::UpDateSpriteSs()
+{
+	SPRITE_STATE ss = m_SState;
+	float fW = ss.Disp.w;	//表示ｽﾌﾟﾗｲﾄ幅.
+	float fH = ss.Disp.h;	//表示ｽﾌﾟﾗｲﾄ高さ.
+	float fU = (ss.Base.w / ss.Stride.w)/ss.Base.w;	//一ｺﾏあたりの幅.
+	float fV = (ss.Base.h / ss.Stride.h)/ss.Base.h;	//一ｺﾏあたりの高さ.
+
+	//中心を基準にするために.
+	fW /= 2.0f;
+	fH /= 2.0f;
+
+	//板ﾎﾟﾘ(四角形)の頂点を作成.
+	Sprite2DVertex vertices[] =
+	{
+		//頂点座標(x,y,z).					//UV座標( u, v ).
+		D3DXVECTOR3(-fW, fH, 0.0f ),	D3DXVECTOR2( 0.0f,	 fV ),	//頂点1(左下).
+		D3DXVECTOR3(-fW,-fH, 0.0f ),	D3DXVECTOR2( 0.0f, 0.0f ),	//頂点2(左上).
+		D3DXVECTOR3( fW, fH, 0.0f ),	D3DXVECTOR2(   fU,	 fV ),	//頂点3(右下).
+		D3DXVECTOR3( fW,-fH, 0.0f ),	D3DXVECTOR2(   fU, 0.0f )	//頂点4(右上).
+	};
+	//最大要素数を算出する.
+	UINT uVerMax = sizeof(vertices) / sizeof(vertices[0]);
+
+	//ﾊﾞｯﾌｧ構造体.
+	D3D11_BUFFER_DESC bd;
+	bd.Usage			= D3D11_USAGE_DEFAULT;		//使用法(ﾃﾞﾌｫﾙﾄ).
+	bd.ByteWidth		= sizeof( Sprite2DVertex ) * uVerMax;//頂点ｻｲｽﾞ(頂点*4).
+	bd.BindFlags		= D3D11_BIND_VERTEX_BUFFER;	//頂点ﾊﾞｯﾌｧとして扱う.
+	bd.CPUAccessFlags	= 0;						//CPUからはｱｸｾｽしない.
+	bd.MiscFlags		= 0;						//その他のﾌﾗｸﾞ(未使用).
+	bd.StructureByteStride	= 0;					//構造体ｻｲｽﾞ(未使用).
+
+	//ｻﾌﾞﾘｿｰｽﾃﾞｰﾀ構造体.
+	D3D11_SUBRESOURCE_DATA InitData;
+	InitData.pSysMem	= vertices;	//板ﾎﾟﾘの頂点をｾｯﾄ.
+
+	//頂点ﾊﾞｯﾌｧの作成.
+	if( FAILED(
+		m_pDevice11->CreateBuffer(
+			&bd, &InitData, &m_pVertexBuffer ) ) )
+	{
+		MessageBox( NULL, "頂点ﾊﾞｯﾌｧ作成失敗,", "clsJewel::UpDateSpriteSs", MB_OK );
+	}
 }

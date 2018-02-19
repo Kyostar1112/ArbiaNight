@@ -8,7 +8,7 @@
 
 
 //ｸﾞﾛｰﾊﾞﾙ変数.
-clsMain* g_pClsMain = NULL;
+clsMain* g_pClsMain = nullptr;
 
 
 //-----振動-----//.
@@ -73,7 +73,7 @@ const int	  iVOL_SE_EXIT = 300;
 const D3DXVECTOR3 vLIGHT_DIR = { 0.0f, 0.01f, 0.02f };
 
 //カメラのより具合.
-const float g_Zoom = 4.0f;
+const float fZOOM = D3DX_PI / 4.0f;
 
 //描画限界距離.
 const float fRENDER_LIMIT = 150.0f;
@@ -90,21 +90,19 @@ const float fBLACK_SPD_FAST = 0.05f;
 
 
 
-const int PAT_SMOK_MAX = 500;
+const int iPAT_SMOK_MAX = 500;
 
 
 //----- 配置用 -----//
-const float STAGE_WIDHT = 10.0f;
-const float fWALL_HIT_RANGE = STAGE_WIDHT / 2.0f - 0.75f;
+const float fSTAGE_WIDHT = 10.0f;
+const float fWALL_HIT_RANGE = fSTAGE_WIDHT / 2.0f - 0.75f;
 //落下死亡扱いする高さ.
 const float fDROP_DOWN_Y = -6.0f;
 
 //手前限界.
 const float fPLAYER_BACK_LIMIT = 4.0f;
-//スタート地点.
-const D3DXVECTOR3 START_POSITION = { 0.0f, 0.0f, fPLAYER_BACK_LIMIT };
 //カメラが手前によらないZ座標.
-const float CAMERA_NOT_BACK = 12.0f;
+const float fCAMERA_NOT_BACK = 12.0f;
 
 //カメラの初期ずれ.
 const D3DXVECTOR3 vCAMERA_INIT_OFFSET = { 0.0f, 4.9f, -7.0f };
@@ -194,7 +192,7 @@ INT WINAPI WinMain(
 	g_pClsMain = new clsMain;	//初期化&ｸﾗｽの宣言.
 
 	//ｸﾗｽが存在しているかﾁｪｯｸ.
-	if( g_pClsMain != NULL ){
+	if( g_pClsMain != nullptr ){
 		//ｳｨﾝﾄﾞｳ作成成功.
 		if( SUCCEEDED(
 			g_pClsMain->InitWindow(
@@ -242,35 +240,23 @@ clsMain::clsMain()
 {
 	ZeroMemory( this, sizeof( clsMain ) );
 
-	m_hWnd = NULL;
+	m_hWnd = nullptr;
 
-	m_pDevice		= NULL;	//ﾃﾞﾊﾞｲｽｵﾌﾞｼﾞｪｸﾄ.
-	m_pDeviceContext= NULL;	//ﾃﾞﾊﾞｲｽｺﾝﾃｷｽﾄ.
-	m_pSwapChain	= NULL;	//ｽﾜｯﾌﾟﾁｪｰﾝ.
+	m_pDevice		= nullptr;	//ﾃﾞﾊﾞｲｽｵﾌﾞｼﾞｪｸﾄ.
+	m_pDeviceContext= nullptr;	//ﾃﾞﾊﾞｲｽｺﾝﾃｷｽﾄ.
+	m_pSwapChain	= nullptr;	//ｽﾜｯﾌﾟﾁｪｰﾝ.
 
-	m_pBackBuffer_TexRTV	= NULL;//ﾚﾝﾀﾞｰﾀｰｹﾞｯﾄﾋﾞｭｰ.
-	m_pBackBuffer_DSTex		= NULL;//ﾊﾞｯｸﾊﾞｯﾌｧ.
-	m_pBackBuffer_DSTexDSV	= NULL;//ﾃﾞﾌﾟｽｽﾃﾝｼﾙﾋﾞｭｰ.
+	m_pBackBuffer_TexRTV	= nullptr;//ﾚﾝﾀﾞｰﾀｰｹﾞｯﾄﾋﾞｭｰ.
+	m_pBackBuffer_DSTex		= nullptr;//ﾊﾞｯｸﾊﾞｯﾌｧ.
+	m_pBackBuffer_DSTexDSV	= nullptr;//ﾃﾞﾌﾟｽｽﾃﾝｼﾙﾋﾞｭｰ.
 
-//	//ｶﾒﾗ(視点)位置.
-//	m_Camera.vEye	= D3DXVECTOR3( 0.0f, 2.0f, -10.0f );
-//	//注視位置.
-//	m_Camera.vLook	= D3DXVECTOR3( 0.0f, 2.0f, 10.0f );
 
 	//ﾗｲﾄ方向.
 	m_vLight = vLIGHT_DIR;
 
 	//ステージ読込全速力.
 	g_bStageRead = false;
-
 	m_fAlphaPoint = 1.0f;
-
-	m_pEffect = nullptr;
-
-	m_pEndEnemy = nullptr;
-
-	m_pCheck = nullptr;
-
 }
 
 //============================================================
@@ -300,14 +286,13 @@ HRESULT clsMain::InitWindow(
 	wc.hInstance		= hInstance;
 	wc.hIcon			= LoadIcon( NULL, IDI_APPLICATION );
 	wc.hCursor			= LoadCursor( NULL, IDC_ARROW );
-	wc.hbrBackground	= ( HBRUSH )GetStockObject( LTGRAY_BRUSH );
+	wc.hbrBackground	= (HBRUSH)GetStockObject( LTGRAY_BRUSH );
 	wc.lpszClassName	= APR_NAME;
 	wc.hIconSm			= LoadIcon( NULL, IDI_APPLICATION );
 
 	//ｳｨﾝﾄﾞｳｸﾗｽをWindowsに登録.
 	if( !RegisterClassEx( &wc ) ){
-		MessageBox( NULL,
-			"ｳｨﾝﾄﾞｳｸﾗｽの登録に失敗", "clsMain::InitWindow", MB_OK );
+		MessageBox( NULL, "ウィンドウクラスノ登録にミス", "clsMainInitWindow", MB_OK );
 		return E_FAIL;
 	}
 
@@ -324,8 +309,7 @@ HRESULT clsMain::InitWindow(
 		NULL );				//ｳｨﾝﾄﾞｳ作成時に発生するｲﾍﾞﾝﾄに渡すﾃﾞｰﾀ.
 
 	if( !m_hWnd ){
-		MessageBox( NULL,
-			"ｳｨﾝﾄﾞｳ作成に失敗", "clsMain::InitWindow", MB_OK );
+		MessageBox( NULL, "ｳｨﾝﾄﾞｳ作成にミス", "clsMain::InitWindow", MB_OK );
 		return E_FAIL;
 	}
 #ifdef Inoue
@@ -335,7 +319,6 @@ HRESULT clsMain::InitWindow(
 		true // アクセプトオプション
 	   );
 #endif	//#ifdef _DEBUG
-
 #endif//#ifdef Inoue
 
 	//ｳｨﾝﾄﾞｳの表示.
@@ -343,10 +326,9 @@ HRESULT clsMain::InitWindow(
 	UpdateWindow( m_hWnd );
 
 	//マウスカーソルの非表示.
-#ifdef _DEBUG
-#else
+#ifndef _DEBUG
 	ShowCursor(false);
-#endif//#ifdef _RELEASE
+#endif//#ifndef _DEBUG
 
 	return S_OK;
 }
@@ -372,7 +354,7 @@ LRESULT clsMain::MsgProc(
 		uFileNo = DragQueryFile( (HDROP)wParam, 0xFFFFFFFF, NULL, 0 );
 		char Path[MAX_PATH];
 		for (int i = 0; i < (int)uFileNo; i++){
-			DragQueryFile(hDrop, i, Path, sizeof(Path));
+			DragQueryFile( hDrop, i, Path, sizeof( Path ) );
 			g_vsFilePath.push_back(Path);
 		}
 		DragFinish( hDrop );
@@ -409,40 +391,23 @@ void clsMain::Loop()
 	//起動音再生.
 	m_pBgm[enBGM_START_UP]->Play();
 
-
-#ifdef START_LOADING_DISPLAY
-	//メッシュやスプライトなどの読込.
-	NowLoading();
-#endif//#ifdef START_LOADING_DISPLAY.
-
-
 	m_pXInput = new clsXInput;
-
-
 
 	//あたり判定.
 	m_pCollision = new clsCollision;
 	m_pCollision->CreateSe( m_hWnd );
 
-#ifndef START_LOADING_DISPLAY
+
+#ifdef START_LOADING_DISPLAY
+	//メッシュやスプライトなどの読込.
+	NowLoading();
+#else
 	//ﾒｯｼｭ読み込み関数をまとめたもの.
 	ReadMesh();
 	//メインシーン初期化(仮置き).
 	InitMain( true );
 #endif//#ifndef START_LOADING_DISPLAY
 
-#if _DEBUG
-	//ﾃﾞﾊﾞｯｸﾞﾃｷｽﾄの初期化.
-	m_pText = new clsDebugText;
-	D3DXVECTOR4 vColor( 1.0f, 1.0f, 1.0f, 1.0f );
-	if( FAILED( m_pText->Init(
-		m_pDeviceContext,
-		WND_W, WND_H, 50.0f,
-		vColor ) ) )
-	{
-		MessageBox( NULL, "ﾃﾞﾊﾞｯｸﾞﾃｷｽﾄ作成失敗", "clsMain::Loop", MB_OK );
-	}
-#endif //#if _DEBUG
 
 	//----------------------------------------------------------
 	//	ﾌﾚｰﾑﾚｰﾄ.
@@ -506,7 +471,7 @@ void clsMain::AppMain()
 			else if (m_pTestData->GetExtension() == png)
 			{
 				m_vsmpSpriteTest.push_back(make_unique<clsSprite2D>());
-				m_vsmpSpriteTest[g_iPngNum]->Create(m_pDevice, m_pDeviceContext, (LPSTR)m_pTestData->GetFilePath().c_str());
+				m_vsmpSpriteTest[g_iPngNum]->Init(m_pDevice, m_pDeviceContext, (LPSTR)m_pTestData->GetFilePath().c_str());
 				m_vsmpSpriteTest[g_iPngNum]->SetPos(WND_W / 2 - m_vsmpSpriteTest[g_iPngNum]->GetSs().Disp.w / 2, WND_H / 2 - m_vsmpSpriteTest[g_iPngNum]->GetSs().Disp.h / 2);
 				g_iPngNum++;
 			}
@@ -615,17 +580,19 @@ void clsMain::AppMain()
 		//スプライト移動、拡縮.
 		if (!m_vsmpSpriteTest.empty())
 		{
-			GETKEY_STAY('A'){ m_vsmpSpriteTest[m_SpriteControlNum]->AddPosX(-5.0f); }
-			GETKEY_STAY('D'){ m_vsmpSpriteTest[m_SpriteControlNum]->AddPosX(5.0f);	}
-			GETKEY_STAY('W'){ m_vsmpSpriteTest[m_SpriteControlNum]->AddPosY(-5.0f); }
-			GETKEY_STAY('S'){ m_vsmpSpriteTest[m_SpriteControlNum]->AddPosY(5.0f);	}
+			GETKEY_STAY('A'){ m_vsmpSpriteTest[m_SpriteControlNum]->AddPosX(-5.0f);	 m_vsmpSpriteTest[m_SpriteControlNum]->UpDateSpriteSs(); }
+			GETKEY_STAY('D'){ m_vsmpSpriteTest[m_SpriteControlNum]->AddPosX(5.0f);	 m_vsmpSpriteTest[m_SpriteControlNum]->UpDateSpriteSs(); }
+			GETKEY_STAY('W'){ m_vsmpSpriteTest[m_SpriteControlNum]->AddPosY(-5.0f);	 m_vsmpSpriteTest[m_SpriteControlNum]->UpDateSpriteSs(); }
+			GETKEY_STAY('S'){ m_vsmpSpriteTest[m_SpriteControlNum]->AddPosY(5.0f);	 m_vsmpSpriteTest[m_SpriteControlNum]->UpDateSpriteSs(); }
 			GETKEY_STAY('Q'){
 				m_fAlphaPoint-=0.01f;
 				m_vsmpSpriteTest[m_SpriteControlNum]->MulDisp(m_fAlphaPoint);
+				m_vsmpSpriteTest[m_SpriteControlNum]->UpDateSpriteSs();
 			}
 			GETKEY_STAY('E'){
 				m_fAlphaPoint+=0.01f;
 				m_vsmpSpriteTest[m_SpriteControlNum]->MulDisp(m_fAlphaPoint);
+				m_vsmpSpriteTest[m_SpriteControlNum]->UpDateSpriteSs();
 			}
 			GETKEY_DOWN('N'){
 				if (m_SpriteControlNum < m_vsmpSpriteTest.size() - 1){
@@ -814,7 +781,7 @@ HRESULT clsMain::InitD3D()
 	//	D3D_FEATURE_LEVEL列挙体の配列.
 	//	D3D_FEATURE_LEVEL_10_1:Direct3D 10.1のGPUﾚﾍﾞﾙ.
 	D3D_FEATURE_LEVEL	pFeatureLevels	= D3D_FEATURE_LEVEL_11_0;
-	D3D_FEATURE_LEVEL*	pFeatureLevel	= NULL;	//配列の要素数.
+	D3D_FEATURE_LEVEL*	pFeatureLevel	= nullptr;	//配列の要素数.
 
 
 	//ﾃﾞﾊﾞｲｽとｽﾜｯﾌﾟﾁｪｰﾝの作成.
@@ -854,9 +821,7 @@ HRESULT clsMain::InitD3D()
 					&m_pSwapChain, &m_pDevice,
 					pFeatureLevel, &m_pDeviceContext ) ) )
 			{
-				MessageBox(NULL,
-					"ﾃﾞﾊﾞｲｽとｽﾜｯﾌﾟﾁｪｰﾝの作成に失敗",
-					"error(main.cpp)", MB_OK );
+				MessageBox( NULL, "ﾃﾞﾊﾞｲｽとｽﾜｯﾌﾟﾁｪｰﾝの作成にミス", "error(main.cpp)", MB_OK );
 				return E_FAIL;
 			}
 		}
@@ -962,7 +927,7 @@ HRESULT clsMain::InitD3D()
 								//FALSE:↑の逆になる.
 	rdc.DepthClipEnable	= FALSE;	//距離についてのｸﾘｯﾋﾟﾝｸﾞ有効.
 
-	ID3D11RasterizerState* pIr	= NULL;
+	ID3D11RasterizerState* pIr	= nullptr;
 	m_pDevice->CreateRasterizerState( &rdc, &pIr );
 	m_pDeviceContext->RSSetState( pIr );
 	SAFE_RELEASE( pIr );
@@ -975,60 +940,50 @@ HRESULT clsMain::InitD3D()
 //============================================================
 void clsMain::DestroyD3D()
 {
-//作ったのとは逆順.
-
-	if( m_pEndEnemy != nullptr ){
-		delete m_pEndEnemy;
-		m_pEndEnemy = nullptr;
-	}
-
-	////Effekseerの破棄.
-	//clsEffects::GetInstance()->Destroy();
-	m_pEffect = nullptr;
-
-	//音声ﾌｧｲﾙを閉じる.
-	if( m_pBgm != NULL ){
-		for( int i=0; i<enBGM_MAX; i++){
-			m_pBgm[i]->Close();
-			delete m_pBgm[i];
-			m_pBgm[i] = NULL;
-		}
-	}
-
-	//SEを閉じる.
-	if( m_pSe != NULL ){
-		for( int i=0; i<enSe_MAX; i++ ){
-			m_pSe[i]->Close();
-			delete m_pSe[i];
-			m_pSe[i] = NULL;
-		}
-	}
-
-
 #if _DEBUG
-	//定規の削除.
-	for( int i=0; i<m_iBlkAryMax; i++ ){
-		//ﾓﾃﾞﾙﾃﾞｰﾀの関連付け.
-		m_ppBlkAry[i]->DetatchModel();
-		//破棄.
-		delete m_ppBlkAry[i];
-		m_ppBlkAry[i] = NULL;
+	//デバッグテキスト.
+	if( m_pText != nullptr ){
+		delete m_pText;
+		m_pText = nullptr;
 	}
-	//ﾎﾟｲﾝﾀ配列破棄.
-	delete[] m_ppBlkAry;
-	m_ppBlkAry = NULL;
 
+	if( m_pRayH != nullptr ){
+		delete m_pRayH;
+		m_pRayH = nullptr;
+	}
+	if( m_pRayFB != nullptr ){
+		delete m_pRayFB;
+		m_pRayFB = nullptr;
+	}
+	if( m_pRayV != nullptr ){
+		delete m_pRayV;
+		m_pRayV = nullptr;
+	}
+	if( m_pParticle != nullptr ){
+		delete m_pParticle;
+		m_pParticle = nullptr;
+	}
+
+	//定規の削除.
+	if( m_ppBlkAry != nullptr ){
+		for( int i=0; i<m_iBlkAryMax; i++ ){
+			//ﾓﾃﾞﾙﾃﾞｰﾀの関連付け.
+			m_ppBlkAry[i]->DetatchModel();
+			//破棄.
+			delete m_ppBlkAry[i];
+			m_ppBlkAry[i] = nullptr;
+		}
+		//ﾎﾟｲﾝﾀ配列破棄.
+		delete[] m_ppBlkAry;
+		m_ppBlkAry = nullptr;
+	}
 	//最大数初期化.
 	m_iBlkAryMax = 0;
+	
 
 #endif //#if _DEBUG
 
-
 #ifdef Inoue
-
-
-
-
 	//ステージ(壁)の削除.
 	if(!m_vsmpWall.empty()){
 		for( int i=0; i<m_vsmpWall.size(); i++ ){
@@ -1153,13 +1108,11 @@ void clsMain::DestroyD3D()
 		m_vsmpSpriteTest.shrink_to_fit();
 	}
 
-
 	//ﾌｧｲﾙ読込ｸﾗｽ解放.
 	if( m_smpStageData != NULL ){
 		m_smpStageData.reset();
 		m_smpStageData = NULL;
 	}
-
 
 	//Excel.
 	if( m_smpStageDataExcel != NULL ){
@@ -1167,46 +1120,74 @@ void clsMain::DestroyD3D()
 		m_smpStageDataExcel = NULL;
 	}
 
-
 	//UiManager.
 	if( m_smpUiManagar != NULL ){
 		m_smpUiManagar.reset();
 		m_smpUiManagar = NULL;
 	}
-
-
 #endif //ifdef Inoue.
+
+#ifdef Tahara
+
+	if( m_pEndEnemy != nullptr ){
+		delete m_pEndEnemy;
+		m_pEndEnemy = nullptr;
+	}
+
 	if( m_pCheck != nullptr ){
 		delete m_pCheck;
 		m_pCheck = nullptr;
 	}
 
-
-	//NEW_ARBIA.
-	if( m_pPlayer != NULL ){
+	//ARBIA.
+	if( m_pPlayer != nullptr ){
 		m_pPlayer->DetatchModel();
 		delete m_pPlayer;
-		m_pPlayer = NULL;
+		m_pPlayer = nullptr;
 	}
+
+
+	////Effekseerの破棄.
+	//clsEffects::GetInstance()->Destroy();
+	m_pEffect = nullptr;
 
 
 
 	//あたり判定.
-	if( m_pCollision != NULL ){
+	if( m_pCollision != nullptr ){
 		delete m_pCollision;
-		m_pCollision = NULL;
+		m_pCollision = nullptr;
 	}
 
 	//ｺﾝﾄﾛｰﾗ入力.
-	if( m_pXInput != NULL ){
+	if( m_pXInput != nullptr ){
 		m_pXInput->EndProc();
 		XInputEnable( false );
 		delete m_pXInput;
-		m_pXInput = NULL;
+		m_pXInput = nullptr;
 	}
 
+	//SEを閉じる.
+	if( m_pSe != nullptr ){
+		for( int i=0; i<enSe_MAX; i++ ){
+			m_pSe[i]->Stop();
+			m_pSe[i]->Close();
+			delete m_pSe[i];
+			m_pSe[i] = nullptr;
+		}
+	}
 
-	//Direct3Dｵﾌﾞｼﾞｪｸﾄを解放.
+	//BGMを閉じる.
+	if( m_pBgm != nullptr ){
+		for( int i=0; i<enBGM_MAX; i++){
+			m_pBgm[i]->Stop();
+			m_pBgm[i]->Close();
+			delete m_pBgm[i];
+			m_pBgm[i] = nullptr;
+		}
+	}
+#endif //#ifdef Tahara
+
 	SAFE_RELEASE( m_pBackBuffer_DSTexDSV );
 	SAFE_RELEASE( m_pBackBuffer_DSTex );
 	SAFE_RELEASE( m_pBackBuffer_TexRTV );
@@ -1224,8 +1205,8 @@ void clsMain::DestroyD3D()
 ////============================================================
 HRESULT clsMain::InitSphere( clsDX9Mesh* pMesh, float fScale )
 {
-	LPDIRECT3DVERTEXBUFFER9 pVB = NULL;	//頂点ﾊﾞｯﾌｧ.
-	void*	pVertices = NULL;	//頂点.
+	LPDIRECT3DVERTEXBUFFER9 pVB = nullptr;	//頂点ﾊﾞｯﾌｧ.
+	void*	pVertices = nullptr;	//頂点.
 	D3DXVECTOR3	vCenter;		//中心.
 	float	fRadius;			//半径.
 
@@ -1259,13 +1240,14 @@ HRESULT clsMain::InitSphere( clsDX9Mesh* pMesh, float fScale )
 
 	return S_OK;
 }
+
 ////============================================================
 //	ﾊﾞｳﾝﾃﾞｨﾝｸﾞﾎﾞｯｸｽ作成.
 ////============================================================
 HRESULT clsMain::InitBBox( clsDX9Mesh* pMesh )
 {
-	LPDIRECT3DVERTEXBUFFER9 pVB = NULL;
-	VOID* pVertices = NULL;
+	LPDIRECT3DVERTEXBUFFER9 pVB = nullptr;
+	VOID* pVertices = nullptr;
 	D3DXVECTOR3 Max, Min;
 
 	//ﾒｯｼｭの頂点ﾊﾞｯﾌｧをﾛｯｸする.
@@ -1440,7 +1422,7 @@ HRESULT clsMain::ReadMesh()
 	//プレイヤー.
 	{
 		m_pPlayer = new clsPlayer;
-		m_pPlayer->Create( m_hWnd, m_pDevice, m_pDeviceContext );
+		m_pPlayer->Create( m_hWnd, m_pDevice, m_pDeviceContext, m_pXInput );
 		m_pPlayer->Init();
 
 		CD3DXSKINMESH_INIT si;//skin_Init.
@@ -1465,10 +1447,30 @@ HRESULT clsMain::ReadMesh()
 	}
 
 
-	//文字( 最初の奴は作らない{ MOVIE用 } ).
+	//チェックポイント文字( 最初の奴は作らない{ MOVIE用 } ).
 	m_pCheck = new clsCheckPointMgr;
 	m_pCheck->Create( m_hWnd, m_pDevice, m_pDeviceContext );
 	m_pCheck->Init();
+
+
+
+
+	//エンディングシーンでの敵表示クラス.
+	m_pEndEnemy = new clsEndEnemMgr;
+	m_pEndEnemy->Create( m_hWnd, m_pDevice, m_pDeviceContext );
+
+
+
+	//列挙体のステージの一番最初.
+	iWallModelNumZero = m_pResource->EtoI( clsResource::enST_MODEL_WALL_MIN );
+	iFloorModelNumZero = m_pResource->EtoI( clsResource::enST_MODEL_FLOOR_MIN );
+
+
+
+	//モデルの紐づけ.
+	StageModelSet();
+
+
 
 
 #if _DEBUG
@@ -1487,33 +1489,12 @@ HRESULT clsMain::ReadMesh()
 		m_ppBlkAry[i]->SetPosition(
 			D3DXVECTOR3( 0.0f, 0.0f, 0.0f ) );
 	}
-#endif //#if _DEBUG
 
-
-	//エンディングシーンでの敵表示クラス.
-	m_pEndEnemy = new clsEndEnemMgr;
-	m_pEndEnemy->Create( m_hWnd, m_pDevice, m_pDeviceContext );
-
-
-
-	//列挙体のステージの一番最初.
-	iWallModelNumZero = m_pResource->EtoI( clsResource::enST_MODEL_WALL_MIN );
-	iFloorModelNumZero = m_pResource->EtoI( clsResource::enST_MODEL_FLOOR_MIN );
-
-
-
-
-
-
-
-#if _DEBUG
 	//ﾊﾟｰﾃｨｸﾙの初期化500個.
 //	m_pParticle = new clsParticle;	//元はこうして使っていたよ.
-	m_pParticle = new clsParticle( PAT_SMOK_MAX, D3DXVECTOR3( 0.0f, 0.0f, 0.0f ) );
+	m_pParticle = new clsParticle( iPAT_SMOK_MAX, D3DXVECTOR3( 0.0f, 0.0f, 0.0f ) );
 	m_pParticle->Init( m_pDevice, m_pDeviceContext );
 	m_pParticle->m_bDispFlg = false;
-
-
 
 	//ﾚｲ表示の初期化(垂直).
 	m_pRayV = new clsRay;
@@ -1526,17 +1507,25 @@ HRESULT clsMain::ReadMesh()
 	m_pRayFB->m_Ray.vPoint[1] = D3DXVECTOR3( 0.0f, 0.0f, 5.0f);
 	m_pRayFB->Init( m_pDevice, m_pDeviceContext );
 	//ﾚｲ表示の初期化(左右).
-	m_pRayH = new clsRay;
-	m_pRayH->m_Ray.vPoint[0] = D3DXVECTOR3(-5.0f, 0.0f, 0.0f);
-	m_pRayH->m_Ray.vPoint[1] = D3DXVECTOR3( 5.0f, 0.0f, 0.0f);
-	m_pRayH->Init( m_pDevice, m_pDeviceContext );
+	if( m_pRayH == nullptr ){
+		m_pRayH = new clsRay;
+		int r = sizeof( clsRay );
+		m_pRayH->m_Ray.vPoint[0] = D3DXVECTOR3(-5.0f, 0.0f, 0.0f);
+		m_pRayH->m_Ray.vPoint[1] = D3DXVECTOR3( 5.0f, 0.0f, 0.0f);
+		m_pRayH->Init( m_pDevice, m_pDeviceContext );
+	}
 
+	//ﾃﾞﾊﾞｯｸﾞﾃｷｽﾄの初期化.
+	m_pText = new clsDebugText;
+	D3DXVECTOR4 vColor( 1.0f, 1.0f, 1.0f, 1.0f );
+	if( FAILED( m_pText->Init(
+		m_pDeviceContext,
+		WND_W, WND_H, 50.0f,
+		vColor ) ) )
+	{
+		MessageBox( NULL, "ﾃﾞﾊﾞｯｸﾞﾃｷｽﾄ作成失敗", "clsMain::Loop", MB_OK );
+	}
 #endif //#if _DEBUG
-
-
-	//モデルの紐づけ.
-	StageModelSet();
-
 
 
 	return S_OK;
@@ -1545,7 +1534,7 @@ HRESULT clsMain::ReadMesh()
 
 
 //============================================================
-//	深度ﾃｽﾄ(Zﾃｽﾄ)　ON/OFF切替.
+//	深度ﾃｽﾄ(Zﾃｽﾄ)ON/OFF切替.
 //============================================================
 void clsMain::SetDepth( bool bFlg )
 {
@@ -1705,6 +1694,7 @@ bool clsMain::Intersect(
 	}
 	return false;
 }
+
 //============================================================
 //	交差位置のﾎﾟﾘｺﾞﾝの頂点を見つける.
 //		※頂点座標はﾛｰｶﾙ座標.
@@ -1720,14 +1710,14 @@ HRESULT clsMain::FindVerticesOnPoly(
 	//面数を取得.
 	DWORD dwPolyAmt = pTarget->GetNumFaces();
 
-	WORD* pwPoly = NULL;
+	WORD* pwPoly = nullptr;
 
 	//ｲﾝﾃﾞｯｸｽﾊﾞｯﾌｧをﾛｯｸ(読込ﾓｰﾄﾞ).
 	pTarget->LockIndexBuffer(
 		D3DLOCK_READONLY, (VOID**)&pwPoly );
-	BYTE*	pbVertices = NULL;	//頂点(ﾊﾞｲﾄ型)
-	FLOAT*	pfVertices = NULL;	//頂点(float型)
-	LPDIRECT3DVERTEXBUFFER9 VB = NULL;	//頂点ﾊﾞｯﾌｧ.
+	BYTE*	pbVertices = nullptr;	//頂点(ﾊﾞｲﾄ型)
+	FLOAT*	pfVertices = nullptr;	//頂点(float型)
+	LPDIRECT3DVERTEXBUFFER9 VB = nullptr;	//頂点ﾊﾞｯﾌｧ.
 	pTarget->GetVertexBuffer( &VB );	//頂点情報の取得.
 
 	//頂点ﾊﾞｯﾌｧのﾛｯｸ.
@@ -1795,22 +1785,22 @@ void clsMain::WallJudge( clsDX9Mesh* pAttacker, clsDX9Mesh* pWall )
 							D3DXVECTOR3( 1.0f, 0.0f, 0.0f ),
 							D3DXVECTOR3(-1.0f, 0.0f, 0.0f ) };
 	//ﾚｲの向きにより当たる壁までの距離を求める.
-	//軸ﾍﾞｸﾄﾙ　前後右左.
+	//軸ﾍﾞｸﾄﾙ前後右左.
 	for( char i=0; i<MAX; i++ ){
 		pAttacker->m_vAxis = Axis[i];
 		Intersect( pAttacker, pWall, &fDistance[i], &vIntersect[i] );
 	}
 #else
-	//軸ﾍﾞｸﾄﾙ　前.
+	//軸ﾍﾞｸﾄﾙ前.
 	pAttacker->m_vAxis = D3DXVECTOR3( 0.0f, 0.0f, 1.0f );
 	Intersect( pAttacker, pWall, &fDistance[0], &vIntersect[0] );
-	//軸ﾍﾞｸﾄﾙ　後.
+	//軸ﾍﾞｸﾄﾙ後.
 	pAttacker->m_vAxis = D3DXVECTOR3( 0.0f, 0.0f,-1.0f );
 	Intersect( pAttacker, pWall, &fDistance[1], &vIntersect[1] );
-	//軸ﾍﾞｸﾄﾙ　右.
+	//軸ﾍﾞｸﾄﾙ右.
 	pAttacker->m_vAxis = D3DXVECTOR3( 1.0f, 0.0f, 0.0f );
 	Intersect( pAttacker, pWall, &fDistance[2], &vIntersect[2] );
-	//軸ﾍﾞｸﾄﾙ　左.
+	//軸ﾍﾞｸﾄﾙ左.
 	pAttacker->m_vAxis = D3DXVECTOR3(-1.0f, 0.0f, 0.0f );
 	Intersect( pAttacker, pWall, &fDistance[3], &vIntersect[3] );
 #endif
@@ -2022,7 +2012,7 @@ void clsMain::Proj()
 	//ﾌﾟﾛｼﾞｪｸｼｮﾝ(射影行列)変換.
 	D3DXMatrixPerspectiveFovLH(
 		&m_mProj,			//(out)ﾌﾟﾛｼﾞｪｸｼｮﾝ計算結果.
-		D3DX_PI / g_Zoom,	//y方向の視野(ﾗｼﾞｱﾝ指定)数字を大きくしたら視野が狭くなる.
+		fZOOM,	//y方向の視野(ﾗｼﾞｱﾝ指定)数字を大きくしたら視野が狭くなる.
 		(FLOAT)WND_W / (FLOAT)WND_H,//ｱｽﾍﾟｸﾄ比(幅/高さ).
 		0.1f,				//近いﾋﾞｭｰ平面のz値.
 		fRENDER_LIMIT );	//遠いﾋﾞｭｰ平面のz値.100.f
@@ -2313,7 +2303,7 @@ void clsMain::InitEndroll()
 //============================================================
 void clsMain::CameraMgr()
 {
-	if( m_pPlayer != NULL ){
+	if( m_pPlayer != nullptr ){
 		CameraTargetSet();
 		Stoker( m_Camera.vEye, m_vCameraTarget );
 		CameraLookSet();
@@ -2336,7 +2326,7 @@ void clsMain::CameraTargetSet()
 	m_vCameraTarget.z += m_fLookOffset;
 
 	//一番手前.
-	if( m_pPlayer->GetPositionZ() <= CAMERA_NOT_BACK )
+	if( m_pPlayer->GetPositionZ() <= fCAMERA_NOT_BACK )
 	{
 		m_fLookOffset += fCAMERA_OFFSET_MOVE_BACK_LIMIT;
 		if( m_fLookOffset > 0 ){
@@ -2426,7 +2416,7 @@ void clsMain::CameraLookSet()
 	m_fCameraLookFloor = m_pPlayer->m_fFloorY;
 	m_vLookTarget.y = m_fCameraLookFloorOld;
 
-	//見る高さ　足元からの高さ.
+	//見る高さ足元からの高さ.
 	m_vLookTarget.y += fLOOK_OFFSET_Y;
 
 
@@ -2442,7 +2432,7 @@ void clsMain::CameraLookSet()
 
 	m_Camera.vLook = m_vLookTarget;
 }
- float clsMain::CameraLengthComp( float Attker, float Target )
+float clsMain::CameraLengthComp( float Attker, float Target )
  {
 	float Langth = Target - Attker;
 
@@ -2726,7 +2716,7 @@ void clsMain::StageModelSet()
 #else
 				m_vsmpStepCil[StageMoveFloorViticulNum]->AttachModel( m_pResource->GetStaticModels( m_pResource->enST_MODEL_STEP_CIL ) );
 #endif//#ifdef Tahara
-				m_vsmpStepCil[StageMoveFloorViticulNum]->SetPositionX( (float)m_vStageDataPatarnSet[StageNum].iStepCil - STAGE_WIDHT / 2.0f );
+				m_vsmpStepCil[StageMoveFloorViticulNum]->SetPositionX( (float)m_vStageDataPatarnSet[StageNum].iStepCil - fSTAGE_WIDHT / 2.0f );
 				m_vsmpStepCil[StageMoveFloorViticulNum]->SetScale( SetScale );
 				m_vsmpStepCil[StageMoveFloorViticulNum]->CreateMove( bInitCil );
 				StageMoveFloorViticulNum++;
@@ -3025,7 +3015,7 @@ void clsMain::SceneTitle()
 
 
 	bool bPushEnter = false;
-	if( m_pXInput->IsPressEnter( XINPUT_GAMEPAD_A ) )bPushEnter = true;
+	if( m_pXInput->IsPressEnter( XINPUT_A ) )bPushEnter = true;
 	GETKEY_DOWN( 'Z' ) bPushEnter = true;
 	GETKEY_DOWN( 'A' ) bPushEnter = true;
 
@@ -3042,6 +3032,7 @@ void clsMain::SceneTitle()
 			}
 		}
 		break;
+
 	case en_TSM_BREAK_DOOR:
 		{
 			//カメラ追いかける.
@@ -3080,7 +3071,7 @@ void clsMain::SceneTitle()
 			}
 			//床.
 			bool bGroundFlg = false;
-			m_vsmpDoorMgr[0]->Move( m_pPlayer->GetPositionZ() );
+			m_vsmpDoorMgr[0]->Update( m_pPlayer->GetPositionZ() );
 			for( int i=0; i<m_vsmpFloor.size(); i++ ){
 				if( isCutOutForHit( m_pPlayer->GetPositionZ(), m_vsmpFloor[i]->GetPositionZ() ) ){
 					if( m_pCollision->FloorJudge(
@@ -3096,11 +3087,13 @@ void clsMain::SceneTitle()
 			m_pPlayer->SetGroundFlg( bGroundFlg );
 		}
 		break;
+
 	case en_TSM_GO_MAIN:
 		//メインへ.
 		InitMain( true );
 		m_enTitleSceneMode = en_TSM_IDLE;
 		break;
+
 	default:
 		m_enTitleSceneMode = en_TSM_GO_MAIN;
 		break;
@@ -3118,9 +3111,9 @@ void clsMain::SceneMain()
 	}
 
 	//----- 自機 -----//.
-	m_pPlayer->Input( m_pXInput );
+	m_pPlayer->Input();
 
-	m_pPlayer->Move( GetEar() );
+	m_pPlayer->Update( GetEar() );
 
 	//手前ガード.
 	if( m_pPlayer->GetPositionZ() < fPLAYER_BACK_LIMIT ){
@@ -3145,7 +3138,7 @@ void clsMain::SceneMain()
 	//----- 敵 -----//.
 	for( int i=0; i<m_vsmpEnemyMgr.size(); i++ ){
 		//動く.
-		m_vsmpEnemyMgr[i]->Move( GetEar() );
+		m_vsmpEnemyMgr[i]->Update( GetEar() );
 
 		if( isCutOutForHit( m_pPlayer->GetPositionZ(), m_vsmpEnemyMgr[i]->GetPositionZ() ) ){
 			//ﾌﾟﾚｲﾔｰのPosをﾀｰｹﾞｯﾄにｾｯﾄ.
@@ -3279,7 +3272,7 @@ void clsMain::SceneMain()
 	//----- 床槍 -----//.
 	for( int i=0; i<m_vsmpSpiaFloorMgr.size(); i++ ){
 		//動き.
-		m_vsmpSpiaFloorMgr[i]->Move( GetEar() );
+		m_vsmpSpiaFloorMgr[i]->Update( GetEar() );
 
 		if( isCutOutForHit( m_pPlayer->GetPositionZ(), m_vsmpSpiaFloorMgr[i]->GetPositionZ(), fONE_BROCK_HIT_AREA, fONE_BROCK_HIT_AREA ) ){
 			//生きてるとき.
@@ -3308,7 +3301,7 @@ void clsMain::SceneMain()
 	//----- 壁槍 -----//.
 	for ( int i=0; i<m_vsmpSpiaWallMgr.size(); i++ ){
 		//動き.
-		m_vsmpSpiaWallMgr[i]->Move( GetEar() );
+		m_vsmpSpiaWallMgr[i]->Update( GetEar() );
 
 		if( isCutOutForHit( m_pPlayer->GetPositionZ(), m_vsmpSpiaWallMgr[i]->GetPositionZ(), fONE_BROCK_HIT_AREA, fONE_BROCK_HIT_AREA ) ){
 			//生きてるとき.
@@ -3351,7 +3344,7 @@ void clsMain::SceneMain()
 	char* cPendBoneName = (char*)PEND_BONE_NAME;//ﾎﾞｰﾝ名.
 	for( int i=0; i<m_vsmpPend.size(); i++ ){
 		//振り子動き.
-		m_vsmpPend[i]->Move( GetEar() );
+		m_vsmpPend[i]->Update( GetEar() );
 		//透過基準設定.
 		m_vsmpPend[i]->SetAlphaFlg( m_pPlayer->GetPositionZ() );
 
@@ -3426,7 +3419,7 @@ void clsMain::SceneMain()
 					}
 				}
 			}
-			m_vsmpGoalMgr[i]->Move( GetEar() );
+			m_vsmpGoalMgr[i]->Update( GetEar() );
 		}
 	}
 
@@ -3540,7 +3533,7 @@ void clsMain::SceneMain()
 			//透過.
 			m_vsmpDoorMgr[i]->SetAlphaFlg( GetEar() );
 			//動作.
-			m_vsmpDoorMgr[i]->Move( GetEar() );
+			m_vsmpDoorMgr[i]->Update( GetEar() );
 		}
 	}
 
@@ -3564,7 +3557,7 @@ void clsMain::SceneMain()
 		//落とし穴の数分回す.
 		for( int i=0; i<m_vsmpCoverMgr.size(); i++ ){
 			//動作.
-			m_vsmpCoverMgr[i]->Move( GetEar() );
+			m_vsmpCoverMgr[i]->Update( GetEar() );
 			if( isCutOutForHit( m_pPlayer->GetPositionZ(), m_vsmpCoverMgr[i]->GetPositionZ() ) ){
 				//開いている時は乗れない.
 				if( m_vsmpCoverMgr[i]->isCanStmp() )
@@ -3621,7 +3614,7 @@ void clsMain::SceneMain()
 
 	//----- 動く丸足場 -----//.
 	for( int i=0; i<m_vsmpStepCil.size(); i++ ){
-		m_vsmpStepCil[i]->Move();	//こいつは外に出しておかないとbreakのせいで乗っている足場以外が止まってしまう.
+		m_vsmpStepCil[i]->Update();	//こいつは外に出しておかないとbreakのせいで乗っている足場以外が止まってしまう.
 	}
 	if( !bCutGroundCheck ){
 		for( int i=0; i<m_vsmpStepCil.size(); i++ ){
@@ -3648,7 +3641,7 @@ void clsMain::SceneMain()
 
 	//----- 動く四角足場 -----//.
 	for( int i=0; i<m_vsmpStepBox.size(); i++ ){
-		m_vsmpStepBox[i]->Move();	//こいつは外に出しておかないとbreakのせいで乗っている足場以外が止まってしまう.
+		m_vsmpStepBox[i]->Update();	//こいつは外に出しておかないとbreakのせいで乗っている足場以外が止まってしまう.
 	}
 	if( !bCutGroundCheck ){
 		for( int i=0; i<m_vsmpStepBox.size(); i++ ){
@@ -3810,7 +3803,7 @@ void clsMain::SceneResult()
 	for( int i=0; i<m_vsmpGoalMgr.size(); i++ ){
 		m_pCollision->WallJudge( m_pPlayer, m_vsmpGoalMgr[i]->GetFloorColPointer() );
 		m_pCollision->WallJudge( m_pPlayer, m_vsmpGoalMgr[i]->GetTrBoxColPointer() );
-		m_vsmpGoalMgr[i]->Move( GetEar() );
+		m_vsmpGoalMgr[i]->Update( GetEar() );
 	}
 	//----- ゴール床 -----//.
 	bool bGroundFlg = false;
@@ -3855,7 +3848,7 @@ void clsMain::SceneResult()
 
 	//決定ボタン.
 	bool bPushEnter = false;
-	if( m_pXInput->IsPressEnter( XINPUT_GAMEPAD_A ) )bPushEnter = true;
+	if( m_pXInput->IsPressEnter( XINPUT_A ) )bPushEnter = true;
 	GETKEY_DOWN( 'Z' ) bPushEnter = true;
 	GETKEY_DOWN( 'A' ) bPushEnter = true;
 
@@ -3921,13 +3914,13 @@ void clsMain::SceneEnding()
 
 	//短押し.
 	bool bPushEnterEnter = false;
-	if( m_pXInput->IsPressEnter( XINPUT_GAMEPAD_A ) )bPushEnterEnter = true;
+	if( m_pXInput->IsPressEnter( XINPUT_A ) )bPushEnterEnter = true;
 	GETKEY_DOWN( 'Z' ) bPushEnterEnter = true;
 	GETKEY_DOWN( 'A' ) bPushEnterEnter = true;
 
 	//長押し.
 	bool bPushEnterStay = false;
-	if( m_pXInput->IsPressStay( XINPUT_GAMEPAD_A ) )bPushEnterStay = true;
+	if( m_pXInput->IsPressStay( XINPUT_A ) )bPushEnterStay = true;
 	GETKEY_STAY( 'Z' ) bPushEnterStay = true;
 	GETKEY_STAY( 'A' ) bPushEnterStay = true;
 
@@ -3957,7 +3950,7 @@ void clsMain::SceneOver()
 
 
 	bool bPushEnter = false;
-	if( m_pXInput->IsPressEnter( XINPUT_GAMEPAD_A ) )bPushEnter = true;
+	if( m_pXInput->IsPressEnter( XINPUT_A ) )bPushEnter = true;
 	GETKEY_DOWN( 'Z' ) bPushEnter = true;
 	GETKEY_DOWN( 'A' ) bPushEnter = true;
 
@@ -4083,9 +4076,12 @@ void clsMain::RenderMain()
 		}
 	}
 
+#endif //#ifdef Inoue
+
 	//エフェクシーア.
 	m_pEffect->Render( m_mView, m_mProj, m_Camera.vEye );
 
+#ifdef Inoue
 
 	//ペンデュラム(逆順なのは透過の都合).
 	if ( !m_vsmpPend.empty() ){
@@ -4118,55 +4114,6 @@ void clsMain::RenderMain()
 
 
 
-
-
-
-
-
-
-//	//ﾊﾟｰﾃｨｸﾙの表示.
-//	if( m_pParticle->m_bDispFlg ){
-//		SetDepth( false );	//Zﾃｽﾄ:OFF.
-//		//※ﾊﾟｰﾃｨｸﾙ1粒をﾎﾟｲﾝﾄｽﾌﾟﾗｲﾄ1枚として500枚描画.
-//		int particleMax = m_pParticle->GetMaxParticle();
-//		for( int i=0; i<particleMax; i++ ){
-//			//現在のi番目の粒の位置を取得.
-//			D3DXVECTOR3 vParticlePos = m_pParticle->GetParticlePos( i );
-//			//i番目の粒を表示.
-//			m_pParticle->Render( m_mView, m_mProj, m_Camera.vEye, vParticlePos );
-//		}
-//		//ﾊﾟｰﾃｨｸﾙの移動処理.
-//		m_pParticle->Run();
-//		SetDepth( true );	//Zﾃｽﾄ:ON.
-//	}
-
-
-
-
-	////------------------------------
-	////	Effekseerｸﾗｽのﾚﾝﾀﾞﾘﾝｸﾞ.
-	////------------------------------
-	//clsEffects* pEffects = clsEffects::GetInstance();
-	//if( pEffects ){
-	//	//確認用に変数を宣言.
-	//	static ::Effekseer::Handle handle = -1;
-	//	if( GetAsyncKeyState( 'R' ) & 0x1 ){
-	//		for( int i=0; i<clsEffects::enEfcType_Max; i++ ){
-	//			//ｴﾌｪｸﾄの再生.
-	//			handle =
-	//				pEffects->Play( (clsEffects::enEfcType)i ,
-	//				D3DXVECTOR3( -2.0f + (float)(i*2), 1.0f, 5.0f ) );
-	//			//回転.
-	//			pEffects->SetRotation( handle,
-	//				D3DXVECTOR3( 0.0f, D3DXToRadian( 90.0 ), 0.0f ) );
-	//			//ｽｹｰﾙ.
-	//			pEffects->SetScale( handle,
-	//				D3DXVECTOR3( 0.5f, 0.5f, 0.5f ) );
-	//		}
-	//	}
-	//	pEffects->Render( m_mView, m_mProj, m_Camera.vEye );
-	//}
-
 #ifdef _DEBUG
 	//定規.
 	for( int i=0; i<m_iBlkAryMax; i++ ){
@@ -4190,6 +4137,23 @@ void clsMain::RenderMain()
 	//回転値を自機に合わせる.
 	m_pRayH->m_Ray.fYaw = m_pPlayer->GetRotationY();
 		m_pRayH->Render( m_mView, m_mProj );
+
+
+//	//ﾊﾟｰﾃｨｸﾙの表示.
+//	if( m_pParticle->m_bDispFlg ){
+//		SetDepth( false );	//Zﾃｽﾄ:OFF.
+//		//※ﾊﾟｰﾃｨｸﾙ1粒をﾎﾟｲﾝﾄｽﾌﾟﾗｲﾄ1枚として500枚描画.
+//		int particleMax = m_pParticle->GetMaxParticle();
+//		for( int i=0; i<particleMax; i++ ){
+//			//現在のi番目の粒の位置を取得.
+//			D3DXVECTOR3 vParticlePos = m_pParticle->GetParticlePos( i );
+//			//i番目の粒を表示.
+//			m_pParticle->Render( m_mView, m_mProj, m_Camera.vEye, vParticlePos );
+//		}
+//		//ﾊﾟｰﾃｨｸﾙの移動処理.
+//		m_pParticle->Run();
+//		SetDepth( true );	//Zﾃｽﾄ:ON.
+//	}
 
 
 
@@ -4252,7 +4216,7 @@ void clsMain::RenderDebugText()
 
 
 	//NULLﾁｪｯｸ.
-	if (m_pText != NULL){
+	if ( m_pText != nullptr ){
 		char strDbgTxt[256];
 		int dbgtxty = 50;
 		int dbgTxtX = 20;
@@ -4563,16 +4527,17 @@ void clsMain::NowLoading()
 void clsMain::LoadSpriteInit()
 {
 	m_pLoadBack = make_unique<clsSprite2D>();
-	m_pLoadBack->Create(m_pDevice, m_pDeviceContext, "Data\\Load\\Black.png");
+	m_pLoadBack->Init(m_pDevice, m_pDeviceContext, "Data\\Load\\Black.png");
 	m_pLoadBack->SetPos( D3DXVECTOR3 (0.0f, 0.0f, 0.0f) );
 	m_pLoadBack->SetPatarnU( 0.0f );
 	m_pLoadBack->SetPatarnV( 0.0f );
 	m_pLoadBack->SetAlpha( 1.0f );
 
 	m_pLoadTxt = new clsSprite2D;
-	m_pLoadTxt->Create(m_pDevice, m_pDeviceContext, "Data\\Load\\LoadBack.png");
+	m_pLoadTxt->Init(m_pDevice, m_pDeviceContext, "Data\\Load\\LoadBack.png");
 	m_pLoadTxt->SetDispW(m_pLoadTxt->GetSs().Base.w/2);
 	m_pLoadTxt->SetDispH(m_pLoadTxt->GetSs().Base.h/2);
+	m_pLoadTxt->UpDateSpriteSs();
 	m_pLoadTxt->SetPos( WND_W/2-m_pLoadTxt->GetSs().Disp.w/2 , m_pLoadTxt->GetSs().Disp.h );
 
 	m_pLoadTxt->SetPatarnU( 0.0f );
@@ -4591,9 +4556,10 @@ void clsMain::LoadSpriteInit()
 	m_pLoadGage->SetAlpha( 1.0f );
 
 	m_pLoadGageBack = make_unique<clsSprite2D>();
-	m_pLoadGageBack->Create(m_pDevice, m_pDeviceContext, "Data\\Load\\LoadGargeType.png");
+	m_pLoadGageBack->Init(m_pDevice, m_pDeviceContext, "Data\\Load\\LoadGargeType.png");
 	m_pLoadGageBack->SetDispW(960.0f);
 	m_pLoadGageBack->SetDispH(50.0f);
+	m_pLoadGageBack->UpDateSpriteSs();
 	m_pLoadGageBack->SetPos( D3DXVECTOR3(WND_W / 2.0f - (ss_LoadGage.Disp.w/2.0f), 453.0f , -2.0f) );
 	m_pLoadGageBack->SetAlpha( 1.0f );
 

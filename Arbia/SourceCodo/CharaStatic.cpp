@@ -4,10 +4,12 @@
 
 clsCharaStatic::clsCharaStatic()
 {
+	m_pModel = nullptr;
 }
 
 clsCharaStatic::~clsCharaStatic()
 {
+	DetatchModel();
 }
 
 
@@ -17,6 +19,7 @@ void clsCharaStatic::Render( D3DXMATRIX &mView, D3DXMATRIX &mProj,
 	D3DXVECTOR3 &vLight, D3DXVECTOR3 &vEye,
 	D3DXVECTOR4 vColor , bool alphaFlg )
 {
+	if( m_pModel == nullptr ) return;
 
 	//座標更新する.
 	UpDateModel();
@@ -28,7 +31,7 @@ void clsCharaStatic::Render( D3DXMATRIX &mView, D3DXMATRIX &mProj,
 //ﾓﾃﾞﾙﾃﾞｰﾀ関連付け関数clsDX9Mesh
 void clsCharaStatic::AttachModel( clsDX9Mesh* pModel )
 {
-	if( pModel != NULL ){
+	if( pModel != nullptr ){
 		m_pModel = pModel;
 	}
 }
@@ -36,8 +39,8 @@ void clsCharaStatic::AttachModel( clsDX9Mesh* pModel )
 //ﾓﾃﾞﾙﾃﾞｰﾀ関連付け解除関数.
 void clsCharaStatic::DetatchModel()
 {
-	if( m_pModel != NULL ){
-		m_pModel = NULL;
+	if( m_pModel != nullptr ){
+		m_pModel = nullptr;
 	}
 }
 
@@ -47,7 +50,7 @@ void clsCharaStatic::DetatchModel()
 //座標や回転値を更新する.
 void clsCharaStatic::UpDateModel()
 {
-	if( m_pModel == NULL ){
+	if( m_pModel == nullptr ){
 		return;
 	}
 
@@ -103,7 +106,7 @@ void clsCharaStatic::UpdatePos()
 }
 
 //==================================================
-//	位置更新関数.
+//	あたり判定更新関数.
 //==================================================
 void clsCharaStatic::UpdateColState()
 {

@@ -8,9 +8,9 @@ class clsRay
 	: public clsCommon	//共通ｸﾗｽ継承.
 {
 public:
-//============================================================
-//	構造体.
-//============================================================
+	//============================================================
+	//	構造体.
+	//============================================================
 	//ｺﾝｽﾀﾝﾄﾊﾞｯﾌｧのｱﾌﾟﾘ側の定義(Ray.hlsl).
 	//ｼｪｰﾀﾞ内のｺﾝｽﾀﾝﾄﾊﾞｯﾌｧと一致している必要あり.
 	struct SHADER_CONSTANT_BUFFER
@@ -34,11 +34,15 @@ public:
 		FLOAT		fYaw;		//Y回転軸.
 		RAY()
 		{
-			ZeroMemory( this, sizeof( RAY ) );
-			//vDirection;	= 0;//一個一個こうした方が事故が少ない.
+			const D3DXVECTOR3 vINIT_VECTOR3 = { 0.0f, 0.0f, 0.0f };
+			//ZeroMemory( this, sizeof( RAY ) );
+			vPoint[0] = vPoint[1] = vINIT_VECTOR3;
+			vDirection = vINIT_VECTOR3;
+			vPos = vINIT_VECTOR3;
+			fYaw = 0.0f;
 		}
 	};
-	RAY						m_Ray;	//ﾚｲ構造体.
+	RAY	m_Ray;	//ﾚｲ構造体.
 
 	clsRay();
 	~clsRay();

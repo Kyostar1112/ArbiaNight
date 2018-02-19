@@ -2,9 +2,9 @@
 
 
 ////===== あたり判定 =====//.
-const float COL_SPIA_BOX_X = 1.0f;//2.3
-const float COL_SPIA_BOX_Y = 0.5f;//1.
-const float COL_SPIA_BOX_Z = COL_SPIA_BOX_Y;
+const float fCOL_SPIA_BOX_X = 1.0f;//2.3
+const float fCOL_SPIA_BOX_Y = 0.5f;//1.
+const float fCOL_SPIA_BOX_Z = fCOL_SPIA_BOX_Y;
 ////===== あたり判定 終わり =====//.
 
 
@@ -15,18 +15,15 @@ const int iVIB_INTER_TIME = 4;//Vibration Intervar何フレームに一回揺れる?.
 
 //速度.
 const float fUP_SPD = 0.75f;
-const float fDOWN_YAW = 0.1f;
+const float fDOWN_YAW = 0.1f;//回転速度.
 const float fDOWN_SPD = -0.05f;
 
 //長さ(動きの).
-const float fVIB_RANGE = 0.25f;
-const float fSPIA_TOP = 3.5f;
+const float fVIB_RANGE = 0.25f;//がたがた距離.
+const float fSPIA_TOP = 3.5f;//最大距離.
 
 clsSpiaWall::clsSpiaWall()
 {
-//	m_enMode = enSWM_ROAD;
-//	m_iTimer = 0;
-//	m_fChangeRange = 0.0f;
 }
 
 clsSpiaWall::~clsSpiaWall()
@@ -46,9 +43,9 @@ void clsSpiaWall::Create( bool bRightFlg, int iNo )
 	}
 
 	//Box用あたり判定.
-	ColState.vRangeHalf.x = COL_SPIA_BOX_X;
-	ColState.vRangeHalf.y = COL_SPIA_BOX_Y;
-	ColState.vRangeHalf.z = COL_SPIA_BOX_Z;
+	ColState.vRangeHalf.x = fCOL_SPIA_BOX_X;
+	ColState.vRangeHalf.y = fCOL_SPIA_BOX_Y;
+	ColState.vRangeHalf.z = fCOL_SPIA_BOX_Z;
 	ColState.fCenterY = ColState.vRangeHalf.y / 2.0f;
 	ColState.fCenterY = 0.0f;
 	if( bRightFlg ){
@@ -73,7 +70,7 @@ void clsSpiaWall::Init( D3DXVECTOR3 vInitPos, bool bRightFlg )
 	m_vInitPos = vInitPos;
 }
 
-bool clsSpiaWall::Move()
+bool clsSpiaWall::Update()
 {
 	bool bSoundTop = false;//飛び出し音フラグ.
 	switch( m_enMode )
@@ -176,11 +173,4 @@ void clsSpiaWall::Vibration()
 void clsSpiaWall::UpdateColState()
 {
 	ColState.vPos = m_vPos;
-//	if( m_bRight ){
-//		ColState.vPos.x -= ColState.vRangeHalf.x / 2.0f;
-//	}
-//	else{
-//		ColState.vPos.x += ColState.vRangeHalf.x / 2.0f;
-//	}
-
 }

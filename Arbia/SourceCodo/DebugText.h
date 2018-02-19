@@ -56,6 +56,25 @@ struct TextVertex
 //Ã·½Ä¸×½.
 class clsDebugText
 {
+public:
+	clsDebugText();	//ºİ½Ä×¸À.
+	~clsDebugText();//ÃŞ½Ä×¸À.
+
+	HRESULT Init( ID3D11DeviceContext* pContext,
+		DWORD dwWidth, DWORD dwHeight,
+		float fSize, D3DXVECTOR4 vColor );
+
+
+
+	//“§‰ß(±ÙÌ§ÌŞÚİÄŞ)İ’è‚ÌØ‚è‘Ö‚¦.
+	void SetBlend( bool flg );
+
+	//ÚİÀŞØİ¸ŞŠÖ”.
+	void Render( char* text, int x, int y );
+
+	//Ì«İÄÚİÀŞØİ¸ŞŠÖ”.
+	void RenderFont( int FontIndex, int x, int y );
+
 private:
 	//«±ÌßØ‚Éˆê‚Â.
 	ID3D11Device*			m_pDevice11;		//ÃŞÊŞ²½µÌŞ¼Şª¸Ä.
@@ -89,25 +108,6 @@ private:
 	
 
 
-
-public:
-	clsDebugText();	//ºİ½Ä×¸À.
-	~clsDebugText();//ÃŞ½Ä×¸À.
-
-	HRESULT Init( ID3D11DeviceContext* pContext,
-		DWORD dwWidth, DWORD dwHeight,
-		float fSize, D3DXVECTOR4 vColor );
-
-
-
-	//“§‰ß(±ÙÌ§ÌŞÚİÄŞ)İ’è‚ÌØ‚è‘Ö‚¦.
-	void SetBlend( bool flg );
-
-	//ÚİÀŞØİ¸ŞŠÖ”.
-	void Render( char* text, int x, int y );
-
-	//Ì«İÄÚİÀŞØİ¸ŞŠÖ”.
-	void RenderFont( int FontIndex, int x, int y );
 
 
 };

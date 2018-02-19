@@ -1,8 +1,8 @@
 #include "CollisionRay.h"
 
 
-const float WALL_HIT	= 1.01f;	//壁との衝突距離.//0.8f.
-const float WALL_SPACE	= WALL_HIT;	//壁との壁と開ける距離.//0.8f.
+const float fWALL_HIT	= 1.01f;	//壁との衝突距離.
+const float fWALL_SPACE	= fWALL_HIT;	//壁との壁と開ける距離.
 
 
 
@@ -65,140 +65,140 @@ void clsCollisionRay::WallJudge( clsCharaSkin* pWalker, clsCharaStatic* pWall )/
 
 	//前が壁に接近.
 	fDis = fDistance[0];
-	if( fDis < WALL_HIT && fDis > 0.01f ){
+	if( fDis < fWALL_HIT && fDis > 0.01f ){
 		if( pWalker->GetRotationY() < 0.0f ){
 			//時計回り.
 			if( fYaw >= 0.785f && fYaw < 2.355f ){		//右から.
-				pWalker->AddPositionX( WALL_SPACE - fDis );
+				pWalker->AddPositionX( fWALL_SPACE - fDis );
 			}
 			else if( fYaw >= 2.355f && fYaw < 3.925f ){	//前から.
-				pWalker->AddPositionZ( WALL_SPACE - fDis );
+				pWalker->AddPositionZ( fWALL_SPACE - fDis );
 			}
 			else if( fYaw >= 3.925f && fYaw < 5.495f ){	//左から.
-				pWalker->AddPositionX( -( WALL_SPACE - fDis ) );
+				pWalker->AddPositionX( -( fWALL_SPACE - fDis ) );
 			}
 			else{										//奥から.
-				pWalker->AddPositionZ( -( WALL_SPACE - fDis ) );
+				pWalker->AddPositionZ( -( fWALL_SPACE - fDis ) );
 			}
 		}
 		else{
 			//反時計回り.
 			if( fYaw >= 0.785f && fYaw < 2.355f ){		//右から.
-				pWalker->AddPositionX( -( WALL_SPACE - fDis ) );
+				pWalker->AddPositionX( -( fWALL_SPACE - fDis ) );
 			}
 			else if( fYaw >= 2.355f && fYaw < 3.925f ){	//前から.
-				pWalker->AddPositionZ( WALL_SPACE - fDis );
+				pWalker->AddPositionZ( fWALL_SPACE - fDis );
 			}
 			else if( fYaw >= 3.925f && fYaw < 5.495f ){	//左から.
-				pWalker->AddPositionX( WALL_SPACE - fDis );
+				pWalker->AddPositionX( fWALL_SPACE - fDis );
 			}
 			else{										//奥から.
-				pWalker->AddPositionZ( -( WALL_SPACE - fDis ) );
+				pWalker->AddPositionZ( -( fWALL_SPACE - fDis ) );
 			}
 		}
 	}
 
 	//後ろが壁に接近.
 	fDis = fDistance[1];
-	if( fDis < WALL_HIT && fDis > 0.01f ){
+	if( fDis < fWALL_HIT && fDis > 0.01f ){
 		//時計回り.
 		if( pWalker->GetRotationY() < 0.0f ){
 			if( fYaw >= 0.785f && fYaw < 2.355f ){		//右から.
-				pWalker->AddPositionX( -( WALL_SPACE - fDis ) );
+				pWalker->AddPositionX( -( fWALL_SPACE - fDis ) );
 			}
 			else if( fYaw >= 2.355f && fYaw < 3.925f ){	//前から.
-				pWalker->AddPositionZ( -( WALL_SPACE - fDis ) );
+				pWalker->AddPositionZ( -( fWALL_SPACE - fDis ) );
 			}
 			else if( fYaw >= 3.925f && fYaw < 5.495f ){	//左から.
-				pWalker->AddPositionX( WALL_SPACE - fDis );
+				pWalker->AddPositionX( fWALL_SPACE - fDis );
 			}
 			else{										//奥から.
-				pWalker->AddPositionZ( WALL_SPACE - fDis );
+				pWalker->AddPositionZ( fWALL_SPACE - fDis );
 			}
 		}
 		//反時計回り.
 		else{
 			if( fYaw >= 0.785f && fYaw < 2.355f ){		//右から.
-				pWalker->AddPositionX( WALL_SPACE - fDis );
+				pWalker->AddPositionX( fWALL_SPACE - fDis );
 			}
 			else if( fYaw >= 2.355f && fYaw < 3.925f ){	//前から.
-				pWalker->AddPositionZ( -( WALL_SPACE - fDis ) );
+				pWalker->AddPositionZ( -( fWALL_SPACE - fDis ) );
 			}
 			else if( fYaw >= 3.925f && fYaw < 5.495f ){	//左から.
-				pWalker->AddPositionX( -( WALL_SPACE - fDis ) );
+				pWalker->AddPositionX( -( fWALL_SPACE - fDis ) );
 			}
 			else{										//奥から.
-				pWalker->AddPositionZ( WALL_SPACE - fDis );
+				pWalker->AddPositionZ( fWALL_SPACE - fDis );
 			}
 		}
 	}
 
 	//右が壁に接近.
 	fDis = fDistance[2];
-	if( fDis < WALL_HIT && fDis > 0.01f ){
+	if( fDis < fWALL_HIT && fDis > 0.01f ){
 		//時計回り.
 		if( pWalker->GetRotationY() < 0.0f ){
 			if( fYaw >= 0.785f && fYaw < 2.355f ){		//右から.
-				pWalker->AddPositionZ( -( WALL_SPACE - fDis ) );
+				pWalker->AddPositionZ( -( fWALL_SPACE - fDis ) );
 			}
 			else if( fYaw >= 2.355f && fYaw < 3.925f ){	//前から.
-				pWalker->AddPositionX( WALL_SPACE - fDis );
+				pWalker->AddPositionX( fWALL_SPACE - fDis );
 			}
 			else if( fYaw >= 3.925f && fYaw < 5.495f ){	//左から.
-				pWalker->AddPositionZ( WALL_SPACE - fDis );
+				pWalker->AddPositionZ( fWALL_SPACE - fDis );
 			}
 			else{										//奥から.
-				pWalker->AddPositionX( -( WALL_SPACE - fDis ) );
+				pWalker->AddPositionX( -( fWALL_SPACE - fDis ) );
 			}
 		}
 		//反時計回り.
 		else{
 			if( fYaw >= 0.785f && fYaw < 2.355f ){		//右から.
-				pWalker->AddPositionZ( WALL_SPACE - fDis );
+				pWalker->AddPositionZ( fWALL_SPACE - fDis );
 			}
 			else if( fYaw >= 2.355f && fYaw < 3.925f ){	//前から.
-				pWalker->AddPositionX( WALL_SPACE - fDis );
+				pWalker->AddPositionX( fWALL_SPACE - fDis );
 			}
 			else if( fYaw >= 3.925f && fYaw < 5.495f ){	//左から.
-				pWalker->AddPositionZ( -( WALL_SPACE - fDis ) );
+				pWalker->AddPositionZ( -( fWALL_SPACE - fDis ) );
 			}
 			else{										//奥から.
-				pWalker->AddPositionX( -( WALL_SPACE - fDis ) );
+				pWalker->AddPositionX( -( fWALL_SPACE - fDis ) );
 			}
 		}
 	}
 
 	//左が壁に接近.
 	fDis = fDistance[3];
-	if( fDis < WALL_HIT && fDis > 0.01f ){
+	if( fDis < fWALL_HIT && fDis > 0.01f ){
 		//時計回り.
 		if( pWalker->GetRotationY() < 0.0f ){
 			if( fYaw >= 0.785f && fYaw < 2.355f ){		//右から.
-				pWalker->AddPositionZ( WALL_SPACE - fDis );
+				pWalker->AddPositionZ( fWALL_SPACE - fDis );
 			}
 			else if( fYaw >= 2.355f && fYaw < 3.925f ){	//前から.
-				pWalker->AddPositionX( -( WALL_SPACE - fDis ) );
+				pWalker->AddPositionX( -( fWALL_SPACE - fDis ) );
 			}
 			else if( fYaw >= 3.925f && fYaw < 5.495f ){	//左から.
-				pWalker->AddPositionZ( -( WALL_SPACE - fDis ) );
+				pWalker->AddPositionZ( -( fWALL_SPACE - fDis ) );
 			}
 			else{										//奥から.
-				pWalker->AddPositionX( WALL_SPACE - fDis );
+				pWalker->AddPositionX( fWALL_SPACE - fDis );
 			}
 		}
 		//反時計回り.
 		else{
 			if( fYaw >= 0.785f && fYaw < 2.355f ){		//右から.
-				pWalker->AddPositionZ( -( WALL_SPACE - fDis ) );
+				pWalker->AddPositionZ( -( fWALL_SPACE - fDis ) );
 			}
 			else if( fYaw >= 2.355f && fYaw < 3.925f ){	//前から.
-				pWalker->AddPositionX( -( WALL_SPACE - fDis ) );
+				pWalker->AddPositionX( -( fWALL_SPACE - fDis ) );
 			}
 			else if( fYaw >= 3.925f && fYaw < 5.495f ){	//左から.
-				pWalker->AddPositionZ( WALL_SPACE - fDis );
+				pWalker->AddPositionZ( fWALL_SPACE - fDis );
 			}
 			else{										//奥から.
-				pWalker->AddPositionX( WALL_SPACE - fDis );
+				pWalker->AddPositionX( fWALL_SPACE - fDis );
 			}
 		}
 	}

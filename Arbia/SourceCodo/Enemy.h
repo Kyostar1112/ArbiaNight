@@ -29,14 +29,14 @@ public:
 		enEM_WIN,
 	};//m_enMove.
 
-clsEnemy();
+	clsEnemy();
 	~clsEnemy();
 
 	void Create( HWND hWnd, ID3D11Device* pDevice11, ID3D11DeviceContext* pContext11, int iNo, int jNo );
 	virtual void Init( float fStartZ );
 
 	//“G“®‚«.
-	void Move( float fEarZ );
+	void Update( float fEarZ );
 	//€–Sˆ—.
 	void Dead( bool FlgPlayerJumpAtk = false );
 
@@ -103,11 +103,11 @@ private:
 	float m_fStartZ;
 
 	//“G“®‚«q•ª.
-	void Move_Walk ();
-	void Move_Run  ();
-	void Move_Atk  ();
-	void Move_Stop ();
-	void Move_Death();//€–S‚Ì“®‚«.
+	void MoveWalk ();
+	void MoveRun  ();
+	void MoveAtk  ();
+	void MoveStop ();
+	void MoveDeath();//€–S‚Ì“®‚«.
 
 
 	//–Ú•W‚Æ‚ÌŠp“x.
