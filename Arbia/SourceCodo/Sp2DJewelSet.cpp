@@ -48,7 +48,7 @@ void clsJewerSet::Create( HWND hWnd,
 	if( m_smpModel ) return;
 
 	m_smpModel = make_unique<clsJewel>();
-	m_smpModel->Init( pDevice11, pContext11, sFILE_PATH_JEWEL );
+	m_smpModel->Create( pDevice11, pContext11, sFILE_PATH_JEWEL );
 	m_smpModel->MulDisp( fMUL_DISP_JEWEL );
 	m_smpModel->UpDateSpriteSs();
 
