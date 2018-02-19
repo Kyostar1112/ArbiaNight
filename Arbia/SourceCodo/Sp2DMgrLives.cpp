@@ -59,7 +59,7 @@ void clsLives::ReSet()
 
 void clsLives::Update()
 {
-	m_smpLives->Move();
+	m_smpLives->Update();
 }
 void clsLives::Render()
 {

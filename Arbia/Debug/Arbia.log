@@ -1,248 +1,132 @@
-﻿2018/02/19 11:27:45 にビルドを開始しました。
-     1>ノード 2 上のプロジェクト "C:\Users\men\Github\ArbiaNight\Arbia\Arbia.vcxproj" (Build ターゲット)。
-     1>FxCompile:
-         C:\Program Files (x86)\Windows Kits\8.1\bin\x86\fxc.exe /nologo /E"VS" /T vs_5_0 /Fo "C:\Users\men\Github\ArbiaNight\Debug\DebugText.cso" /Od /Zi Shader\DebugText.hlsl 
-         compilation object save succeeded; see C:\Users\men\Github\ArbiaNight\Debug\DebugText.cso
-         C:\Program Files (x86)\Windows Kits\8.1\bin\x86\fxc.exe /nologo /E"VS_Main" /T vs_5_0 /Fo "C:\Users\men\Github\ArbiaNight\Debug\Mesh.cso" /Od /Zi Shader\Mesh.hlsl 
-     1>C:\Users\men\Github\ArbiaNight\Arbia\Shader\Mesh.hlsl(52,2-31): warning X3206: implicit truncation of vector type
-     1>C:\Users\men\Github\ArbiaNight\Arbia\Shader\Mesh.hlsl(54,2-24): warning X3206: implicit truncation of vector type
-     1>C:\Users\men\Github\ArbiaNight\Arbia\Shader\Mesh.hlsl(56,9-35): warning X3206: implicit truncation of vector type
-     1>C:\Users\men\Github\ArbiaNight\Arbia\Shader\Mesh.hlsl(60,18-34): warning X3206: implicit truncation of vector type
-     1>C:\Users\men\Github\ArbiaNight\Arbia\Shader\Mesh.hlsl(67,30-43): warning X3206: implicit truncation of vector type
-     1>C:\Users\men\Github\ArbiaNight\Arbia\Shader\Mesh.hlsl(109,23-32): warning X3081: comma expression used where a vector constructor may have been intended
-     1>C:\Users\men\Github\ArbiaNight\Arbia\Shader\Mesh.hlsl(109,23-38): warning X3081: comma expression used where a vector constructor may have been intended
-         compilation object save succeeded; see C:\Users\men\Github\ArbiaNight\Debug\Mesh.cso
-     1>C:\Users\men\Github\ArbiaNight\Arbia\Shader\Mesh.hlsl(109,23-44): warning X3081: comma expression used where a vector constructor may have been intended
-     1>C:\Users\men\Github\ArbiaNight\Arbia\Shader\Mesh.hlsl(122,17-26): warning X3081: comma expression used where a vector constructor may have been intended
-     1>C:\Users\men\Github\ArbiaNight\Arbia\Shader\Mesh.hlsl(122,17-32): warning X3081: comma expression used where a vector constructor may have been intended
-     1>C:\Users\men\Github\ArbiaNight\Arbia\Shader\Mesh.hlsl(122,17-37): warning X3081: comma expression used where a vector constructor may have been intended
-     1>C:\Users\men\Github\ArbiaNight\Arbia\Shader\Mesh.hlsl(160,2-31): warning X3206: implicit truncation of vector type
-     1>C:\Users\men\Github\ArbiaNight\Arbia\Shader\Mesh.hlsl(162,2-24): warning X3206: implicit truncation of vector type
-     1>C:\Users\men\Github\ArbiaNight\Arbia\Shader\Mesh.hlsl(164,9-35): warning X3206: implicit truncation of vector type
-     1>C:\Users\men\Github\ArbiaNight\Arbia\Shader\Mesh.hlsl(165,18-34): warning X3206: implicit truncation of vector type
-     1>C:\Users\men\Github\ArbiaNight\Arbia\Shader\Mesh.hlsl(172,30-44): warning X3206: implicit truncation of vector type
-     1>C:\Users\men\Github\ArbiaNight\Arbia\Shader\Mesh.hlsl(228,2-17): warning X3206: implicit truncation of vector type
-         
-         C:\Program Files (x86)\Windows Kits\8.1\bin\x86\fxc.exe /nologo /E"VSSkin" /T vs_5_0 /Fo "C:\Users\men\Github\ArbiaNight\Debug\MeshSkin.cso" /Od /Zi Shader\MeshSkin.hlsl 
-     1>C:\Users\men\Github\ArbiaNight\Arbia\Shader\MeshSkin.hlsl(110,9-40): warning X3206: implicit truncation of vector type
-     1>C:\Users\men\Github\ArbiaNight\Arbia\Shader\MeshSkin.hlsl(111,9-44): warning X3206: implicit truncation of vector type
-     1>C:\Users\men\Github\ArbiaNight\Arbia\Shader\MeshSkin.hlsl(112,30-46): warning X3206: implicit truncation of vector type
-     1>C:\Users\men\Github\ArbiaNight\Arbia\Shader\MeshSkin.hlsl(116,30-44): warning X3206: implicit truncation of vector type
-         
-         compilation object save succeeded; see C:\Users\men\Github\ArbiaNight\Debug\MeshSkin.cso
-         C:\Program Files (x86)\Windows Kits\8.1\bin\x86\fxc.exe /nologo /E"VS" /T vs_5_0 /Fo "C:\Users\men\Github\ArbiaNight\Debug\PointSprite.cso" /Od /Zi Shader\PointSprite.hlsl 
-         compilation object save succeeded; see C:\Users\men\Github\ArbiaNight\Debug\PointSprite.cso
-         C:\Program Files (x86)\Windows Kits\8.1\bin\x86\fxc.exe /nologo /E"VS" /T vs_5_0 /Fo "C:\Users\men\Github\ArbiaNight\Debug\Ray.cso" /Od /Zi Shader\Ray.hlsl 
-         compilation object save succeeded; see C:\Users\men\Github\ArbiaNight\Debug\Ray.cso
-         C:\Program Files (x86)\Windows Kits\8.1\bin\x86\fxc.exe /nologo /E"VS_Main" /T vs_5_0 /Fo "C:\Users\men\Github\ArbiaNight\Debug\Sprite2D.cso" /Od /Zi Shader\Sprite2D.hlsl 
-         compilation object save succeeded; see C:\Users\men\Github\ArbiaNight\Debug\Sprite2D.cso
-       ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ISourceCodo\Effekseer\include /ZI /nologo /W3 /WX- /sdl /Od /Oy /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt SourceCodo\CheckPoint.cpp SourceCodo\CheckPointMgr.cpp SourceCodo\EndEnemy.cpp SourceCodo\EndEnemyMgr.cpp SourceCodo\NumGroup.cpp SourceCodo\CharaSkin.cpp SourceCodo\CharaStatic.cpp SourceCodo\Collision.cpp SourceCodo\CollisionRay.cpp SourceCodo\Common.cpp SourceCodo\CoverManager.cpp SourceCodo\CXInput.cpp SourceCodo\D3DXSKINMESH.cpp SourceCodo\DebugText.cpp SourceCodo\DoorManager.cpp SourceCodo\DX9Mesh.cpp SourceCodo\DxInput.cpp SourceCodo\Effects.cpp SourceCodo\Enemy.cpp SourceCodo\EnemyManager.cpp SourceCodo\File.cpp SourceCodo\Floor.cpp SourceCodo\GageSprite2D.cpp SourceCodo\GameObject.cpp SourceCodo\GoalManager.cpp SourceCodo\Main.cpp SourceCodo\Sp2DJewel.cpp SourceCodo\Sp2DJewelSet.cpp SourceCodo\Sp2DMgrActTxt.cpp SourceCodo\Sp2DMgrDiscover.cpp SourceCodo\Sp2DMgrEnding.cpp SourceCodo\Sp2DMgrLives.cpp SourceCodo\Sp2DMgrMain.cpp SourceCodo\Sp2DMgrOver.cpp SourceCodo\Particle.cpp SourceCodo\Pendulum.cpp SourceCodo\Player.cpp SourceCodo\Ray.cpp SourceCodo\Resource.cpp SourceCodo\SceneManager.cpp SourceCodo\Sound.cpp SourceCodo\Sp2DMgrOverTxt.cpp SourceCodo\Sp2DMgrPushButn.cpp SourceCodo\Sp2DMgrResult.cpp SourceCodo\Sp2DTimer.cpp SourceCodo\Sp2DTimerGroup.cpp SourceCodo\SpiaFloor.cpp SourceCodo\SpiaFloorManager.cpp SourceCodo\SpiaWall.cpp SourceCodo\SpiaWallManager.cpp SourceCodo\Sprite.cpp SourceCodo\Sprite2D.cpp SourceCodo\SpShadow.cpp SourceCodo\StepBox.cpp SourceCodo\StepCylinder.cpp SourceCodo\Sp2DMgrTitle.cpp SourceCodo\UiManager.cpp SourceCodo\Wall.cpp
-         Wall.cpp
+﻿2018/02/19 11:52:13 にビルドを開始しました。
+     1>ノード 2 上のプロジェクト "C:\Users\men\Documents\GitHub\ArbiaNight\Arbia\Arbia.vcxproj" (Build ターゲット)。
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ISourceCodo\Effekseer\include /ZI /nologo /W3 /WX- /sdl /Od /Oy /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt SourceCodo\GameObject.cpp SourceCodo\Main.cpp SourceCodo\NumGroup.cpp SourceCodo\Sp2DJewelSet.cpp SourceCodo\Sp2DMgrResult.cpp SourceCodo\Sp2DTimerGroup.cpp SourceCodo\UiManager.cpp
          UiManager.cpp
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\sp2djewelset.h(42): error C2039: 'InitSetPos' : 'clsJewel' のメンバーではありません。
-                 c:\users\men\github\arbianight\arbia\sourcecodo\sp2djewel.h(8) : 'clsJewel' の宣言を確認してください。
-         Sp2DMgrTitle.cpp
-         StepCylinder.cpp
-         StepBox.cpp
-         SpShadow.cpp
-         Sprite2D.cpp
-         Sprite.cpp
-         SpiaWallManager.cpp
-         SpiaWall.cpp
-         SpiaFloorManager.cpp
-         SpiaFloor.cpp
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\sp2djewelset.h(42): error C2039: 'InitSetPos' : 'clsJewel' のメンバーではありません。
+                 c:\users\men\documents\github\arbianight\arbia\sourcecodo\sp2djewel.h(8) : 'clsJewel' の宣言を確認してください。
          Sp2DTimerGroup.cpp
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\sp2dtimergroup.cpp(80): error C2660: 'clsSprite2D::Init' : 関数に 3 個の引数を指定できません。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\sp2dtimergroup.cpp(86): error C2039: 'UpDateSpriteSs' : 'clsSprite2D' のメンバーではありません。
-                 c:\users\men\github\arbianight\arbia\sourcecodo\sprite2d.h(66) : 'clsSprite2D' の宣言を確認してください。
-         Sp2DTimer.cpp
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\sp2dtimer.cpp(34): warning C4244: '引数' : 'const int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\sp2dtimer.cpp(35): warning C4244: '引数' : 'const int' から 'float' への変換です。データが失われる可能性があります。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\sp2dtimergroup.cpp(86): error C2039: 'UpDateSpriteSs' : 'clsSprite2D' のメンバーではありません。
+                 c:\users\men\documents\github\arbianight\arbia\sourcecodo\sprite2d.h(66) : 'clsSprite2D' の宣言を確認してください。
          Sp2DMgrResult.cpp
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\sp2djewelset.h(42): error C2039: 'InitSetPos' : 'clsJewel' のメンバーではありません。
-                 c:\users\men\github\arbianight\arbia\sourcecodo\sp2djewel.h(8) : 'clsJewel' の宣言を確認してください。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\sp2dmgrresult.cpp(180): error C2039: 'Init' : 'clsJewerSet' のメンバーではありません。
-                 c:\users\men\github\arbianight\arbia\sourcecodo\sp2djewelset.h(9) : 'clsJewerSet' の宣言を確認してください。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\sp2dmgrresult.cpp(400): error C2039: 'Move' : 'clsJewerSet' のメンバーではありません。
-                 c:\users\men\github\arbianight\arbia\sourcecodo\sp2djewelset.h(9) : 'clsJewerSet' の宣言を確認してください。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\sp2dmgrresult.cpp(508): error C2039: 'Move' : 'clsJewerSet' のメンバーではありません。
-                 c:\users\men\github\arbianight\arbia\sourcecodo\sp2djewelset.h(9) : 'clsJewerSet' の宣言を確認してください。
-         Sp2DMgrPushButn.cpp
-         Sp2DMgrOverTxt.cpp
-         Sound.cpp
-         SceneManager.cpp
-         Resource.cpp
-         コードを生成中...
-         コンパイル中...
-         Ray.cpp
-         Player.cpp
-         Pendulum.cpp
-         Particle.cpp
-         Sp2DMgrOver.cpp
-         Sp2DMgrMain.cpp
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\sp2dmgrmain.cpp(154): error C2039: 'Move' : 'clsTimerGrp' のメンバーではありません。
-                 c:\users\men\github\arbianight\arbia\sourcecodo\sp2dtimergroup.h(16) : 'clsTimerGrp' の宣言を確認してください。
-         Sp2DMgrLives.cpp
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\sp2dmgrlives.cpp(62): error C2039: 'Move' : 'clsNumGrp' のメンバーではありません。
-                 c:\users\men\github\arbianight\arbia\sourcecodo\numgroup.h(15) : 'clsNumGrp' の宣言を確認してください。
-         Sp2DMgrEnding.cpp
-         Sp2DMgrDiscover.cpp
-         Sp2DMgrActTxt.cpp
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\sp2djewelset.h(42): error C2039: 'InitSetPos' : 'clsJewel' のメンバーではありません。
+                 c:\users\men\documents\github\arbianight\arbia\sourcecodo\sp2djewel.h(8) : 'clsJewel' の宣言を確認してください。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\sp2dmgrresult.cpp(180): error C2039: 'Init' : 'clsJewerSet' のメンバーではありません。
+                 c:\users\men\documents\github\arbianight\arbia\sourcecodo\sp2djewelset.h(9) : 'clsJewerSet' の宣言を確認してください。
          Sp2DJewelSet.cpp
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\sp2djewelset.h(42): error C2039: 'InitSetPos' : 'clsJewel' のメンバーではありません。
-                 c:\users\men\github\arbianight\arbia\sourcecodo\sp2djewel.h(8) : 'clsJewel' の宣言を確認してください。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\sp2djewelset.cpp(51): error C2660: 'clsSprite2D::Init' : 関数に 3 個の引数を指定できません。
-         Sp2DJewel.cpp
-         Main.cpp
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\sp2djewelset.h(42): error C2039: 'InitSetPos' : 'clsJewel' のメンバーではありません。
-                 c:\users\men\github\arbianight\arbia\sourcecodo\sp2djewel.h(8) : 'clsJewel' の宣言を確認してください。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(76): warning C4305: '初期化中' : 'double' から 'const float' へ切り詰めます。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(474): error C2660: 'clsSprite2D::Init' : 関数に 3 個の引数を指定できません。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(583): error C2039: 'UpDateSpriteSs' : 'clsSprite2D' のメンバーではありません。
-                 c:\users\men\github\arbianight\arbia\sourcecodo\sprite2d.h(66) : 'clsSprite2D' の宣言を確認してください。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(584): error C2039: 'UpDateSpriteSs' : 'clsSprite2D' のメンバーではありません。
-                 c:\users\men\github\arbianight\arbia\sourcecodo\sprite2d.h(66) : 'clsSprite2D' の宣言を確認してください。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(585): error C2039: 'UpDateSpriteSs' : 'clsSprite2D' のメンバーではありません。
-                 c:\users\men\github\arbianight\arbia\sourcecodo\sprite2d.h(66) : 'clsSprite2D' の宣言を確認してください。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(586): error C2039: 'UpDateSpriteSs' : 'clsSprite2D' のメンバーではありません。
-                 c:\users\men\github\arbianight\arbia\sourcecodo\sprite2d.h(66) : 'clsSprite2D' の宣言を確認してください。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(590): error C2039: 'UpDateSpriteSs' : 'clsSprite2D' のメンバーではありません。
-                 c:\users\men\github\arbianight\arbia\sourcecodo\sprite2d.h(66) : 'clsSprite2D' の宣言を確認してください。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(595): error C2039: 'UpDateSpriteSs' : 'clsSprite2D' のメンバーではありません。
-                 c:\users\men\github\arbianight\arbia\sourcecodo\sprite2d.h(66) : 'clsSprite2D' の宣言を確認してください。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(598): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(742): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(989): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(1001): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(1014): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(1027): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(1040): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(1053): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(1065): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(1078): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(1090): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(2075): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(2101): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(2117): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(2134): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(2138): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(2144): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(2150): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(2154): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(2161): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(2166): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(2171): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(2178): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(2179): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(2286): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(2855): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(2865): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(2875): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(2885): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(2895): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(2905): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(2915): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(2925): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(2935): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(2945): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(2955): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(2966): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(2977): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(3075): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(3139): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(3273): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(3302): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(3345): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(3382): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(3388): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(3394): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(3400): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(3428): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(3455): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(3488): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(3558): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(3599): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(3616): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(3620): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(3643): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(3647): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(3670): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(3803): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(3812): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(3976): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(3982): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(3994): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(4010): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(4016): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(4022): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(4028): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(4034): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(4040): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(4055): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(4061): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(4067): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(4073): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(4107): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(4530): error C2660: 'clsSprite2D::Init' : 関数に 3 個の引数を指定できません。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(4537): error C2660: 'clsSprite2D::Init' : 関数に 3 個の引数を指定できません。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(4540): error C2039: 'UpDateSpriteSs' : 'clsSprite2D' のメンバーではありません。
-                 c:\users\men\github\arbianight\arbia\sourcecodo\sprite2d.h(66) : 'clsSprite2D' の宣言を確認してください。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(4559): error C2660: 'clsSprite2D::Init' : 関数に 3 個の引数を指定できません。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(4562): error C2039: 'UpDateSpriteSs' : 'clsSprite2D' のメンバーではありません。
-                 c:\users\men\github\arbianight\arbia\sourcecodo\sprite2d.h(66) : 'clsSprite2D' の宣言を確認してください。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(4628): warning C4244: '=' : 'FLOAT' から 'INT' への変換です。データが失われる可能性があります。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(4629): warning C4244: '=' : 'FLOAT' から 'INT' への変換です。データが失われる可能性があります。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(4632): warning C4244: '=' : 'FLOAT' から 'UINT' への変換です。データが失われる可能性があります。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\main.cpp(4633): warning C4244: '=' : 'FLOAT' から 'UINT' への変換です。データが失われる可能性があります。
-         GoalManager.cpp
-         GameObject.cpp
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\sp2djewelset.h(42): error C2039: 'InitSetPos' : 'clsJewel' のメンバーではありません。
-                 c:\users\men\github\arbianight\arbia\sourcecodo\sp2djewel.h(8) : 'clsJewel' の宣言を確認してください。
-         GageSprite2D.cpp
-         Floor.cpp
-         File.cpp
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\file.cpp(252): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-                 c:\users\men\github\arbianight\arbia\sourcecodo\file.cpp(106) : コンパイルされたクラスの テンプレート のインスタンス化 'void clsFile::split<std::vector<std::string,std::allocator<_Ty>>>(const std::string &,const std::string &,List &)' の参照を確認してください
-                 with
-                 [
-                     _Ty=std::string
-         ,            List=std::vector<std::string,std::allocator<std::string>>
-                 ]
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\file.cpp(247): warning C4101: 'tmp' : ローカル変数は 1 度も使われていません。
-         EnemyManager.cpp
-         Enemy.cpp
-         コードを生成中...
-         コンパイル中...
-         Effects.cpp
-         DxInput.cpp
-         c:\program files (x86)\microsoft directx sdk (june 2010)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-         DX9Mesh.cpp
-         DoorManager.cpp
-         DebugText.cpp
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\debugtext.cpp(346): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\debugtext.cpp(353): warning C4244: '+=' : 'float' から 'int' への変換です。データが失われる可能性があります。
-         D3DXSKINMESH.cpp
-         CXInput.cpp
-         CoverManager.cpp
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\covermanager.cpp(30): warning C4244: '初期化中' : 'double' から 'const int' への変換です。データが失われる可能性があります。
-         Common.cpp
-         CollisionRay.cpp
-         Collision.cpp
-         CharaStatic.cpp
-         CharaSkin.cpp
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\sp2djewelset.h(42): error C2039: 'InitSetPos' : 'clsJewel' のメンバーではありません。
+                 c:\users\men\documents\github\arbianight\arbia\sourcecodo\sp2djewel.h(8) : 'clsJewel' の宣言を確認してください。
          NumGroup.cpp
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\numgroup.cpp(59): error C2660: 'clsSprite2D::Init' : 関数に 3 個の引数を指定できません。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\numgroup.cpp(65): error C2661: 'clsSprite2D::SetSs' : 6 個の引数を伴うオーバーロードされた関数はありません。
-     1>c:\users\men\github\arbianight\arbia\sourcecodo\numgroup.cpp(67): error C2039: 'UpDateSpriteSs' : 'clsSprite2D' のメンバーではありません。
-                 c:\users\men\github\arbianight\arbia\sourcecodo\sprite2d.h(66) : 'clsSprite2D' の宣言を確認してください。
-         EndEnemyMgr.cpp
-         EndEnemy.cpp
-         CheckPointMgr.cpp
-         CheckPoint.cpp
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\numgroup.cpp(65): error C2661: 'clsSprite2D::SetSs' : 6 個の引数を伴うオーバーロードされた関数はありません。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\numgroup.cpp(67): error C2039: 'UpDateSpriteSs' : 'clsSprite2D' のメンバーではありません。
+                 c:\users\men\documents\github\arbianight\arbia\sourcecodo\sprite2d.h(66) : 'clsSprite2D' の宣言を確認してください。
+         Main.cpp
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\sp2djewelset.h(42): error C2039: 'InitSetPos' : 'clsJewel' のメンバーではありません。
+                 c:\users\men\documents\github\arbianight\arbia\sourcecodo\sp2djewel.h(8) : 'clsJewel' の宣言を確認してください。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(76): warning C4305: '初期化中' : 'double' から 'const float' へ切り詰めます。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(474): error C2660: 'clsSprite2D::Init' : 関数に 3 個の引数を指定できません。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(583): error C2039: 'UpDateSpriteSs' : 'clsSprite2D' のメンバーではありません。
+                 c:\users\men\documents\github\arbianight\arbia\sourcecodo\sprite2d.h(66) : 'clsSprite2D' の宣言を確認してください。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(584): error C2039: 'UpDateSpriteSs' : 'clsSprite2D' のメンバーではありません。
+                 c:\users\men\documents\github\arbianight\arbia\sourcecodo\sprite2d.h(66) : 'clsSprite2D' の宣言を確認してください。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(585): error C2039: 'UpDateSpriteSs' : 'clsSprite2D' のメンバーではありません。
+                 c:\users\men\documents\github\arbianight\arbia\sourcecodo\sprite2d.h(66) : 'clsSprite2D' の宣言を確認してください。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(586): error C2039: 'UpDateSpriteSs' : 'clsSprite2D' のメンバーではありません。
+                 c:\users\men\documents\github\arbianight\arbia\sourcecodo\sprite2d.h(66) : 'clsSprite2D' の宣言を確認してください。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(590): error C2039: 'UpDateSpriteSs' : 'clsSprite2D' のメンバーではありません。
+                 c:\users\men\documents\github\arbianight\arbia\sourcecodo\sprite2d.h(66) : 'clsSprite2D' の宣言を確認してください。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(595): error C2039: 'UpDateSpriteSs' : 'clsSprite2D' のメンバーではありません。
+                 c:\users\men\documents\github\arbianight\arbia\sourcecodo\sprite2d.h(66) : 'clsSprite2D' の宣言を確認してください。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(598): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(742): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(989): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(1001): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(1014): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(1027): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(1040): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(1053): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(1065): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(1078): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(1090): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2075): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2101): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2117): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2134): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2138): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2144): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2150): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2154): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2161): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2166): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2171): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2178): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2179): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2286): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2855): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2865): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2875): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2885): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2895): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2905): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2915): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2925): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2935): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2945): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2955): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2966): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(2977): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3075): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3139): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3273): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3302): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3345): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3382): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3388): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3394): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3400): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3428): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3455): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3488): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3558): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3599): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3616): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3620): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3643): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3647): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3670): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3803): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3812): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3976): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3982): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(3994): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(4010): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(4016): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(4022): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(4028): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(4034): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(4040): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(4055): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(4061): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(4067): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(4073): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(4107): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(4530): error C2660: 'clsSprite2D::Init' : 関数に 3 個の引数を指定できません。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(4537): error C2660: 'clsSprite2D::Init' : 関数に 3 個の引数を指定できません。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(4540): error C2039: 'UpDateSpriteSs' : 'clsSprite2D' のメンバーではありません。
+                 c:\users\men\documents\github\arbianight\arbia\sourcecodo\sprite2d.h(66) : 'clsSprite2D' の宣言を確認してください。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(4559): error C2660: 'clsSprite2D::Init' : 関数に 3 個の引数を指定できません。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(4562): error C2039: 'UpDateSpriteSs' : 'clsSprite2D' のメンバーではありません。
+                 c:\users\men\documents\github\arbianight\arbia\sourcecodo\sprite2d.h(66) : 'clsSprite2D' の宣言を確認してください。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(4628): warning C4244: '=' : 'FLOAT' から 'INT' への変換です。データが失われる可能性があります。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(4629): warning C4244: '=' : 'FLOAT' から 'INT' への変換です。データが失われる可能性があります。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(4632): warning C4244: '=' : 'FLOAT' から 'UINT' への変換です。データが失われる可能性があります。
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\main.cpp(4633): warning C4244: '=' : 'FLOAT' から 'UINT' への変換です。データが失われる可能性があります。
+         GameObject.cpp
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\sp2djewelset.h(42): error C2039: 'InitSetPos' : 'clsJewel' のメンバーではありません。
+                 c:\users\men\documents\github\arbianight\arbia\sourcecodo\sp2djewel.h(8) : 'clsJewel' の宣言を確認してください。
          コードを生成中...
-     1>プロジェクト "C:\Users\men\Github\ArbiaNight\Arbia\Arbia.vcxproj" (Build ターゲット) のビルドが終了しました -- 失敗。
+     1>プロジェクト "C:\Users\men\Documents\GitHub\ArbiaNight\Arbia\Arbia.vcxproj" (Build ターゲット) のビルドが終了しました -- 失敗。
 
 ビルドに失敗しました。
 
-経過時間 00:00:28.80
+経過時間 00:00:03.82

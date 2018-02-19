@@ -1,0 +1,146 @@
+﻿2018/02/19 11:53:16 にビルドを開始しました。
+     1>ノード 2 上のプロジェクト "C:\Users\men\Documents\GitHub\ArbiaNight\Arbia\Arbia.vcxproj" (Build ターゲット)。
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ISourceCodo\Effekseer\include /Zi /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt SourceCodo\CheckPoint.cpp SourceCodo\NumGroup.cpp SourceCodo\CharaSkin.cpp SourceCodo\File.cpp SourceCodo\GameObject.cpp SourceCodo\GoalManager.cpp SourceCodo\Main.cpp SourceCodo\Sp2DJewel.cpp SourceCodo\Sp2DJewelSet.cpp SourceCodo\Sp2DMgrActTxt.cpp SourceCodo\Sp2DMgrResult.cpp SourceCodo\Sp2DTimerGroup.cpp SourceCodo\UiManager.cpp
+         CheckPoint.cpp
+         NumGroup.cpp
+     1>SourceCodo\NumGroup.cpp(65): error C2661: 'clsSprite2D::SetSs' : 6 個の引数を伴うオーバーロードされた関数はありません。
+     1>SourceCodo\NumGroup.cpp(67): error C2039: 'UpDateSpriteSs' : 'clsSprite2D' のメンバーではありません。
+                 c:\users\men\documents\github\arbianight\arbia\sourcecodo\Sprite2D.h(66) : 'clsSprite2D' の宣言を確認してください。
+         CharaSkin.cpp
+         File.cpp
+     1>SourceCodo\File.cpp(252): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+                 SourceCodo\File.cpp(106) : コンパイルされたクラスの テンプレート のインスタンス化 'void clsFile::split<std::vector<std::string,std::allocator<_Ty>>>(const std::string &,const std::string &,List &)' の参照を確認してください
+                 with
+                 [
+                     _Ty=std::string
+         ,            List=std::vector<std::string,std::allocator<std::string>>
+                 ]
+     1>SourceCodo\File.cpp(247): warning C4101: 'tmp' : ローカル変数は 1 度も使われていません。
+         GameObject.cpp
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\Sp2DJewelSet.h(42): error C2039: 'InitSetPos' : 'clsJewel' のメンバーではありません。
+                 c:\users\men\documents\github\arbianight\arbia\sourcecodo\Sp2DJewel.h(8) : 'clsJewel' の宣言を確認してください。
+         GoalManager.cpp
+         Main.cpp
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\Sp2DJewelSet.h(42): error C2039: 'InitSetPos' : 'clsJewel' のメンバーではありません。
+                 c:\users\men\documents\github\arbianight\arbia\sourcecodo\Sp2DJewel.h(8) : 'clsJewel' の宣言を確認してください。
+     1>SourceCodo\Main.cpp(76): warning C4305: '初期化中' : 'double' から 'const float' へ切り詰めます。
+     1>SourceCodo\Main.cpp(474): error C2660: 'clsSprite2D::Init' : 関数に 3 個の引数を指定できません。
+     1>SourceCodo\Main.cpp(583): error C2039: 'UpDateSpriteSs' : 'clsSprite2D' のメンバーではありません。
+                 c:\users\men\documents\github\arbianight\arbia\sourcecodo\Sprite2D.h(66) : 'clsSprite2D' の宣言を確認してください。
+     1>SourceCodo\Main.cpp(584): error C2039: 'UpDateSpriteSs' : 'clsSprite2D' のメンバーではありません。
+                 c:\users\men\documents\github\arbianight\arbia\sourcecodo\Sprite2D.h(66) : 'clsSprite2D' の宣言を確認してください。
+     1>SourceCodo\Main.cpp(585): error C2039: 'UpDateSpriteSs' : 'clsSprite2D' のメンバーではありません。
+                 c:\users\men\documents\github\arbianight\arbia\sourcecodo\Sprite2D.h(66) : 'clsSprite2D' の宣言を確認してください。
+     1>SourceCodo\Main.cpp(586): error C2039: 'UpDateSpriteSs' : 'clsSprite2D' のメンバーではありません。
+                 c:\users\men\documents\github\arbianight\arbia\sourcecodo\Sprite2D.h(66) : 'clsSprite2D' の宣言を確認してください。
+     1>SourceCodo\Main.cpp(590): error C2039: 'UpDateSpriteSs' : 'clsSprite2D' のメンバーではありません。
+                 c:\users\men\documents\github\arbianight\arbia\sourcecodo\Sprite2D.h(66) : 'clsSprite2D' の宣言を確認してください。
+     1>SourceCodo\Main.cpp(595): error C2039: 'UpDateSpriteSs' : 'clsSprite2D' のメンバーではありません。
+                 c:\users\men\documents\github\arbianight\arbia\sourcecodo\Sprite2D.h(66) : 'clsSprite2D' の宣言を確認してください。
+     1>SourceCodo\Main.cpp(598): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(742): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(989): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(1001): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(1014): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(1027): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(1040): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(1053): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(1065): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(1078): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(1090): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(2075): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(2101): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(2117): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(2134): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(2138): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(2144): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(2150): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(2154): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(2161): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(2166): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(2171): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(2178): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(2179): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(2286): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(2855): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(2865): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(2875): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(2885): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(2895): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(2905): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(2915): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(2925): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(2935): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(2945): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(2955): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(2966): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(2977): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(3075): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(3139): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(3273): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(3302): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(3345): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(3382): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(3388): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(3394): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(3400): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(3428): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(3455): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(3488): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(3558): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(3599): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(3616): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(3620): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(3643): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(3647): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(3670): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(3803): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(3812): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(3976): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(3982): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(3994): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(4010): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(4016): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(4022): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(4028): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(4034): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(4040): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(4055): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(4061): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(4067): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(4073): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(4107): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>SourceCodo\Main.cpp(4530): error C2660: 'clsSprite2D::Init' : 関数に 3 個の引数を指定できません。
+     1>SourceCodo\Main.cpp(4537): error C2660: 'clsSprite2D::Init' : 関数に 3 個の引数を指定できません。
+     1>SourceCodo\Main.cpp(4540): error C2039: 'UpDateSpriteSs' : 'clsSprite2D' のメンバーではありません。
+                 c:\users\men\documents\github\arbianight\arbia\sourcecodo\Sprite2D.h(66) : 'clsSprite2D' の宣言を確認してください。
+     1>SourceCodo\Main.cpp(4559): error C2660: 'clsSprite2D::Init' : 関数に 3 個の引数を指定できません。
+     1>SourceCodo\Main.cpp(4562): error C2039: 'UpDateSpriteSs' : 'clsSprite2D' のメンバーではありません。
+                 c:\users\men\documents\github\arbianight\arbia\sourcecodo\Sprite2D.h(66) : 'clsSprite2D' の宣言を確認してください。
+     1>SourceCodo\Main.cpp(4628): warning C4244: '=' : 'FLOAT' から 'INT' への変換です。データが失われる可能性があります。
+     1>SourceCodo\Main.cpp(4629): warning C4244: '=' : 'FLOAT' から 'INT' への変換です。データが失われる可能性があります。
+     1>SourceCodo\Main.cpp(4632): warning C4244: '=' : 'FLOAT' から 'UINT' への変換です。データが失われる可能性があります。
+     1>SourceCodo\Main.cpp(4633): warning C4244: '=' : 'FLOAT' から 'UINT' への変換です。データが失われる可能性があります。
+         Sp2DJewel.cpp
+         Sp2DJewelSet.cpp
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\Sp2DJewelSet.h(42): error C2039: 'InitSetPos' : 'clsJewel' のメンバーではありません。
+                 c:\users\men\documents\github\arbianight\arbia\sourcecodo\Sp2DJewel.h(8) : 'clsJewel' の宣言を確認してください。
+         Sp2DMgrActTxt.cpp
+         Sp2DMgrResult.cpp
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\Sp2DJewelSet.h(42): error C2039: 'InitSetPos' : 'clsJewel' のメンバーではありません。
+                 c:\users\men\documents\github\arbianight\arbia\sourcecodo\Sp2DJewel.h(8) : 'clsJewel' の宣言を確認してください。
+     1>SourceCodo\Sp2DMgrResult.cpp(180): error C2039: 'Init' : 'clsJewerSet' のメンバーではありません。
+                 c:\users\men\documents\github\arbianight\arbia\sourcecodo\Sp2DJewelSet.h(9) : 'clsJewerSet' の宣言を確認してください。
+         Sp2DTimerGroup.cpp
+     1>SourceCodo\Sp2DTimerGroup.cpp(86): error C2039: 'UpDateSpriteSs' : 'clsSprite2D' のメンバーではありません。
+                 c:\users\men\documents\github\arbianight\arbia\sourcecodo\Sprite2D.h(66) : 'clsSprite2D' の宣言を確認してください。
+         UiManager.cpp
+     1>c:\users\men\documents\github\arbianight\arbia\sourcecodo\Sp2DJewelSet.h(42): error C2039: 'InitSetPos' : 'clsJewel' のメンバーではありません。
+                 c:\users\men\documents\github\arbianight\arbia\sourcecodo\Sp2DJewel.h(8) : 'clsJewel' の宣言を確認してください。
+         コードを生成中...
+     1>プロジェクト "C:\Users\men\Documents\GitHub\ArbiaNight\Arbia\Arbia.vcxproj" (Build ターゲット) のビルドが終了しました -- 失敗。
+
+ビルドに失敗しました。
+
+経過時間 00:00:05.46
