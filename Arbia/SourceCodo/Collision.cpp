@@ -4,6 +4,7 @@
 #include "Collision.h"
 #include "CollisionRay.h"
 
+
 //----- 音 -----//.
 //----- アルビア.
 //キック.
@@ -273,8 +274,8 @@ void clsCollision::WallJudge( clsCharaSkin* pWalker, clsCharaStatic* pWall )
 //============================================================
 //	床のあたり判定ﾗｯﾌﾟ.
 //============================================================
-bool clsCollision::FloorJudge(
-	clsCharaSkin* pWalker,
+bool clsCollision::FloorJudge( 
+	clsCharaSkin* pWalker, 
 	float fRange,
 	float& fLandY,
 	clsCharaStatic* pFloor,
@@ -290,8 +291,8 @@ bool clsCollision::FloorJudge(
 //============================================================
 //	天井との判定.
 //============================================================
-bool clsCollision::CeilingJudge(
-	clsCharaSkin* pWalker,
+bool clsCollision::CeilingJudge( 
+	clsCharaSkin* pWalker, 
 	float fWalkerHeight,
 	clsCharaStatic* pFloor )
 {

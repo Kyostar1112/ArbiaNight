@@ -11,9 +11,9 @@ public:
 	clsJewerSet();
 	~clsJewerSet();
 
-	void Create( HWND hWnd, 
+	void Create( HWND hWnd,
 		ID3D11Device* pDevice11, ID3D11DeviceContext* pContext11,
-		int iNo ); 
+		int iNo );
 
 	void Update();
 
@@ -37,9 +37,9 @@ public:
 	}
 
 
-	void InitSetPos(){
+	void Init(){
 		if( !m_smpModel ) return;
-		m_smpModel->InitSetPos();
+		m_smpModel->Init();
 	};
 
 

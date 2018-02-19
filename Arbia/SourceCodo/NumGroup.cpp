@@ -56,15 +56,12 @@ void clsNumGrp::Create( ID3D11Device* pDevice11, ID3D11DeviceContext* pContext11
 
 		NumImage[i] = new clsSprite2D;
 
-		NumImage[i]->Create( pDevice11, pContext11, FILE_PATH_TEN );
+		NumImage[i]->Create( pDevice11, pContext11, FILE_PATH_TEN, 1.0f, iTEN_DECIMAL );
 
 		NumImage[i]->SetSs(
 			NumImage[i]->GetSs().Base.w,
 			NumImage[i]->GetSs().Base.h,
-			NUMSIZE.w, NUMSIZE.h,
-			1.0f, iTEN_DECIMAL );
-
-		NumImage[i]->UpDateSpriteSs();
+			NUMSIZE.w, NUMSIZE.h);
 	}
 	//ç≈ëÂíl.
 	m_iMax = iMAX;
@@ -82,7 +79,7 @@ void clsNumGrp::ReSet()
 void clsNumGrp::SetPos( D3DXVECTOR3 vPos )
 {
 	m_vPos = vPos;
-	
+
 	for( char i=0; i<cNUM_MAX; i++ ){
 		NumImage[i]->SetPos( vPos );
 	}
