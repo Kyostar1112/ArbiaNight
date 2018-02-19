@@ -13,13 +13,13 @@ clsSprite2D::clsSprite2D()
 	, m_AnimCount( 0 )
 	, m_bDispFlg( false )
 	, m_fAlpha( 1.0f )
-	, m_pTexture( NULL )
-	, m_pVertexShader( NULL )
-	, m_pVertexLayout( NULL )
-	, m_pPixelShader( NULL )
-	, m_pConstantBuffer( NULL )
-	, m_pVertexBuffer( NULL )
-	, m_pSampleLinear( NULL )
+	, m_pTexture( nullptr )
+	, m_pVertexShader( nullptr )
+	, m_pVertexLayout( nullptr )
+	, m_pPixelShader( nullptr )
+	, m_pConstantBuffer( nullptr )
+	, m_pVertexBuffer( nullptr )
+	, m_pSampleLinear( nullptr )
 {
 //	ZeroMemory( this, sizeof( clsSprite2D ) );
 //	m_fAlpha = 1.0f;
@@ -91,8 +91,8 @@ HRESULT clsSprite2D::Create( ID3D11Device* pDevice11,
 //============================================================
 HRESULT clsSprite2D::InitShader()
 {
-	ID3DBlob* pCompiledShader = NULL;
-	ID3DBlob* pErrors = NULL;
+	ID3DBlob* pCompiledShader = nullptr;
+	ID3DBlob* pErrors = nullptr;
 
 	UINT uCompileFlag = 0;
 
@@ -328,9 +328,9 @@ HRESULT clsSprite2D::CreateTexture( LPSTR fileName,
 		D3DX11CreateShaderResourceViewFromFile(
 			m_pDevice11,		//ﾘｿｰｽを使用するﾃﾞﾊﾞｲｽへのﾎﾟｲﾝﾀ.
 			fileName,	//ﾌｧｲﾙ名(ﾊﾟｽも必要).
-			NULL, NULL,
+			nullptr, nullptr,
 			pTex,	//(out)ﾃｸｽﾁｬ.
-			NULL ) ) )
+			nullptr ) ) )
 	{
 		ERR_MSG( fileName, "clsSprite2D::CreateTexture" );
 		return E_FAIL;
@@ -370,8 +370,8 @@ void clsSprite2D::Render()
 	mWorld = mScale * mTrans;
 
 	//使用するｼｪｰﾀﾞの登録.
-	m_pDeviceContext11->VSSetShader( m_pVertexShader, NULL, 0 );
-	m_pDeviceContext11->PSSetShader( m_pPixelShader,  NULL, 0 );
+	m_pDeviceContext11->VSSetShader( m_pVertexShader, nullptr, 0 );
+	m_pDeviceContext11->PSSetShader( m_pPixelShader,  nullptr, 0 );
 
 	//ｼｪｰﾀﾞのｺﾝｽﾀﾝﾄﾊﾞｯﾌｧに各種ﾃﾞｰﾀを渡す.
 	D3D11_MAPPED_SUBRESOURCE pData;
@@ -479,8 +479,8 @@ bool clsSprite2D::Release()
 
 	SAFE_RELEASE( m_pConstantBuffer );
 
-	m_pDeviceContext11 = NULL;
-	m_pDevice11 = NULL;
+	m_pDeviceContext11 = nullptr;
+	m_pDevice11 = nullptr;
 
 	return true;
 }
