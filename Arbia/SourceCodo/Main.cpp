@@ -471,7 +471,7 @@ void clsMain::AppMain()
 			else if (m_pTestData->GetExtension() == png)
 			{
 				m_vsmpSpriteTest.push_back(make_unique<clsSprite2D>());
-				m_vsmpSpriteTest[g_iPngNum]->Init(m_pDevice, m_pDeviceContext, (LPSTR)m_pTestData->GetFilePath().c_str());
+				m_vsmpSpriteTest[g_iPngNum]->Create(m_pDevice, m_pDeviceContext, (LPSTR)m_pTestData->GetFilePath().c_str());
 				m_vsmpSpriteTest[g_iPngNum]->SetPos(WND_W / 2 - m_vsmpSpriteTest[g_iPngNum]->GetSs().Disp.w / 2, WND_H / 2 - m_vsmpSpriteTest[g_iPngNum]->GetSs().Disp.h / 2);
 				g_iPngNum++;
 			}
@@ -580,19 +580,17 @@ void clsMain::AppMain()
 		//スプライト移動、拡縮.
 		if (!m_vsmpSpriteTest.empty())
 		{
-			GETKEY_STAY('A'){ m_vsmpSpriteTest[m_SpriteControlNum]->AddPosX(-5.0f);	 m_vsmpSpriteTest[m_SpriteControlNum]->UpDateSpriteSs(); }
-			GETKEY_STAY('D'){ m_vsmpSpriteTest[m_SpriteControlNum]->AddPosX(5.0f);	 m_vsmpSpriteTest[m_SpriteControlNum]->UpDateSpriteSs(); }
-			GETKEY_STAY('W'){ m_vsmpSpriteTest[m_SpriteControlNum]->AddPosY(-5.0f);	 m_vsmpSpriteTest[m_SpriteControlNum]->UpDateSpriteSs(); }
-			GETKEY_STAY('S'){ m_vsmpSpriteTest[m_SpriteControlNum]->AddPosY(5.0f);	 m_vsmpSpriteTest[m_SpriteControlNum]->UpDateSpriteSs(); }
+			GETKEY_STAY('A'){ m_vsmpSpriteTest[m_SpriteControlNum]->AddPosX(-5.0f); }
+			GETKEY_STAY('D'){ m_vsmpSpriteTest[m_SpriteControlNum]->AddPosX(5.0f);	}
+			GETKEY_STAY('W'){ m_vsmpSpriteTest[m_SpriteControlNum]->AddPosY(-5.0f); }
+			GETKEY_STAY('S'){ m_vsmpSpriteTest[m_SpriteControlNum]->AddPosY(5.0f);	}
 			GETKEY_STAY('Q'){
 				m_fAlphaPoint-=0.01f;
 				m_vsmpSpriteTest[m_SpriteControlNum]->MulDisp(m_fAlphaPoint);
-				m_vsmpSpriteTest[m_SpriteControlNum]->UpDateSpriteSs();
 			}
 			GETKEY_STAY('E'){
 				m_fAlphaPoint+=0.01f;
 				m_vsmpSpriteTest[m_SpriteControlNum]->MulDisp(m_fAlphaPoint);
-				m_vsmpSpriteTest[m_SpriteControlNum]->UpDateSpriteSs();
 			}
 			GETKEY_DOWN('N'){
 				if (m_SpriteControlNum < m_vsmpSpriteTest.size() - 1){
@@ -979,7 +977,7 @@ void clsMain::DestroyD3D()
 	}
 	//最大数初期化.
 	m_iBlkAryMax = 0;
-	
+
 
 #endif //#if _DEBUG
 
@@ -4527,17 +4525,16 @@ void clsMain::NowLoading()
 void clsMain::LoadSpriteInit()
 {
 	m_pLoadBack = make_unique<clsSprite2D>();
-	m_pLoadBack->Init(m_pDevice, m_pDeviceContext, "Data\\Load\\Black.png");
+	m_pLoadBack->Create(m_pDevice, m_pDeviceContext, "Data\\Load\\Black.png");
 	m_pLoadBack->SetPos( D3DXVECTOR3 (0.0f, 0.0f, 0.0f) );
 	m_pLoadBack->SetPatarnU( 0.0f );
 	m_pLoadBack->SetPatarnV( 0.0f );
 	m_pLoadBack->SetAlpha( 1.0f );
 
 	m_pLoadTxt = new clsSprite2D;
-	m_pLoadTxt->Init(m_pDevice, m_pDeviceContext, "Data\\Load\\LoadBack.png");
+	m_pLoadTxt->Create(m_pDevice, m_pDeviceContext, "Data\\Load\\LoadBack.png");
 	m_pLoadTxt->SetDispW(m_pLoadTxt->GetSs().Base.w/2);
 	m_pLoadTxt->SetDispH(m_pLoadTxt->GetSs().Base.h/2);
-	m_pLoadTxt->UpDateSpriteSs();
 	m_pLoadTxt->SetPos( WND_W/2-m_pLoadTxt->GetSs().Disp.w/2 , m_pLoadTxt->GetSs().Disp.h );
 
 	m_pLoadTxt->SetPatarnU( 0.0f );
@@ -4556,10 +4553,9 @@ void clsMain::LoadSpriteInit()
 	m_pLoadGage->SetAlpha( 1.0f );
 
 	m_pLoadGageBack = make_unique<clsSprite2D>();
-	m_pLoadGageBack->Init(m_pDevice, m_pDeviceContext, "Data\\Load\\LoadGargeType.png");
+	m_pLoadGageBack->Create(m_pDevice, m_pDeviceContext, "Data\\Load\\LoadGargeType.png");
 	m_pLoadGageBack->SetDispW(960.0f);
 	m_pLoadGageBack->SetDispH(50.0f);
-	m_pLoadGageBack->UpDateSpriteSs();
 	m_pLoadGageBack->SetPos( D3DXVECTOR3(WND_W / 2.0f - (ss_LoadGage.Disp.w/2.0f), 453.0f , -2.0f) );
 	m_pLoadGageBack->SetAlpha( 1.0f );
 

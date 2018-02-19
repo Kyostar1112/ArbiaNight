@@ -82,8 +82,6 @@ void clsTimerGrp::Create( HWND hWnd, ID3D11Device* pDevice11, ID3D11DeviceContex
 			m_Colon[i]->GetSs().Base.w,
 			m_Colon[i]->GetSs().Base.h,
 			fCOLON_DISP, fCOLON_DISP );
-
-		m_Colon[i]->UpDateSpriteSs();
 	}
 
 	//Œø‰Ê‰¹.
@@ -111,7 +109,7 @@ void clsTimerGrp::SetPos( D3DXVECTOR3 vPos )
 {
 	const float fOffsetPlus = 2.5f;
 	m_vPos = vPos;
-	
+
 	for( char i=0; i<cTIMEER_NUM; i++ ){
 		m_Timer[i]->SetPos( vPos );
 	}
