@@ -4,7 +4,6 @@
 #include "Collision.h"
 #include "CollisionRay.h"
 
-
 //----- 音 -----//.
 //----- アルビア.
 //キック.

@@ -11,11 +11,6 @@ class clsCharaStatic;
 
 class clsCollisionRay;
 
-
-
-
-
-
 //‚ ‚½‚è”»’è—p½Ã°À½.
 struct COL_STATE
 {
@@ -80,16 +75,16 @@ public:
 
 
 	//°‚Æ‚Ì”»’è.
-	bool FloorJudge( 
-		clsCharaSkin* pWalker, 
+	bool FloorJudge(
+		clsCharaSkin* pWalker,
 		float fRange,
 		float& fLandY,//‰º‚É°‚ª‚ ‚é‚Ætrue‚ª•Ô‚Á‚Ä‚­‚é.
 		clsCharaStatic* pFloor,
 		bool& bFlg );
 
 	//“Vˆä‚Æ‚Ì”»’è.
-	bool CeilingJudge( 
-		clsCharaSkin* pWalker, 
+	bool CeilingJudge(
+		clsCharaSkin* pWalker,
 		float fWalkerHeight,
 		clsCharaStatic* pFloor );
 
