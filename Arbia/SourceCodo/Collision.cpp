@@ -274,8 +274,8 @@ void clsCollision::WallJudge( clsCharaSkin* pWalker, clsCharaStatic* pWall )
 //============================================================
 //	è∞ÇÃÇ†ÇΩÇËîªíË◊ØÃﬂ.
 //============================================================
-bool clsCollision::FloorJudge( 
-	clsCharaSkin* pWalker, 
+bool clsCollision::FloorJudge(
+	clsCharaSkin* pWalker,
 	float fRange,
 	float& fLandY,
 	clsCharaStatic* pFloor,
@@ -291,8 +291,8 @@ bool clsCollision::FloorJudge(
 //============================================================
 //	ìVà‰Ç∆ÇÃîªíË.
 //============================================================
-bool clsCollision::CeilingJudge( 
-	clsCharaSkin* pWalker, 
+bool clsCollision::CeilingJudge(
+	clsCharaSkin* pWalker,
 	float fWalkerHeight,
 	clsCharaStatic* pFloor )
 {
